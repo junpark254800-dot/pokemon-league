@@ -84,6 +84,7 @@ kbd { font: 700 14px var(--body); border: 1px solid var(--brass); color: var(--b
 .groups button[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); }
 .tracks { display: grid; gap: 10px; }
 .trk { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; background: var(--night-2); border: 1px solid var(--line); padding: 12px 14px; }
+.trk[hidden] { display: none; }
 .trk.on { border-color: var(--brass); }
 .trk h3 { font-size: 18px; }
 .trk .where { font-size: 13px; color: var(--dim); }
