@@ -342,11 +342,15 @@ body { word-break: keep-all; }
 </div>
 
 <audio id="audio" preload="none" crossorigin="anonymous"></audio>
-<script src="config.js"></script>
 <script>
+// config.js is fetched fresh every visit (?t=...), so an edit on GitHub shows up as soon as Pages has deployed it
 (function () {
   "use strict";
-  var S = window.SITE || {};
+  var sc = document.createElement("script");
+  sc.src = "config.js?t=" + Date.now();
+  sc.onload = sc.onerror = function () { init(window.SITE || {}); };
+  document.head.appendChild(sc);
+  function init(S) {
   function el(id) { return document.getElementById(id); }
   if (S.download) { el("dlBtn").href = S.download; el("link").textContent = S.download; }
   if (S.version) el("ver").textContent = S.version; else el("ver").hidden = true;
@@ -361,6 +365,7 @@ body { word-break: keep-all; }
   var nav = el("links");
   L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.title || x.url; nav.appendChild(a); });
   if (!L.length) nav.hidden = true;
+  }
 })();
 </script>
 <script src="tracks.js"></script>
