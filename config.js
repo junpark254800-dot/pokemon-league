@@ -5,7 +5,7 @@
 // ================================================================
 window.SITE = {
   // 모드팩 다운로드 링크 (구글 드라이브 공유 링크)
-  download: "https://drive.google.com/file/d/1MWntgXDw0EdwTuhMycknG3EC1DLrV5l4/view?usp=sharing",
+  download: "https://drive.google.com/file/d/1mclv18wtujZ867LYXPvlWyxLXV4SeUKu/view?usp=sharing",
 
   // 모드팩 버전 / 올린 날짜 (다운로드 버튼 아래에 표시)
   version: "공개 테스트 · 2026-11-01",
