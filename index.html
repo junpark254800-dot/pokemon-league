@@ -4,152 +4,564 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>포켓몬 리그 — 공개 테스트</title>
+<meta name="description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 '포켓몬 리그' 모드팩 다운로드와 소개">
 <meta property="og:type" content="website">
 <meta property="og:title" content="포켓몬 리그 — 공개 테스트">
-<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 모드팩 다운로드와 설치 방법">
+<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 모드팩 다운로드와 소개">
 <meta property="og:image" content="https://junpark254800-dot.github.io/pokemon-league/cover.jpg">
 <meta property="og:url" content="https://junpark254800-dot.github.io/pokemon-league/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#e2b45a">
-<meta name="description" content="마인크래프트 포켓몬 서버 '포켓몬 리그' 공개 테스트 모드팩 다운로드와 설치 방법">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* one visual world: a night train under a dawn sky - deep blue-green night, brass lamps, a thin violet for the Halo */
   --night: #0d1a24;
   --night-2: #13242f;
   --line: #24404c;
   --ink: #ece4d2;
   --dim: #9fb0b4;
   --brass: #e2b45a;
-  --brass-ink: #1a1408;
+  --halo: #b49cf0;
+  --dawn: #f0a77a;
   --display: "Gowun Batang", "Noto Serif KR", serif;
   --body: "Noto Sans KR", system-ui, sans-serif;
   color-scheme: dark;
+  /* layout: one long poster column (max 1080px); every section = heading on the left rail, content on the right */
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
-body { background: var(--night); color: var(--ink); font: 16px/1.7 var(--body); word-break: keep-all; }
+body { background: var(--night); color: var(--ink); font: 16px/1.7 var(--body); padding-bottom: 150px; }
 a { color: var(--brass); }
-.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
-h1, h2 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; }
-header { padding: 48px 0 28px; }
-.kicker { font-size: 13px; letter-spacing: .3em; color: var(--brass); }
-h1 { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 10px 0 14px; }
-.lead { font-family: var(--display); font-size: clamp(17px, 2.4vw, 21px); margin: 0; max-width: 32em; }
-.trailer { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; border: 1px solid var(--line); }
-.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; color: var(--dim); font-size: 13px; margin-top: 6px; }
-.vol input { width: 110px; accent-color: var(--brass); }
-.dl { margin: 28px 0 8px; padding: 22px; border: 1px solid var(--brass); background: var(--night-2); display: grid; gap: 12px; }
-.dl .btn { display: block; text-align: center; text-decoration: none; background: var(--brass); color: var(--brass-ink); font-weight: 700; font-size: 20px; padding: 16px 20px; }
-.dl .btn:hover, .dl .btn:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; }
+button { font: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, video:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* hero */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #0a141c 0%, var(--night) 70%); }
+.hero canvas.sky { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
+.hero .wrap { position: relative; padding-top: 56px; padding-bottom: 40px; display: grid; gap: 28px; }
+.kicker { font-size: 14px; letter-spacing: .3em; color: var(--brass); }
+.hero h1 { font-size: clamp(44px, 8vw, 88px); line-height: 1.05; letter-spacing: .04em; }
+.hero p.lead { font-family: var(--display); font-size: clamp(18px, 2.6vw, 24px); color: var(--ink); margin: 0; max-width: 34em; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; padding: 0; list-style: none; }
+.facts li { display: grid; }
+.facts b { font-family: var(--display); font-size: 34px; color: var(--brass); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.facts span { font-size: 13px; color: var(--dim); }
+.trailer { border: 1px solid var(--line); background: #000; aspect-ratio: 16 / 9; width: 100%; display: block; }
+.meta { font-size: 13px; color: var(--dim); }
+
+/* sections */
+section.s { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 52px 0; border-bottom: 1px solid var(--line); }
+section.s > header { grid-row: 1 / span 4; }
+section.s > :not(header) { grid-column: 2; }
+section.s > header h2 { font-size: 30px; }
+section.s > header p { color: var(--dim); font-size: 14px; margin: 8px 0 0; }
+.n { font-family: var(--display); color: var(--brass); font-size: 14px; letter-spacing: .2em; display: block; margin-bottom: 6px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+.card { background: var(--night-2); border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr; }
+.card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+.card .t { padding: 12px 14px 14px; }
+.card h3 { font-size: 19px; margin-bottom: 4px; }
+.card p { margin: 0; font-size: 14px; color: var(--dim); }
+.card .tag { display: inline-block; font-size: 12px; color: var(--night); background: var(--brass); padding: 0 7px; margin-bottom: 6px; }
+.card.halo .tag { background: var(--halo); }
+.list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px 24px; }
+.list li { padding-left: 16px; position: relative; font-size: 15px; }
+.list li::before { content: ""; position: absolute; left: 0; top: .72em; width: 7px; height: 1px; background: var(--brass); }
+.list b { color: var(--ink); }
+.list span { color: var(--dim); }
+.keys { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+kbd { font: 700 14px var(--body); border: 1px solid var(--brass); color: var(--brass); padding: 1px 8px; margin-right: 6px; }
+.keys div { font-size: 14px; color: var(--dim); background: var(--night-2); border: 1px solid var(--line); padding: 8px 12px; }
+
+/* soundtrack */
+.groups { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.groups button { background: none; border: 1px solid var(--line); color: var(--dim); padding: 4px 12px; font-size: 14px; }
+.groups button[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); }
+.tracks { display: grid; gap: 10px; }
+.trk { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; background: var(--night-2); border: 1px solid var(--line); padding: 12px 14px; }
+.trk.on { border-color: var(--brass); }
+.trk h3 { font-size: 18px; }
+.trk .where { font-size: 13px; color: var(--dim); }
+.trk .btns { display: flex; gap: 6px; }
+.trk .btns button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 4px 10px; font-size: 13px; white-space: nowrap; }
+.trk .btns button.hl { border-color: var(--brass); color: var(--brass); }
+.trk canvas { grid-column: 1 / -1; width: 100%; height: 44px; display: block; cursor: pointer; }
+.engine { margin-top: 22px; font-size: 14px; color: var(--dim); max-width: 46em; }
+
+/* checklist */
+.check { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.check fieldset { border: 1px solid var(--line); background: var(--night-2); margin: 0; padding: 12px 14px 14px; }
+.check legend { font-family: var(--display); font-weight: 700; font-size: 18px; padding: 0 6px; color: var(--brass); }
+.check label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; padding: 4px 0; }
+.check input { margin-top: 5px; accent-color: var(--brass); }
+.check label.done span { color: var(--dim); text-decoration: line-through; }
+.progress { font-variant-numeric: tabular-nums; color: var(--brass); font-family: var(--display); font-size: 22px; }
+.report { margin-top: 18px; font-size: 14px; color: var(--dim); }
+
+/* now playing */
+.np { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(9, 18, 25, .96); border-top: 1px solid var(--brass); z-index: 5; }
+.np .wrap { display: grid; grid-template-columns: 210px 1fr auto; gap: 14px; align-items: center; padding-top: 10px; padding-bottom: 10px; }
+.np canvas.vis { width: 210px; height: 74px; display: block; }
+.np .title { font-family: var(--display); font-size: 19px; }
+.np .cap { font-family: var(--display); color: var(--brass); font-size: 16px; min-height: 1.6em; transition: opacity .6s; }
+.np canvas.flow { width: 100%; height: 26px; display: block; cursor: pointer; margin-top: 4px; }
+.np .ctl { display: flex; gap: 6px; }
+.np .ctl button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font-size: 14px; white-space: nowrap; }
+.np .time { font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
+footer { padding: 36px 0; color: var(--dim); font-size: 13px; }
+
+@media (max-width: 760px) {
+  section.s { grid-template-columns: 1fr; gap: 16px; padding: 40px 0; }
+  section.s > header { grid-row: auto; }
+  section.s > :not(header) { grid-column: 1; }
+  .np .wrap { grid-template-columns: 1fr; gap: 6px; padding-top: 8px; padding-bottom: 8px; }
+  .np canvas.vis { display: none; }
+  .np .title { font-size: 15px; }
+  .np .cap { display: none; }
+  .np canvas.flow { height: 18px; }
+  .np .ctl { flex-wrap: wrap; align-items: center; }
+  .np .ctl button { padding: 5px 10px; font-size: 13px; }
+  .trk { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .np .cap { transition: none; } }
+.ctl .vol { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.ctl .vol input { width: 90px; accent-color: var(--brass); }
+.dl { margin: 24px 0 0; padding: 20px; border: 1px solid var(--brass); background: var(--night-2); display: grid; gap: 10px; max-width: 760px; }
+.dl .btn { display: block; text-align: center; text-decoration: none; background: var(--brass); color: #1a1408; font-weight: 700; font-size: 20px; padding: 14px 20px; }
 .dl .btn .sub { display: block; font-size: 13px; font-weight: 500; opacity: .75; }
-.dl small { color: var(--dim); }
-.copy { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.copy code { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; font-size: 13px; color: var(--dim); background: var(--night); border: 1px solid var(--line); padding: 6px 8px; }
-.copy button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
-section { padding: 30px 0 6px; border-top: 1px solid var(--line); margin-top: 26px; }
-h2 { font-size: 26px; margin-bottom: 14px; }
-ol { padding-left: 1.3em; margin: 0; }
-ol li { margin: 0 0 12px; }
-ol li b { color: var(--brass); font-weight: 700; }
-ul.req { padding-left: 1.2em; margin: 0; }
-.note { color: var(--dim); font-size: 14px; }
-.links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
-.links a { border: 1px solid var(--line); padding: 8px 14px; text-decoration: none; color: var(--ink); background: var(--night-2); }
-.links a:hover, .links a:focus-visible { border-color: var(--brass); color: var(--brass); }
+.dl .btn:hover, .dl .btn:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
+.dl small { color: var(--dim); font-size: 13px; }
 .dl .ver { color: var(--brass); }
-.srv { margin-top: 10px; }
+.copy { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.copy code { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; font-size: 12px; color: var(--dim); background: var(--night); border: 1px solid var(--line); padding: 6px 8px; }
+.copy button, .srv button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.links a { border: 1px solid var(--line); padding: 8px 14px; text-decoration: none; color: var(--ink); background: var(--night-2); font-size: 14px; }
+.links a:hover, .links a:focus-visible { border-color: var(--brass); color: var(--brass); }
+.steps { margin: 0 0 14px; padding-left: 1.3em; }
+.steps li { margin: 0 0 8px; font-size: 15px; color: var(--dim); }
+.steps li b { color: var(--ink); }
+.srv { margin: 6px 0 14px; font-size: 15px; }
 .srv code { color: var(--brass); background: var(--night-2); border: 1px solid var(--line); padding: 3px 8px; }
-.srv button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 3px 10px; font: inherit; font-size: 14px; cursor: pointer; }
-footer { color: var(--dim); font-size: 13px; padding: 36px 0 48px; }
+body { word-break: keep-all; }
+.topdl { display: inline-block; margin-top: 18px; background: var(--brass); color: #1a1408; font-weight: 700; text-decoration: none; padding: 10px 18px; }
+.topdl:hover, .topdl:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
+
+<div class="hero">
+  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
     <div class="kicker">공개 테스트 · 마인크래프트 포켓몬 서버</div>
     <h1>포켓몬 리그</h1>
-    <p class="lead">네 개의 지방, 서른두 명의 관장, 네 개의 리그. 모드팩을 받아서 함께 모험을 시작해요.</p>
-  </header>
+    <p class="lead">네 개의 지방을 기차로 건너며, 서른두 명의 관장과 네 개의 리그, 그리고 전설을 손에 넣으려는 조직과 마주하는 오픈월드 이야기.</p>
+    <p><a class="topdl" href="#dl">⬇ 모드팩 다운로드 · 설치 방법</a></p>
+    <ul class="facts">
+      <li><b>4</b><span>지방</span></li>
+      <li><b>45</b><span>마을</span></li>
+      <li><b>32</b><span>체육관</span></li>
+      <li><b>4</b><span>포켓몬 리그</span></li>
+      <li><b>45</b><span>주민 이야기</span></li>
+      <li><b>46</b><span>칭호</span></li>
+      <li><b>25</b><span>오리지널 곡</span></li>
+    </ul>
+    <video class="trailer" id="trailer" src="trailer.mp4" poster="img/poster.jpg" controls preload="metadata" playsinline></video>
+    <div class="dl" id="dl">
+      <a class="btn" id="dlBtn" href="#" target="_blank" rel="noopener">⬇ 모드팩 다운로드<span class="sub">구글 드라이브</span></a>
+      <small class="ver" id="ver"></small>
+      <small>구글 드라이브가 열리면 오른쪽 위 다운로드(⬇)로 받으세요. "바이러스 검사를 할 수 없음" 안내가 뜨면 "무시하고 다운로드". 설치 방법은 아래 01 시작하기에 있어요.</small>
+      <div class="copy"><code id="link"></code><button type="button" id="copyBtn">링크 복사</button></div>
+    </div>
+    <nav class="links" id="links"></nav>
+    <div class="meta">Minecraft Java 1.21.1 · Fabric · Cobblemon 1.8.4 · 직접 만든 모드(league_ui)와 데이터팩 · 레벨 캡 없음</div>
+  </div>
+</div>
 
-  <video class="trailer" id="trailer" src="trailer.mp4" poster="cover.jpg" controls preload="metadata" playsinline></video>
-  <label class="vol">🔈 영상 음량 <input id="vol" type="range" min="0" max="1" step="0.01" value="0.15" aria-label="영상 음량"></label>
+<main class="wrap">
 
-  <div class="dl">
-    <a class="btn" id="dlBtn" href="#" target="_blank" rel="noopener">⬇ 모드팩 다운로드<span class="sub">구글 드라이브</span></a>
-    <small id="ver" class="ver"></small>
-    <small>버튼을 누르면 구글 드라이브가 열려요. 오른쪽 위 다운로드 버튼(⬇)으로 받으면 됩니다. 파일이 커서 "바이러스 검사를 할 수 없음" 안내가 뜨면 "무시하고 다운로드"를 누르세요.</small>
-    <div class="copy">
-      <code id="link"></code>
-      <button type="button" id="copyBtn">링크 복사</button>
+  <section class="s" id="start">
+    <header><span class="n">01</span><h2>시작하기</h2><p>설치부터 첫 접속까지</p></header>
+    <div>
+      <ol class="steps">
+        <li><b>준비물</b> — 마인크래프트 자바 에디션(정품), <a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱</a>(무료 런처), 램 16GB 이상 PC 권장</li>
+        <li><b>모드팩 받기</b> — 위의 다운로드 버튼으로 모드팩 파일을 받아요.</li>
+        <li><b>가져오기</b> — 받은 파일을 더블클릭하거나, Modrinth 앱 왼쪽 <b>＋</b> 버튼에서 파일로 가져오기. 모드는 앱이 알아서 내려받아요.</li>
+        <li><b>메모리</b> — 프로필 설정 → Java 메모리를 <b>6GB 이상</b>으로. 기본값이면 느리거나 튕길 수 있어요.</li>
+        <li><b>실행</b> — ▶ 플레이. 첫 실행은 몇 분 걸려요.</li>
+      </ol>
+      <p class="srv" id="srvNone">서버 접속 방법과 주소는 디스코드 공지를 확인해 주세요.</p>
+      <p class="srv" id="srvBox" hidden>서버 주소 <code id="srv"></code> <button type="button" id="srvCopy">복사</button> <span class="meta">멀티플레이 → 서버 추가 → 붙여넣기</span></p>
+      <ul class="list">
+        <li><b>첫 접속</b> <span>— 마우스로 주위를 둘러보면 첫 열차가 출발해요. 도착하면 새싹마을.</span></li>
+        <li><b>음악</b> <span>— 설정 → 음악 및 소리 → '주크박스/소리 블록' 볼륨이 서버 배경음악이에요.</span></li>
+        <li><b>모험 수첩</b> <span>— 처음 받는 수첩 하나에 메뉴가 다 모여 있어요. (알림 끄기, 배경음악 끄기 포함)</span></li>
+        <li><b>문제가 생기면</b> <span>— 디스코드에 화면을 캡처해서 올려 주세요.</span></li>
+      </ul>
+      <div class="keys">
+        <div><kbd>J</kbd>오른쪽 위 진행 상황 켜기/끄기</div>
+        <div><kbd>,</kbd>지방 지도</div>
+        <div><kbd>K</kbd>포켓기어 라디오</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="world">
+    <header><span class="n">02</span><h2>세계</h2><p>걸어서도, 날아서도, 기차로도</p></header>
+    <div class="grid">
+      <article class="card"><img src="img/r1.jpg" alt="푸른들 지방의 아침 마을"><div class="t"><span class="tag">1지방</span><h3>푸른들 지방</h3><p>과수원과 들판, 모험이 시작되는 곳.</p></div></article>
+      <article class="card"><img src="img/r2.jpg" alt="백암산 지방의 산간 풍경"><div class="t"><span class="tag">2지방</span><h3>백암산 지방</h3><p>흰 바위 산맥과 산사, 호숫가 마을.</p></div></article>
+      <article class="card"><img src="img/r3.jpg" alt="남해 제도의 섬마을"><div class="t"><span class="tag">3지방</span><h3>남해 제도</h3><p>암초와 섬을 잇는 바다의 지방.</p></div></article>
+      <article class="card"><img src="img/r4.jpg" alt="북부 고원의 설경"><div class="t"><span class="tag">4지방</span><h3>북부 고원</h3><p>눈 덮인 고원과 연구탑, 마지막 지방.</p></div></article>
+    </div>
+    <ul class="list">
+      <li><b>지방 열차</b> <span>— 역 매표소에서 행선지를 고르면 컷신으로 이동</span></li>
+      <li><b>하늘 택시</b> <span>— 한 번 가 본 마을로 날아가기</span></li>
+      <li><b>사파리 존</b> <span>— 특수 바이옴의 포켓몬</span></li>
+      <li><b>탐험 이스터에그</b> <span>— 길에서 벗어나면 보이는 것들</span></li>
+    </ul>
+  </section>
+
+  <section class="s" id="story">
+    <header><span class="n">03</span><h2>이야기</h2><p>스포일러 없이, 시작만</p></header>
+    <div class="grid">
+      <article class="card halo"><img src="img/halo.jpg" alt="헤일로 작전 현장"><div class="t"><span class="tag">메인 스토리</span><h3>헤일로</h3><p>전설의 포켓몬을 '보호'한다는 조직. 하늘의 고리가 무엇을 붙잡고 있는지는 직접 확인해 주세요.</p></div></article>
+      <article class="card"><img src="img/rival.jpg" alt="마을 거리"><div class="t"><span class="tag">라이벌</span><h3>하루</h3><p>새싹마을의 꼬마가 길 곳곳에서 기다려요. 갈수록 강해져요.</p></div></article>
+      <article class="card"><img src="img/town.jpg" alt="해 질 녘 마을"><div class="t"><span class="tag">사이드</span><h3>주민 이야기 45</h3><p>마을마다 한 명, 세 단계로 이어지는 부탁과 결말.</p></div></article>
+    </div>
+  </section>
+
+  <section class="s" id="battle">
+    <header><span class="n">04</span><h2>배틀</h2><p>혼자서도, 같이서도</p></header>
+    <div class="grid">
+      <article class="card"><img src="img/league.jpg" alt="포켓몬 리그 건물"><div class="t"><span class="tag">진행</span><h3>체육관 32 · 리그 4</h3><p>지방마다 관장 여덟 명과 리그. 챔피언을 이기면 그 트레이너가 다음 챔피언이 돼요.</p></div></article>
+      <article class="card"><img src="img/factory.jpg" alt="배틀 팩토리"><div class="t"><span class="tag">배틀 타워</span><h3>배틀 팩토리</h3><p>렌탈 포켓몬 54마리 중 셋을 골라 7연승 도전.</p></div></article>
+      <article class="card"><img src="img/cup.jpg" alt="리그 대회 대진표"><div class="t"><span class="tag">멀티</span><h3>랭크 매칭 · 리그 대회</h3><p>접속한 친구와 자동 매칭, 토너먼트 대진표.</p></div></article>
+      <article class="card"><img src="img/boss.jpg" alt="월드 보스"><div class="t"><span class="tag">협동</span><h3>월드 보스 레이드</h3><p>지방마다 하루 한 번 거대해지는 포켓몬.</p></div></article>
+    </div>
+    <ul class="list">
+      <li><b>관장 재대결</b> <span>— 챔피언이 된 뒤 최강 상태의 관장과</span></li>
+      <li><b>PvP 레이팅</b> <span>— 이기면 RP, 트레이너 카드에 등급</span></li>
+      <li><b>명예의 전당</b> <span>— 서버 공유 순위 6종</span></li>
+      <li><b>길가 트레이너</b> <span>— 도로와 마을 곳곳</span></li>
+    </ul>
+  </section>
+
+  <section class="s" id="life">
+    <header><span class="n">05</span><h2>생활</h2><p>배틀만 하는 게 아니에요</p></header>
+    <div class="grid">
+      <article class="card"><img src="img/house.jpg" alt="바닷가 마을의 집"><div class="t"><span class="tag">집</span><h3>내 집 마련</h3><p>집을 사고, 꾸미고, 증축하고, 푹 쉬기.</p></div></article>
+      <article class="card"><img src="img/cos.jpg" alt="리그 부티크"><div class="t"><span class="tag">꾸미기</span><h3>부티크 · 옷장</h3><p>모자 17종, 발자국 11종, 오라 7종.</p></div></article>
+    </div>
+    <ul class="list">
+      <li><b>직업 5종</b> <span>— 낚시꾼 · 농부 · 광부 · 브리더 · 연구원, 10레벨</span></li>
+      <li><b>의뢰 게시판 · 평판</b> <span>— 마을마다 매일 바뀌는 부탁</span></li>
+      <li><b>교환소 · NPC 교환 의뢰</b> <span>— 친구와, 그리고 주민과</span></li>
+      <li><b>우체국 · 주간 신문</b> <span>— 서버 기록이 실리는 신문</span></li>
+      <li><b>축제 · 낚시 대회 · 채집 대회</b> <span>— 마을별 요일 행사</span></li>
+      <li><b>코인 케이스 · 출석 도장</b> <span>— 리그 화폐와 매일 보상</span></li>
+    </ul>
+  </section>
+
+  <section class="s" id="events">
+    <header><span class="n">06</span><h2>이벤트</h2><p>접속해 있으면 세계가 움직여요</p></header>
+    <div class="grid">
+      <article class="card"><img src="img/outbreak.jpg" alt="대량발생"><div class="t"><span class="tag">약 40분마다</span><h3>대량발생</h3><p>마을 근처 들판에 한 종류가 가득. 색이 다른 포켓몬 확률 상승.</p></div></article>
+      <article class="card"><img src="img/storm.jpg" alt="기상 특보"><div class="t"><span class="tag">90분 안팎</span><h3>기상 특보</h3><p>폭풍, 강풍, 폭염, 안개, 유성우. 날씨마다 다른 포켓몬.</p></div></article>
+      <article class="card halo"><img src="img/raid.jpg" alt="헤일로 작전"><div class="t"><span class="tag">약 75분마다</span><h3>헤일로 작전</h3><p>밀렵 단속, 보급 열차, 전파 방해, 광장 점거. 막으면 작전 문서 조각.</p></div></article>
+      <article class="card"><img src="img/meteor.jpg" alt="유성우 밤"><div class="t"><span class="tag">하늘 아래</span><h3>준전설 목격 제보</h3><p>특정한 하늘에서만 나타나는 11마리.</p></div></article>
+    </div>
+  </section>
+
+  <section class="s" id="collect">
+    <header><span class="n">07</span><h2>수집 · 탐험</h2><p>도감 밖의 기록들</p></header>
+    <div class="grid">
+      <article class="card"><img src="img/album.jpg" alt="포켓몬 앨범"><div class="t"><span class="tag">포켓기어</span><h3>카메라와 앨범</h3><p>망원경 카메라로 찍고, 앨범에 모아요.</p></div></article>
+      <article class="card"><img src="img/badge.jpg" alt="배지 케이스"><div class="t"><span class="tag">32칸</span><h3>배지 케이스</h3><p>배지 모양 칸에 직접 끼우는 케이스.</p></div></article>
+      <article class="card"><img src="img/riddle.jpg" alt="수수께끼 수첩"><div class="t"><span class="tag">비밀</span><h3>수수께끼 수첩</h3><p>전설의 흔적, 오래된 석판, 목격담, 작전 문서.</p></div></article>
+    </div>
+    <ul class="list">
+      <li><b>도감 마일스톤 13단계</b> <span>— 박사의 보상</span></li>
+      <li><b>칭호 46종</b> <span>— 이름 위에 다는 기록</span></li>
+      <li><b>지방마다 하나의 수상한 알</b> <span>— 길 밖 어딘가에</span></li>
+    </ul>
+  </section>
+
+  <section class="s" id="made">
+    <header><span class="n">08</span><h2>직접 만든 것</h2><p>이 서버에만 있는 모드와 음악</p></header>
+    <div>
+      <ul class="list">
+        <li><b>league_ui 모드</b> <span>— 지도, 트레이너 카드, 배지 케이스, 교환소, 앨범, 랭크 매칭, 배틀 팩토리, 수수께끼 수첩 화면과 진행 상황 표시</span></li>
+        <li><b>포켓기어 라디오</b> <span>— 왼쪽 위 뉴스 자막. 이벤트가 생기면 바로 알려 줘요</span></li>
+        <li><b>스토리 컷신</b> <span>— 화면 위아래 검은 띠와 함께 대사가 타이핑돼요</span></li>
+        <li><b>데이터팩</b> <span>— 45개 마을의 건물, NPC, 의뢰, 이벤트를 전부 함수로 생성</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="s" id="music">
+    <header><span class="n">09</span><h2>사운드트랙</h2><p>장소와 진행에 따라 바뀌는 오리지널 곡</p></header>
+    <div>
+      <div class="groups" id="groups" role="group" aria-label="곡 분류"></div>
+      <div class="tracks" id="tracks"></div>
+      <p class="engine">모든 곡은 이 서버를 위해 새로 작곡했어요. 실제 악기 녹음 샘플(MuseScore 음원)로 연주하고, 잔향과 마스터링은 직접 만든 엔진으로 입혔어요. 도로 음악은 지방이 바뀔수록, 리그 음악은 지방이 깊어질수록 무거워져요. 밤길과 동굴, 바다 위에서는 그곳만의 곡이 흐르고, 정상에 처음 오르면 곡의 절정부터 시작해요. ★ 버튼은 곡이 가장 커지는 곳 바로 앞에서 시작해요.</p>
+    </div>
+  </section>
+
+  <section class="s" id="test">
+    <header><span class="n">10</span><h2>테스트 항목</h2><p>해 본 것에 체크해 주세요<br><span class="progress" id="prog">0 / 0</span></p></header>
+    <div>
+      <div class="check" id="check"></div>
+      <p class="report">이상한 점을 찾으면 <b>F3을 눌러 좌표가 보이게 화면을 캡처</b>하고, 무엇을 하다가 생겼는지 한 줄만 적어 보내 주세요. 체크 표시는 이 브라우저에만 저장돼요.</p>
+    </div>
+  </section>
+
+  <footer>포켓몬 리그 서버 · 맵·모드·데이터팩 제작 박준혁 · 스토리·디자인·음악 Claude · Pokémon은 Nintendo / Creatures / GAME FREAK의 상표이며, 이 서버는 친구들끼리 즐기는 비공식 팬 서버예요.</footer>
+</main>
+
+<div class="np" id="np" aria-live="polite">
+  <div class="wrap">
+    <canvas class="vis" id="vis" width="420" height="148" aria-hidden="true"></canvas>
+    <div>
+      <div class="title" id="npTitle">곡을 고르면 여기서 재생돼요</div>
+      <div class="cap" id="npCap">★ 하이라이트부터 들으면 곡이 커지는 순간부터 시작해요</div>
+      <canvas class="flow" id="flow" height="52" aria-label="곡 흐름 (누르면 그 위치로 이동)"></canvas>
+      <div class="time" id="npTime">0:00 / 0:00</div>
+    </div>
+    <div class="ctl">
+      <button id="btnPlay" type="button">▶ 재생</button>
+      <button id="btnHl" type="button">★ 하이라이트</button>
+      <label class="vol" title="음량">🔈<input id="vol" type="range" min="0" max="1" step="0.01" value="0.15" aria-label="음량"></label>
     </div>
   </div>
-
-  <nav class="links" id="links"></nav>
-
-  <section>
-    <h2>준비물</h2>
-    <ul class="req">
-      <li>마인크래프트 자바 에디션 (정품 계정)</li>
-      <li><a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱</a> (무료 런처 · modrinth.com/app)</li>
-      <li>메모리 여유: 램 16GB 이상 PC 권장</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>설치 방법</h2>
-    <ol>
-      <li><b>Modrinth 앱 설치</b> — modrinth.com/app 에서 받아 설치하고 마인크래프트 계정으로 로그인해요.</li>
-      <li><b>모드팩 받기</b> — 위의 다운로드 버튼으로 모드팩 파일을 받아요.</li>
-      <li><b>모드팩 가져오기</b> — 받은 파일을 더블클릭하거나, Modrinth 앱 왼쪽의 <b>＋</b> 버튼에서 파일로 가져오기를 골라 받은 파일을 선택해요. 모드는 앱이 알아서 내려받아요.</li>
-      <li><b>메모리 설정</b> — 가져온 프로필의 설정 → Java 메모리를 <b>6GB 이상</b>으로 올려 주세요. 모드가 많아서 기본값이면 느리거나 튕길 수 있어요.</li>
-      <li><b>실행</b> — 프로필의 ▶ 플레이를 누르면 끝. 첫 실행은 몇 분 걸릴 수 있어요.</li>
-    </ol>
-    <p class="note" id="srvNone">서버 접속 방법과 주소는 디스코드 공지를 확인해 주세요.</p>
-    <div class="srv" id="srvBox" hidden>서버 주소 <code id="srv"></code> <button type="button" id="srvCopy">복사</button><br><span class="note">멀티플레이 → 서버 추가 → 주소에 붙여넣기</span></div>
-  </section>
-
-  <section>
-    <h2>문제가 생기면</h2>
-    <ul class="req">
-      <li>실행이 안 되면 Modrinth 앱에서 프로필을 한 번 닫았다 다시 열고 ▶ 플레이를 눌러 보세요.</li>
-      <li>노래가 너무 크거나 작으면 게임 설정 → 음악 및 소리 → <b>음반(레코드)</b> 볼륨으로 조절해요. 서버 노래는 이 채널로 나와요.</li>
-      <li>그래도 안 되면 디스코드에 화면을 캡처해서 올려 주세요.</li>
-    </ul>
-  </section>
-
-  <footer>포켓몬 리그 · 공개 테스트 · 스토리·디자인 Claude</footer>
 </div>
+
+<audio id="audio" preload="none" crossorigin="anonymous"></audio>
 <script src="config.js"></script>
 <script>
 (function () {
   "use strict";
-  var vid = document.getElementById("trailer"), vol = document.getElementById("vol");
-  var V = 0.15;
-  try { var s = parseFloat(localStorage.getItem("league-dl-vol")); if (s >= 0 && s <= 1) V = s; } catch (e) {}
-  vol.value = V; vid.volume = V;
-  vol.addEventListener("input", function () { V = parseFloat(vol.value); vid.volume = V; try { localStorage.setItem("league-dl-vol", String(V)); } catch (e) {} });
-  vid.addEventListener("volumechange", function () { if (Math.abs(vid.volume - V) > 0.001) { V = vid.volume; vol.value = V; } });
   var S = window.SITE || {};
   function el(id) { return document.getElementById(id); }
   if (S.download) { el("dlBtn").href = S.download; el("link").textContent = S.download; }
   if (S.version) el("ver").textContent = S.version; else el("ver").hidden = true;
   if (S.server) { el("srvNone").hidden = true; el("srvBox").hidden = false; el("srv").textContent = S.server; }
-  el("srvCopy").addEventListener("click", function () { var b = this; navigator.clipboard.writeText(S.server || "").then(function () { b.textContent = "복사됨 ✓"; setTimeout(function () { b.textContent = "복사"; }, 2000); }); });
+  function copy(btn, text, label) { navigator.clipboard.writeText(text).then(function () { btn.textContent = "복사됨 ✓"; }, function () { btn.textContent = "길게 눌러 복사"; }); setTimeout(function () { btn.textContent = label; }, 2000); }
+  el("copyBtn").addEventListener("click", function () { copy(this, S.download || "", "링크 복사"); });
+  el("srvCopy").addEventListener("click", function () { copy(this, S.server || "", "복사"); });
   var L = [];
   if (S.discord) L.push({ title: "디스코드 들어가기", url: S.discord });
-  if (S.poster) L.push({ title: "서버 소개 포스터 보기", url: S.poster });
+  if (S.poster) L.push({ title: "서버 소개 포스터", url: S.poster });
   (S.links || []).forEach(function (x) { if (x && x.url) L.push(x); });
   var nav = el("links");
   L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.title || x.url; nav.appendChild(a); });
   if (!L.length) nav.hidden = true;
-  document.getElementById("copyBtn").addEventListener("click", function () {
-    var b = this, t = document.getElementById("link").textContent;
-    navigator.clipboard.writeText(t).then(function () { b.textContent = "복사됨 ✓"; }, function () { b.textContent = "길게 눌러 복사"; });
-    setTimeout(function () { b.textContent = "링크 복사"; }, 2000);
+})();
+</script>
+<script src="tracks.js"></script>
+<script>
+(function () {
+  "use strict";
+  var TR = window.TRACKS || [];
+  var css = getComputedStyle(document.documentElement);
+  var C = { brass: css.getPropertyValue("--brass").trim(), dim: css.getPropertyValue("--line").trim(), ink: css.getPropertyValue("--ink").trim(), halo: css.getPropertyValue("--halo").trim() };
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var audio = document.getElementById("audio");
+  var cur = null, actx = null, analyser = null, freq = null;
+  function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+
+  // ---- flow graph (loudness envelope, section ticks, highlight star, playhead)
+  function drawFlow(cv, t, pos) {
+    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    var W = Math.max(10, Math.round(r.width * dpr)), H = Math.round((r.height || 44) * dpr);
+    if (cv.width !== W) cv.width = W;
+    cv.height = H;
+    var g = cv.getContext("2d"), env = t.env, n = env.length, bw = W / n;
+    g.clearRect(0, 0, W, H);
+    for (var i = 0; i < n; i++) {
+      var x = i * bw, h = Math.max(2 * dpr, env[i] * (H - 6 * dpr));
+      var played = pos != null && (i + 0.5) / n * t.dur <= pos;
+      g.fillStyle = played ? C.brass : (i / n * t.dur >= t.hl - 0.01 ? "#5d6e62" : "#34505a");
+      g.fillRect(x + bw * 0.15, (H - h) / 2, Math.max(1, bw * 0.7), h);
+    }
+    g.fillStyle = C.ink;
+    (t.caps || []).forEach(function (c) { if (c[0] > 0) g.fillRect(c[0] / t.dur * W, 0, Math.max(1, dpr), 4 * dpr); });
+    var hx = t.hl / t.dur * W;
+    g.fillStyle = C.brass; g.font = (11 * dpr) + "px sans-serif"; g.textBaseline = "top";
+    g.fillText("★", Math.min(W - 12 * dpr, hx - 4 * dpr), H - 13 * dpr);
+    if (pos != null) { g.fillStyle = C.ink; g.fillRect(pos / t.dur * W, 0, Math.max(1, 1.5 * dpr), H); }
+  }
+
+  // ---- track list
+  var groups = ["전체"]; TR.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
+  var gbox = document.getElementById("groups"), tbox = document.getElementById("tracks");
+  groups.forEach(function (gname, k) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = gname; b.setAttribute("aria-pressed", k === 0 ? "true" : "false");
+    b.addEventListener("click", function () {
+      [].forEach.call(gbox.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      [].forEach.call(tbox.children, function (row) { row.hidden = !(gname === "전체" || row.dataset.group === gname); });
+      redrawAll();
+    });
+    gbox.appendChild(b);
   });
+  TR.forEach(function (t) {
+    var row = document.createElement("div"); row.className = "trk"; row.dataset.group = t.group; row.id = "trk-" + t.id;
+    row.innerHTML = '<div><h3></h3><div class="where"></div></div><div class="btns"><button type="button" class="p">▶ 처음부터</button><button type="button" class="hl">★ 하이라이트부터</button></div><canvas aria-label="곡 흐름"></canvas>';
+    row.querySelector("h3").textContent = t.title;
+    row.querySelector(".where").textContent = t.where + " · " + fmt(t.dur);
+    row.querySelector(".p").addEventListener("click", function () { play(t, 0); });
+    row.querySelector(".hl").addEventListener("click", function () { play(t, Math.max(0, t.hl - 6)); });
+    var cv = row.querySelector("canvas");
+    cv.addEventListener("click", function (e) { var r = cv.getBoundingClientRect(); play(t, (e.clientX - r.left) / r.width * t.dur); });
+    t.row = row; t.cv = cv;
+    tbox.appendChild(row);
+  });
+  function redrawAll() { TR.forEach(function (t) { if (!t.row.hidden) drawFlow(t.cv, t, cur === t ? audio.currentTime : null); }); }
+
+  // ---- player
+  function ensureAudioGraph() {
+    if (actx) return;
+    try {
+      actx = new (window.AudioContext || window.webkitAudioContext)();
+      var src = actx.createMediaElementSource(audio);
+      analyser = actx.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = 0.8;
+      src.connect(analyser); analyser.connect(actx.destination);
+      freq = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) { actx = null; analyser = null; }
+  }
+  function play(t, at) {
+    ensureAudioGraph();
+    if (actx && actx.state === "suspended") actx.resume();
+    if (cur !== t) {
+      if (cur) cur.row.classList.remove("on");
+      cur = t; t.row.classList.add("on");
+      audio.src = "audio/" + t.id + ".mp3";
+      document.getElementById("npTitle").textContent = t.title + " — " + t.where;
+    }
+    var go = function () { try { audio.currentTime = at || 0; } catch (e) {} fadeIn(); audio.play().catch(function () {}); };
+    if (audio.readyState >= 1) go(); else audio.addEventListener("loadedmetadata", go, { once: true });
+    if (audio.preload === "none") { audio.preload = "auto"; audio.load(); }
+  }
+  // quiet by default (0.15); the slider sets it for the music and the trailer, remembered per browser
+  var VOL = 0.15;
+  try { var sv = parseFloat(localStorage.getItem("league-vol")); if (sv >= 0 && sv <= 1) VOL = sv; } catch (e) {}
+  var volEl = document.getElementById("vol"), vid = document.getElementById("trailer");
+  volEl.value = VOL; if (vid) vid.volume = VOL;
+  volEl.addEventListener("input", function () { VOL = parseFloat(volEl.value); audio.volume = VOL; if (vid) vid.volume = VOL; try { localStorage.setItem("league-vol", String(VOL)); } catch (e) {} });
+  if (vid) vid.addEventListener("volumechange", function () { if (Math.abs(vid.volume - VOL) > 0.001) { VOL = vid.volume; volEl.value = VOL; audio.volume = VOL; } });
+  function fadeIn() { audio.volume = 0; var v = 0; var id = setInterval(function () { v = Math.min(VOL, v + VOL * 0.08); audio.volume = v; if (v >= VOL) clearInterval(id); }, 60); }
+  var btnPlay = document.getElementById("btnPlay");
+  btnPlay.addEventListener("click", function () {
+    if (!cur) { play(TR[0], 0); return; }
+    if (audio.paused) { ensureAudioGraph(); if (actx) actx.resume(); audio.play().catch(function () {}); } else audio.pause();
+  });
+  document.getElementById("btnHl").addEventListener("click", function () { var t = cur || TR[TR.length - 1]; play(t, Math.max(0, t.hl - 6)); });
+  audio.addEventListener("play", function () { btnPlay.textContent = "❚❚ 멈춤"; });
+  audio.addEventListener("pause", function () { btnPlay.textContent = "▶ 재생"; });
+  audio.addEventListener("ended", function () { var i = TR.indexOf(cur); if (i >= 0 && i + 1 < TR.length && !TR[i + 1].row.hidden) play(TR[i + 1], 0); });
+  var flow = document.getElementById("flow");
+  flow.addEventListener("click", function (e) { if (!cur) return; var r = flow.getBoundingClientRect(); play(cur, (e.clientX - r.left) / r.width * cur.dur); });
+
+  // ---- the caption follows the song: what is happening now, and how far to the high point
+  var capEl = document.getElementById("npCap"), lastCap = "";
+  function caption() {
+    if (!cur) return;
+    var p = audio.currentTime, txt = "";
+    (cur.caps || []).forEach(function (c) { if (p >= c[0]) txt = c[1]; });
+    if (p < cur.hl - 1.5 && cur.hl - p > 8) txt += "  ·  절정까지 " + Math.ceil(cur.hl - p) + "초";
+    if (txt !== lastCap) { lastCap = txt; capEl.textContent = txt; }
+  }
+
+  // ---- visualizer: brass light that swells with the music; stars drift faster in loud passages
+  var vis = document.getElementById("vis"), vg = vis.getContext("2d");
+  var motes = []; for (var i = 0; i < 40; i++) motes.push({ x: Math.random(), y: Math.random(), s: Math.random() * 1.5 + 0.5 });
+  var level = 0;
+  function frame() {
+    var e = 0;
+    if (analyser && !audio.paused) { analyser.getByteFrequencyData(freq); var sum = 0; for (var k = 2; k < 90; k++) sum += freq[k]; e = sum / (88 * 255); }
+    level += (e - level) * 0.12;
+    var W = vis.width, H = vis.height;
+    vg.fillStyle = "rgba(9,18,25,0.35)"; vg.fillRect(0, 0, W, H);
+    var grd = vg.createRadialGradient(W / 2, H * 0.62, 4, W / 2, H * 0.62, 30 + level * 200);
+    grd.addColorStop(0, "rgba(226,180,90," + (0.25 + level * 0.9) + ")"); grd.addColorStop(1, "rgba(226,180,90,0)");
+    vg.fillStyle = grd; vg.fillRect(0, 0, W, H);
+    vg.fillStyle = C.ink;
+    motes.forEach(function (m) {
+      if (!reduce) { m.x += (0.0006 + level * 0.01) * m.s; if (m.x > 1) { m.x = 0; m.y = Math.random(); } }
+      vg.globalAlpha = 0.3 + level; vg.fillRect(m.x * W, m.y * H, m.s * 1.6, m.s * 1.6);
+    });
+    vg.globalAlpha = 1;
+    if (analyser && !audio.paused) {
+      var bars = 28, bw = W / bars;
+      for (var b = 0; b < bars; b++) { var v = freq[2 + b * 3] / 255; vg.fillStyle = C.brass; vg.fillRect(b * bw + 2, H - v * H * 0.55, bw - 4, v * H * 0.55); }
+    }
+    if (cur) {
+      drawFlow(flow, cur, audio.currentTime);
+      if (!cur.row.hidden) drawFlow(cur.cv, cur, audio.currentTime);
+      document.getElementById("npTime").textContent = fmt(audio.currentTime) + " / " + fmt(cur.dur);
+      caption();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // ---- the trailer pauses the soundtrack
+  var tv = document.getElementById("trailer");
+  tv.addEventListener("play", function () { audio.pause(); });
+
+  // ---- hero sky: slow stars and a train of lamps crossing the horizon
+  var sky = document.getElementById("sky"), sg = sky.getContext("2d"), stars = [];
+  for (var j = 0; j < 120; j++) stars.push({ x: Math.random(), y: Math.random() * 0.75, a: Math.random() * 6.28, s: Math.random() * 1.2 + 0.3 });
+  var tt = 0;
+  function skyFrame() {
+    var r = sky.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    if (sky.width !== Math.round(r.width * d) || sky.height !== Math.round(r.height * d)) { sky.width = Math.round(r.width * d); sky.height = Math.round(r.height * d); }
+    var W = sky.width, H = sky.height; sg.clearRect(0, 0, W, H);
+    var dawn = sg.createLinearGradient(0, H * 0.55, 0, H); dawn.addColorStop(0, "rgba(240,167,122,0)"); dawn.addColorStop(1, "rgba(240,167,122,0.16)");
+    sg.fillStyle = dawn; sg.fillRect(0, 0, W, H);
+    stars.forEach(function (s) { s.a += reduce ? 0 : 0.02; sg.globalAlpha = 0.35 + 0.35 * Math.sin(s.a); sg.fillStyle = C.ink; sg.fillRect(s.x * W, s.y * H, s.s * d, s.s * d); });
+    sg.globalAlpha = 1;
+    var y = H * 0.93, x0 = ((tt * 0.0009) % 1.6 - 0.3) * W;
+    for (var c = 0; c < 6; c++) { sg.fillStyle = "rgba(226,180,90,0.75)"; for (var w = 0; w < 4; w++) sg.fillRect(x0 - c * 70 * d + w * 14 * d, y, 6 * d, 4 * d); }
+    if (!reduce) tt += 16;
+    requestAnimationFrame(skyFrame);
+  }
+  requestAnimationFrame(skyFrame);
+
+  // ---- checklist (kept in this browser only)
+  var CHECK = [
+    ["첫걸음", ["첫 열차 컷신이 끝까지 재생된다", "새싹마을에서 스타팅 포켓몬을 받는다", "박사에게 파트너 선물을 받는다", "모험 수첩·코인 케이스·트레이너 카드가 열린다", "J / , / K 키가 작동한다"]],
+    ["이동", ["역 매표소에서 다른 지방으로 기차 이동", "하늘 택시로 가 본 마을에 이동", "마을에 들어가면 마을 이름이 뜬다", "도로를 걸으면 길가 트레이너·이벤트가 생긴다"]],
+    ["배틀", ["첫 체육관 관장을 이긴다 (배지 케이스에 끼우기)", "배틀 팩토리 1판 도전", "친구와 랭크 매칭 1판", "월드 보스에 참여한다", "길가 트레이너와 재대결"]],
+    ["생활", ["의뢰 게시판 의뢰 1개 완료", "직업 하나를 정하고 경험치 얻기", "집 구매·꾸미기 (돈이 되면)", "교환소에서 친구와 교환", "NPC 교환 의뢰 1건", "부티크에서 모자 써 보기"]],
+    ["이벤트", ["대량발생 현장 가 보기", "기상 특보 때 날씨 포켓몬 만나기", "헤일로 작전 막기 (작전 문서 얻기)", "채집 대회 참가", "포켓기어 라디오 소식 확인"]],
+    ["수집", ["카메라로 사진 찍고 앨범 확인", "도감 마일스톤 보상 받기", "칭호 하나 얻고 바꿔 달기", "수수께끼 수첩에 무언가 기록되기"]],
+    ["소리", ["마을·도로·리그에서 음악이 바뀐다", "밤길·동굴·바다 위에서 그곳의 음악이 나온다", "배틀 중에는 배경음악이 멈추고 배틀 음악만 나온다", "헤일로 작전 근처에서 습격 음악이 나온다", "모험 수첩에서 배경음악 끄기/켜기"]]
+  ];
+  var store = {}; try { store = JSON.parse(localStorage.getItem("league-test-v1") || "{}"); } catch (e) { store = {}; }
+  var box = document.getElementById("check"), total = 0;
+  function save() { try { localStorage.setItem("league-test-v1", JSON.stringify(store)); } catch (e) {} }
+  function count() { var n = 0; for (var k in store) if (store[k]) n++; document.getElementById("prog").textContent = n + " / " + total; }
+  CHECK.forEach(function (grp, gi) {
+    var fs = document.createElement("fieldset"), lg = document.createElement("legend"); lg.textContent = grp[0]; fs.appendChild(lg);
+    grp[1].forEach(function (item, ii) {
+      total++;
+      var key = gi + "-" + ii, id = "c" + key, lab = document.createElement("label"), inp = document.createElement("input"), sp = document.createElement("span");
+      inp.type = "checkbox"; inp.id = id; inp.checked = !!store[key]; lab.htmlFor = id; sp.textContent = item;
+      if (inp.checked) lab.classList.add("done");
+      inp.addEventListener("change", function () { store[key] = inp.checked; lab.classList.toggle("done", inp.checked); save(); count(); });
+      lab.appendChild(inp); lab.appendChild(sp); fs.appendChild(lab);
+    });
+    box.appendChild(fs);
+  });
+  count();
+  window.addEventListener("resize", redrawAll);
+  redrawAll();
 })();
 </script>
 </body>
