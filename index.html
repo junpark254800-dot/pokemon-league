@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>포켓몬 리그 — 공개 테스트</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="포켓몬 리그 — 공개 테스트">
+<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 모드팩 다운로드와 설치 방법">
+<meta property="og:image" content="https://junpark254800-dot.github.io/pokemon-league/cover.jpg">
+<meta property="og:url" content="https://junpark254800-dot.github.io/pokemon-league/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#e2b45a">
+<meta name="description" content="마인크래프트 포켓몬 서버 '포켓몬 리그' 공개 테스트 모드팩 다운로드와 설치 방법">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0d1a24;
+  --night-2: #13242f;
+  --line: #24404c;
+  --ink: #ece4d2;
+  --dim: #9fb0b4;
+  --brass: #e2b45a;
+  --brass-ink: #1a1408;
+  --display: "Gowun Batang", "Noto Serif KR", serif;
+  --body: "Noto Sans KR", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--night); color: var(--ink); font: 16px/1.7 var(--body); word-break: keep-all; }
+a { color: var(--brass); }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+h1, h2 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; }
+header { padding: 48px 0 28px; }
+.kicker { font-size: 13px; letter-spacing: .3em; color: var(--brass); }
+h1 { font-size: clamp(40px, 8vw, 72px); line-height: 1.05; margin: 10px 0 14px; }
+.lead { font-family: var(--display); font-size: clamp(17px, 2.4vw, 21px); margin: 0; max-width: 32em; }
+.trailer { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; border: 1px solid var(--line); }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; color: var(--dim); font-size: 13px; margin-top: 6px; }
+.vol input { width: 110px; accent-color: var(--brass); }
+.dl { margin: 28px 0 8px; padding: 22px; border: 1px solid var(--brass); background: var(--night-2); display: grid; gap: 12px; }
+.dl .btn { display: block; text-align: center; text-decoration: none; background: var(--brass); color: var(--brass-ink); font-weight: 700; font-size: 20px; padding: 16px 20px; }
+.dl .btn:hover, .dl .btn:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
+.dl .btn .sub { display: block; font-size: 13px; font-weight: 500; opacity: .75; }
+.dl small { color: var(--dim); }
+.copy { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.copy code { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; font-size: 13px; color: var(--dim); background: var(--night); border: 1px solid var(--line); padding: 6px 8px; }
+.copy button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
+section { padding: 30px 0 6px; border-top: 1px solid var(--line); margin-top: 26px; }
+h2 { font-size: 26px; margin-bottom: 14px; }
+ol { padding-left: 1.3em; margin: 0; }
+ol li { margin: 0 0 12px; }
+ol li b { color: var(--brass); font-weight: 700; }
+ul.req { padding-left: 1.2em; margin: 0; }
+.note { color: var(--dim); font-size: 14px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+.links a { border: 1px solid var(--line); padding: 8px 14px; text-decoration: none; color: var(--ink); background: var(--night-2); }
+.links a:hover, .links a:focus-visible { border-color: var(--brass); color: var(--brass); }
+.dl .ver { color: var(--brass); }
+.srv { margin-top: 10px; }
+.srv code { color: var(--brass); background: var(--night-2); border: 1px solid var(--line); padding: 3px 8px; }
+.srv button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 3px 10px; font: inherit; font-size: 14px; cursor: pointer; }
+footer { color: var(--dim); font-size: 13px; padding: 36px 0 48px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">공개 테스트 · 마인크래프트 포켓몬 서버</div>
+    <h1>포켓몬 리그</h1>
+    <p class="lead">네 개의 지방, 서른두 명의 관장, 네 개의 리그. 모드팩을 받아서 함께 모험을 시작해요.</p>
+  </header>
+
+  <video class="trailer" id="trailer" src="trailer.mp4" poster="cover.jpg" controls preload="metadata" playsinline></video>
+  <label class="vol">🔈 영상 음량 <input id="vol" type="range" min="0" max="1" step="0.01" value="0.15" aria-label="영상 음량"></label>
+
+  <div class="dl">
+    <a class="btn" id="dlBtn" href="#" target="_blank" rel="noopener">⬇ 모드팩 다운로드<span class="sub">구글 드라이브</span></a>
+    <small id="ver" class="ver"></small>
+    <small>버튼을 누르면 구글 드라이브가 열려요. 오른쪽 위 다운로드 버튼(⬇)으로 받으면 됩니다. 파일이 커서 "바이러스 검사를 할 수 없음" 안내가 뜨면 "무시하고 다운로드"를 누르세요.</small>
+    <div class="copy">
+      <code id="link"></code>
+      <button type="button" id="copyBtn">링크 복사</button>
+    </div>
+  </div>
+
+  <nav class="links" id="links"></nav>
+
+  <section>
+    <h2>준비물</h2>
+    <ul class="req">
+      <li>마인크래프트 자바 에디션 (정품 계정)</li>
+      <li><a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱</a> (무료 런처 · modrinth.com/app)</li>
+      <li>메모리 여유: 램 16GB 이상 PC 권장</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>설치 방법</h2>
+    <ol>
+      <li><b>Modrinth 앱 설치</b> — modrinth.com/app 에서 받아 설치하고 마인크래프트 계정으로 로그인해요.</li>
+      <li><b>모드팩 받기</b> — 위의 다운로드 버튼으로 모드팩 파일을 받아요.</li>
+      <li><b>모드팩 가져오기</b> — 받은 파일을 더블클릭하거나, Modrinth 앱 왼쪽의 <b>＋</b> 버튼에서 파일로 가져오기를 골라 받은 파일을 선택해요. 모드는 앱이 알아서 내려받아요.</li>
+      <li><b>메모리 설정</b> — 가져온 프로필의 설정 → Java 메모리를 <b>6GB 이상</b>으로 올려 주세요. 모드가 많아서 기본값이면 느리거나 튕길 수 있어요.</li>
+      <li><b>실행</b> — 프로필의 ▶ 플레이를 누르면 끝. 첫 실행은 몇 분 걸릴 수 있어요.</li>
+    </ol>
+    <p class="note" id="srvNone">서버 접속 방법과 주소는 디스코드 공지를 확인해 주세요.</p>
+    <div class="srv" id="srvBox" hidden>서버 주소 <code id="srv"></code> <button type="button" id="srvCopy">복사</button><br><span class="note">멀티플레이 → 서버 추가 → 주소에 붙여넣기</span></div>
+  </section>
+
+  <section>
+    <h2>문제가 생기면</h2>
+    <ul class="req">
+      <li>실행이 안 되면 Modrinth 앱에서 프로필을 한 번 닫았다 다시 열고 ▶ 플레이를 눌러 보세요.</li>
+      <li>노래가 너무 크거나 작으면 게임 설정 → 음악 및 소리 → <b>음반(레코드)</b> 볼륨으로 조절해요. 서버 노래는 이 채널로 나와요.</li>
+      <li>그래도 안 되면 디스코드에 화면을 캡처해서 올려 주세요.</li>
+    </ul>
+  </section>
+
+  <footer>포켓몬 리그 · 공개 테스트 · 스토리·디자인 Claude</footer>
+</div>
+<script src="config.js"></script>
+<script>
+(function () {
+  "use strict";
+  var vid = document.getElementById("trailer"), vol = document.getElementById("vol");
+  var V = 0.15;
+  try { var s = parseFloat(localStorage.getItem("league-dl-vol")); if (s >= 0 && s <= 1) V = s; } catch (e) {}
+  vol.value = V; vid.volume = V;
+  vol.addEventListener("input", function () { V = parseFloat(vol.value); vid.volume = V; try { localStorage.setItem("league-dl-vol", String(V)); } catch (e) {} });
+  vid.addEventListener("volumechange", function () { if (Math.abs(vid.volume - V) > 0.001) { V = vid.volume; vol.value = V; } });
+  var S = window.SITE || {};
+  function el(id) { return document.getElementById(id); }
+  if (S.download) { el("dlBtn").href = S.download; el("link").textContent = S.download; }
+  if (S.version) el("ver").textContent = S.version; else el("ver").hidden = true;
+  if (S.server) { el("srvNone").hidden = true; el("srvBox").hidden = false; el("srv").textContent = S.server; }
+  el("srvCopy").addEventListener("click", function () { var b = this; navigator.clipboard.writeText(S.server || "").then(function () { b.textContent = "복사됨 ✓"; setTimeout(function () { b.textContent = "복사"; }, 2000); }); });
+  var L = [];
+  if (S.discord) L.push({ title: "디스코드 들어가기", url: S.discord });
+  if (S.poster) L.push({ title: "서버 소개 포스터 보기", url: S.poster });
+  (S.links || []).forEach(function (x) { if (x && x.url) L.push(x); });
+  var nav = el("links");
+  L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.title || x.url; nav.appendChild(a); });
+  if (!L.length) nav.hidden = true;
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var b = this, t = document.getElementById("link").textContent;
+    navigator.clipboard.writeText(t).then(function () { b.textContent = "복사됨 ✓"; }, function () { b.textContent = "길게 눌러 복사"; });
+    setTimeout(function () { b.textContent = "링크 복사"; }, 2000);
+  });
+})();
+</script>
+</body>
+</html>
