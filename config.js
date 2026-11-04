@@ -5,10 +5,10 @@
 // ================================================================
 window.SITE = {
   // 모드팩 다운로드 링크 (구글 드라이브 공유 링크)
-  download: "https://drive.google.com/file/d/1RlvuOrSwfZO8uMjt1DhyfxJA11o5PK0i/view?usp=sharing",
+  download: "https://drive.google.com/file/d/1evLZzugmH6zRz4Pdt-D-UqW0IaazokW9/view?usp=sharing",
 
   // 모드팩 버전 / 올린 날짜 (다운로드 버튼 아래에 표시)
-  version: "v11.9 · 2026-11-04",
+  version: "v11.9.7 · 2026-11-04",
 
   // 서버 주소 — 비워 두면 "디스코드 공지 확인" 문구가 나와요. 예: "play.example.com"
   server: "",
