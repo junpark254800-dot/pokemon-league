@@ -5,7 +5,7 @@
 // ================================================================
 window.SITE = {
   // 모드팩 다운로드 링크 (구글 드라이브 공유 링크)
-  download: "https://drive.google.com/file/d/1mescjnvjZqwzWDwuouQ7XiHPt_UTRGpc/view?usp=sharing",
+  download: "https://drive.google.com/file/d/1RlvuOrSwfZO8uMjt1DhyfxJA11o5PK0i/view?usp=sharing",
 
   // 모드팩 버전 / 올린 날짜 (다운로드 버튼 아래에 표시)
   version: "v11.9 · 2026-11-04",
