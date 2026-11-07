@@ -453,7 +453,7 @@ h2 { font-size: clamp(32px, 4.6vw, 64px); line-height: 1.08; }
 
   // background music: our own "새싹마을 · 첫 열차", quiet, from the first touch (browsers need one)
   const bgm = document.getElementById('bgm'), snd = document.getElementById('snd'), sndt = document.getElementById('sndt');
-  const VOL = 0.14;
+  const VOL = 0.035;   // very soft: just audible under the page
   let want = true;
   try { want = localStorage.getItem('lg.bgm') !== 'off'; } catch (e) {}
   function ui(on) { snd.classList.toggle('play', on); snd.setAttribute('aria-pressed', String(on)); sndt.textContent = on ? '배경음악 끄기' : '배경음악 켜기'; }
@@ -523,7 +523,7 @@ h2 { font-size: clamp(32px, 4.6vw, 64px); line-height: 1.08; }
   el("tlClose").addEventListener("click", function () { vid.pause(); box.hidden = true; });
 
   // ---- soundtrack
-  var TR = window.TRACKS || [], audio = el("audio"), cur = null, VOL = 0.35;
+  var TR = window.TRACKS || [], audio = el("audio"), cur = null, VOL = 0.22;
   function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
   var groups = ["전체"]; TR.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
   var gbox = el("groups"), tbox = el("tracks");
