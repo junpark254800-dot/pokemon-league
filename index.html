@@ -2,550 +2,569 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>포켓몬 리그 — 공개 테스트</title>
-<meta name="description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 '포켓몬 리그' 모드팩 다운로드와 소개">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>포켓몬 리그</title>
+<meta name="description" content="둘이서 만든 마인크래프트 포켓몬 서버 '포켓몬 리그' — 네 개의 지방, 서른두 명의 관장, 직접 만든 모드·쉐이더·음악. 모드팩 다운로드.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="포켓몬 리그 — 공개 테스트">
-<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 마인크래프트 포켓몬 서버 모드팩 다운로드와 소개">
-<meta property="og:image" content="https://junpark254800-dot.github.io/pokemon-league/cover.jpg">
+<meta property="og:title" content="포켓몬 리그">
+<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 맵·모드·쉐이더·음악까지 전부 직접 만든 포켓몬 서버.">
+<meta property="og:image" content="https://junpark254800-dot.github.io/pokemon-league/img2/cover.jpg">
 <meta property="og:url" content="https://junpark254800-dot.github.io/pokemon-league/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#e2b45a">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0b1020">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
+/* layout: a film reel — scenes side by side, turned like a trailer; stacked on phones */
 :root {
-  /* one visual world: a night train under a dawn sky - deep blue-green night, brass lamps, a thin violet for the Halo */
-  --night: #0d1a24;
-  --night-2: #13242f;
-  --line: #24404c;
-  --ink: #ece4d2;
-  --dim: #9fb0b4;
-  --brass: #e2b45a;
-  --halo: #b49cf0;
-  --dawn: #f0a77a;
-  --display: "Gowun Batang", "Noto Serif KR", serif;
-  --body: "Noto Sans KR", system-ui, sans-serif;
+  --ink: #0b1020;
+  --paper: #f3ecdc;
+  --dim: #b4bccf;
+  --gold: #f2c14e;
+  --gold2: #ffdf8a;
+  --line: rgba(242,193,78,.32);
+  --card: rgba(11,16,32,.62);
+  --f-display: "Gowun Batang", "Nanum Myeongjo", serif;
+  --f-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-code: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   color-scheme: dark;
-  /* layout: one long poster column (max 1080px); every section = heading on the left rail, content on the right */
 }
-* { box-sizing: border-box; }
-html, body { margin: 0; }
-body { background: var(--night); color: var(--ink); font: 16px/1.7 var(--body); padding-bottom: 150px; }
-a { color: var(--brass); }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-h1, h2, h3 { font-family: var(--display); font-weight: 700; text-wrap: balance; margin: 0; }
-button { font: inherit; cursor: pointer; }
-button:focus-visible, input:focus-visible, video:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+html, body { height: 100%; }
+body { background: var(--ink); color: var(--paper); font-family: var(--f-body); margin: 0; overflow: hidden; }
+a { color: inherit; }
+.g { color: var(--gold2); font-weight: 700; }
+.reel { display: flex; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+.reel::-webkit-scrollbar { display: none; }
+.scene { position: relative; flex: 0 0 100%; height: 100%; scroll-snap-align: start; overflow: hidden; display: grid; }
+.scene > .in { position: relative; z-index: 2; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px));
+  padding-block: 70px 92px; display: grid; align-content: center; gap: 22px; max-width: 1240px; margin-inline: auto; width: 100%; box-sizing: border-box; overflow-y: auto; scrollbar-width: none; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transform: scale(1.08); transition: transform 9s ease-out; }
+.scene.on .bg { transform: scale(1); }
+.shade { position: absolute; inset: 0; z-index: 1; background:
+  linear-gradient(90deg, rgba(11,16,32,.93) 0%, rgba(11,16,32,.70) 42%, rgba(11,16,32,.18) 100%),
+  linear-gradient(0deg, rgba(11,16,32,.85) 0%, rgba(11,16,32,0) 35%); }
+.bars::before, .bars::after { content: ""; position: absolute; left: 0; right: 0; height: 7vh; background: #04060c; z-index: 3; }
+.bars::before { top: 0; } .bars::after { bottom: 0; }
+.tc { font-family: var(--f-code); font-size: 12px; letter-spacing: .16em; color: var(--gold); text-transform: uppercase; }
+h1, h2 { font-family: var(--f-display); font-weight: 700; margin: 0; text-wrap: balance; letter-spacing: -.01em; text-shadow: 0 2px 24px rgba(0,0,0,.5); }
+h1 { font-size: clamp(56px, 10vw, 136px); line-height: .95; }
+h1 em, h2 em { font-style: normal; color: var(--gold); }
+h2 { font-size: clamp(32px, 4.6vw, 64px); line-height: 1.08; }
+.lede { font-size: clamp(17px, 1.6vw, 22px); line-height: 1.7; margin: 0; max-width: 36em; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
+.sub { color: var(--dim); font-size: 16px; line-height: 1.7; max-width: 44em; margin: 0; }
+.hint { font-family: var(--f-code); font-size: 13px; color: var(--dim); display: flex; gap: 10px; align-items: center; }
+.hint b { color: var(--gold); font-weight: 500; animation: nudge 1.8s ease-in-out infinite; display: inline-block; }
+@keyframes nudge { 50% { transform: translateX(6px); } }
+.made { display: flex; flex-wrap: wrap; gap: 8px; }
+.made span { font-size: 13px; border: 1px solid var(--line); background: rgba(242,193,78,.08); color: var(--gold2); padding: 6px 12px; border-radius: 99px; }
 
-/* hero */
-.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #0a141c 0%, var(--night) 70%); }
-.hero canvas.sky { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
-.hero .wrap { position: relative; padding-top: 56px; padding-bottom: 40px; display: grid; gap: 28px; }
-.kicker { font-size: 14px; letter-spacing: .3em; color: var(--brass); }
-.hero h1 { font-size: clamp(44px, 8vw, 88px); line-height: 1.05; letter-spacing: .04em; }
-.hero p.lead { font-family: var(--display); font-size: clamp(18px, 2.6vw, 24px); color: var(--ink); margin: 0; max-width: 34em; }
-.facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; padding: 0; list-style: none; }
-.facts li { display: grid; }
-.facts b { font-family: var(--display); font-size: 34px; color: var(--brass); line-height: 1.1; font-variant-numeric: tabular-nums; }
-.facts span { font-size: 13px; color: var(--dim); }
-.trailer { border: 1px solid var(--line); background: #000; aspect-ratio: 16 / 9; width: 100%; display: block; }
-.meta { font-size: 13px; color: var(--dim); }
+/* journey: the version strip */
+.track { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px 12px; }
+.stop { background: var(--card); border-top: 2px solid var(--line); padding: 12px 12px 14px; min-width: 0; backdrop-filter: blur(3px); }
+.stop.big { border-top-color: var(--gold); }
+.stop.now { border-top-color: var(--gold); background: rgba(242,193,78,.16); }
+.stop .v { font-family: var(--f-code); color: var(--gold); font-size: 12px; display: block; }
+.stop h3 { font-family: var(--f-display); font-size: 17px; margin: 5px 0 5px; line-height: 1.3; }
+.stop p { color: var(--dim); font-size: 12.5px; line-height: 1.55; margin: 0; }
 
-/* sections */
-section.s { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 52px 0; border-bottom: 1px solid var(--line); }
-section.s > header { grid-row: 1 / span 4; }
-section.s > :not(header) { grid-column: 2; }
-section.s > header h2 { font-size: 30px; }
-section.s > header p { color: var(--dim); font-size: 14px; margin: 8px 0 0; }
-.n { font-family: var(--display); color: var(--brass); font-size: 14px; letter-spacing: .2em; display: block; margin-bottom: 6px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
-.card { background: var(--night-2); border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr; }
-.card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
-.card .t { padding: 12px 14px 14px; }
-.card h3 { font-size: 19px; margin-bottom: 4px; }
-.card p { margin: 0; font-size: 14px; color: var(--dim); }
-.card .tag { display: inline-block; font-size: 12px; color: var(--night); background: var(--brass); padding: 0 7px; margin-bottom: 6px; }
-.card.halo .tag { background: var(--halo); }
-.list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px 24px; }
-.list li { padding-left: 16px; position: relative; font-size: 15px; }
-.list li::before { content: ""; position: absolute; left: 0; top: .72em; width: 7px; height: 1px; background: var(--brass); }
-.list b { color: var(--ink); }
-.list span { color: var(--dim); }
-.keys { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-kbd { font: 700 14px var(--body); border: 1px solid var(--brass); color: var(--brass); padding: 1px 8px; margin-right: 6px; }
-.keys div { font-size: 14px; color: var(--dim); background: var(--night-2); border: 1px solid var(--line); padding: 8px 12px; }
+/* numbers */
+.nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 30px; }
+.num { border-left: 2px solid var(--gold); padding-left: 16px; min-width: 0; }
+.num b { display: block; font-family: var(--f-display); font-size: clamp(36px, 4.4vw, 62px); color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1; }
+.num b small { font-size: .45em; color: var(--gold2); margin-left: 4px; }
+.num span { display: block; font-size: 15px; margin-top: 8px; font-weight: 500; }
+.num i { display: block; font-style: normal; color: var(--dim); font-size: 13px; margin-top: 3px; line-height: 1.5; }
 
-/* soundtrack */
-.groups { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.groups button { background: none; border: 1px solid var(--line); color: var(--dim); padding: 4px 12px; font-size: 14px; }
-.groups button[aria-pressed="true"] { border-color: var(--brass); color: var(--brass); }
-.tracks { display: grid; gap: 10px; }
-.trk { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; background: var(--night-2); border: 1px solid var(--line); padding: 12px 14px; }
-.trk[hidden] { display: none; }
-.trk.on { border-color: var(--brass); }
-.trk h3 { font-size: 18px; }
-.trk .where { font-size: 13px; color: var(--dim); }
-.trk .btns { display: flex; gap: 6px; }
-.trk .btns button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 4px 10px; font-size: 13px; white-space: nowrap; }
-.trk .btns button.hl { border-color: var(--brass); color: var(--brass); }
-.trk canvas { grid-column: 1 / -1; width: 100%; height: 44px; display: block; cursor: pointer; }
-.engine { margin-top: 22px; font-size: 14px; color: var(--dim); max-width: 46em; }
+/* tech cards */
+.tech { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tk { background: var(--card); border: 1px solid rgba(242,193,78,.18); border-radius: 4px; overflow: hidden; min-width: 0; display: grid; grid-template-rows: auto 1fr; backdrop-filter: blur(3px); }
+.tk img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; display: block; }
+.tk div { padding: 14px 16px 16px; }
+.tk h3 { font-family: var(--f-display); font-size: 20px; margin: 0 0 6px; }
+.tk h3 small { font-family: var(--f-code); font-size: 11px; color: var(--gold); display: block; margin-bottom: 4px; letter-spacing: .08em; }
+.tk p { color: var(--dim); font-size: 13.5px; line-height: 1.62; margin: 0; }
 
-/* checklist */
-.check { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-.check fieldset { border: 1px solid var(--line); background: var(--night-2); margin: 0; padding: 12px 14px 14px; }
-.check legend { font-family: var(--display); font-weight: 700; font-size: 18px; padding: 0 6px; color: var(--brass); }
-.check label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; padding: 4px 0; }
-.check input { margin-top: 5px; accent-color: var(--brass); }
-.check label.done span { color: var(--dim); text-decoration: line-through; }
-.progress { font-variant-numeric: tabular-nums; color: var(--brass); font-family: var(--display); font-size: 22px; }
-.report { margin-top: 18px; font-size: 14px; color: var(--dim); }
+/* stills */
+.stills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.still { margin: 0; min-width: 0; background: var(--card); border-radius: 4px; overflow: hidden; backdrop-filter: blur(3px); }
+.still img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.still figcaption { padding: 12px 14px 14px; }
+.still h3 { font-family: var(--f-display); font-size: 19px; margin: 0 0 5px; }
+.still p { color: var(--dim); font-size: 13.5px; line-height: 1.55; margin: 0; }
+.more { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--dim); font-size: 14px; margin: 0; }
+.more b { color: var(--paper); font-weight: 500; }
 
-/* now playing */
-.np { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(9, 18, 25, .96); border-top: 1px solid var(--brass); z-index: 5; }
-.np .wrap { display: grid; grid-template-columns: 210px 1fr auto; gap: 14px; align-items: center; padding-top: 10px; padding-bottom: 10px; }
-.np canvas.vis { width: 210px; height: 74px; display: block; }
-.np .title { font-family: var(--display); font-size: 19px; }
-.np .cap { font-family: var(--display); color: var(--brass); font-size: 16px; min-height: 1.6em; transition: opacity .6s; }
-.np canvas.flow { width: 100%; height: 26px; display: block; cursor: pointer; margin-top: 4px; }
-.np .ctl { display: flex; gap: 6px; }
-.np .ctl button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font-size: 14px; white-space: nowrap; }
-.np .time { font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
-footer { padding: 36px 0; color: var(--dim); font-size: 13px; }
+/* v11.10 list */
+.log { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.log div { background: var(--card); padding: 14px 16px; border-left: 2px solid var(--gold); min-width: 0; backdrop-filter: blur(3px); }
+.log h3 { font-family: var(--f-display); font-size: 18px; margin: 0 0 4px; color: var(--gold2); }
+.log p { margin: 0; color: var(--paper); font-size: 13.5px; line-height: 1.6; }
 
+/* install end card */
+.dl { display: inline-flex; align-items: center; gap: 14px; background: var(--gold); color: var(--ink); text-decoration: none; font-weight: 900; font-size: 22px; padding: 20px 34px; border-radius: 4px; width: fit-content; box-shadow: 0 10px 40px rgba(242,193,78,.25); }
+.dl:hover { background: var(--gold2); }
+.dls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.dl.alt { background: transparent; color: var(--paper); border: 1px solid rgba(255,255,255,.35); box-shadow: none; font-size: 17px; padding: 18px 26px; }
+.dl.alt:hover { background: rgba(255,255,255,.08); border-color: var(--gold); }
+.dl:focus-visible, .chap button:focus-visible, .snd:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; counter-reset: s; }
+.steps div { min-width: 0; }
+.steps div::before { counter-increment: s; content: "0" counter(s); font-family: var(--f-code); color: var(--gold); font-size: 13px; display: block; margin-bottom: 6px; }
+.steps h3 { font-size: 17px; margin: 0 0 4px; }
+.steps p { color: var(--dim); font-size: 14px; line-height: 1.6; margin: 0; }
+.credit { font-size: 13px; color: var(--dim); line-height: 1.8; margin: 0; }
+.credit b { color: var(--paper); }
+
+/* chapter bar + sound */
+.chap { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; gap: 2px; padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.chap button { flex: 1; min-width: 0; background: none; border: 0; color: var(--dim); font-family: var(--f-code); font-size: 11px; letter-spacing: .04em; text-align: left; padding: 10px 4px 0; cursor: pointer; border-top: 2px solid rgba(243,236,220,.18); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chap button.on { color: var(--gold); border-top-color: var(--gold); }
+.snd { position: fixed; z-index: 11; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(11,16,32,.6); color: var(--paper);
+  border: 1px solid var(--line); border-radius: 99px; padding: 8px 14px; font-family: var(--f-body); font-size: 13px; cursor: pointer; display: flex; gap: 8px; align-items: center; backdrop-filter: blur(4px); }
+.snd .eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
+.snd .eq i { width: 2px; background: var(--gold); height: 3px; }
+.snd.play .eq i { animation: eq 1s ease-in-out infinite; }
+.snd.play .eq i:nth-child(2) { animation-delay: .3s; } .snd.play .eq i:nth-child(3) { animation-delay: .6s; }
+@keyframes eq { 50% { height: 12px; } }
+
+@media (max-width: 1100px) { .track { grid-template-columns: repeat(4, minmax(0, 1fr)); } .log { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
-  section.s { grid-template-columns: 1fr; gap: 16px; padding: 40px 0; }
-  section.s > header { grid-row: auto; }
-  section.s > :not(header) { grid-column: 1; }
-  .np .wrap { grid-template-columns: 1fr; gap: 6px; padding-top: 8px; padding-bottom: 8px; }
-  .np canvas.vis { display: none; }
-  .np .title { font-size: 15px; }
-  .np .cap { display: none; }
-  .np canvas.flow { height: 18px; }
-  .np .ctl { flex-wrap: wrap; align-items: center; }
-  .np .ctl button { padding: 5px 10px; font-size: 13px; }
-  .trk { grid-template-columns: 1fr; }
+  body { overflow: auto; }
+  .reel { display: block; height: auto; overflow: visible; scroll-snap-type: none; }
+  .scene { height: auto; }
+  .scene > .in { padding-block: 64px; overflow: visible; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .bars::before, .bars::after { display: none; }
+  .track, .nums, .stills, .steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .tech, .log { grid-template-columns: minmax(0, 1fr); }
+  .chap { display: none; }
+  .shade { background: rgba(11,16,32,.84); }
 }
-@media (prefers-reduced-motion: reduce) { .np .cap { transition: none; } }
-.ctl .vol { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
-.ctl .vol input { width: 90px; accent-color: var(--brass); }
-.dl { margin: 24px 0 0; padding: 20px; border: 1px solid var(--brass); background: var(--night-2); display: grid; gap: 10px; max-width: 760px; }
-.dl .btn { display: block; text-align: center; text-decoration: none; background: var(--brass); color: #1a1408; font-weight: 700; font-size: 20px; padding: 14px 20px; }
-.dl .btn .sub { display: block; font-size: 13px; font-weight: 500; opacity: .75; }
-.dl .btn:hover, .dl .btn:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
-.dl small { color: var(--dim); font-size: 13px; }
-.dl .ver { color: var(--brass); }
-.copy { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.copy code { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; font-size: 12px; color: var(--dim); background: var(--night); border: 1px solid var(--line); padding: 6px 8px; }
-.copy button, .srv button { background: none; border: 1px solid var(--line); color: var(--ink); padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
-.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.links a { border: 1px solid var(--line); padding: 8px 14px; text-decoration: none; color: var(--ink); background: var(--night-2); font-size: 14px; }
-.links a:hover, .links a:focus-visible { border-color: var(--brass); color: var(--brass); }
-.steps { margin: 0 0 14px; padding-left: 1.3em; }
-.steps li { margin: 0 0 8px; font-size: 15px; color: var(--dim); }
-.steps li b { color: var(--ink); }
-.srv { margin: 6px 0 14px; font-size: 15px; }
-.srv code { color: var(--brass); background: var(--night-2); border: 1px solid var(--line); padding: 3px 8px; }
-body { word-break: keep-all; }
-.topdl { display: inline-block; margin-top: 18px; background: var(--brass); color: #1a1408; font-weight: 700; text-decoration: none; padding: 10px 18px; }
-.topdl:hover, .topdl:focus-visible { filter: brightness(1.08); outline: 2px solid var(--ink); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .bg, .scene.on .bg { transition: none; transform: none; } .hint b, .snd.play .eq i { animation: none; } .reel { scroll-behavior: auto; } }
+
+[hidden] { display: none !important; }
+/* soundtrack */
+.ost { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 22px; }
+.ost .now { background: var(--card); border: 1px solid rgba(242,193,78,.18); border-radius: 4px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.ost .now b { font-family: var(--f-display); font-size: 20px; }
+.ost .now p { margin: 0; color: var(--dim); font-size: 13.5px; min-height: 1.6em; }
+.ost .bar { height: 6px; background: rgba(243,236,220,.12); border-radius: 3px; overflow: hidden; cursor: pointer; }
+.ost .bar i { display: block; height: 100%; width: 0; background: var(--gold); }
+.ost .ctl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ost button, .start button, .tlbtn { background: rgba(242,193,78,.12); color: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 7px 12px; font: 500 13px var(--f-body); cursor: pointer; }
+.ost button:hover, .start button:hover, .tlbtn:hover { background: rgba(242,193,78,.25); }
+.ost .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; max-height: 52vh; overflow-y: auto; min-width: 0; }
+.ost .trk { text-align: left; background: var(--card); border: 1px solid transparent; padding: 8px 10px; border-radius: 3px; min-width: 0; }
+.ost .trk.on { border-color: var(--gold); }
+.ost .trk small { display: block; color: var(--dim); font-size: 11.5px; }
+.ost .grp { display: flex; gap: 6px; flex-wrap: wrap; }
+.ost .grp button[aria-pressed="true"] { background: var(--gold); color: var(--ink); }
+/* start: keys, server */
+.start { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.start > div { background: var(--card); padding: 14px 16px; border-left: 2px solid var(--gold); min-width: 0; }
+.start h3 { font-family: var(--f-display); font-size: 18px; margin: 0 0 8px; color: var(--gold2); }
+.start p, .start li { color: var(--paper); font-size: 13.5px; line-height: 1.65; margin: 0; }
+.start ul { margin: 0; padding-left: 18px; }
+.keys { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 13.5px; }
+.keys kbd { font-family: var(--f-code); background: rgba(243,236,220,.12); border: 1px solid var(--line); border-radius: 3px; padding: 1px 7px; color: var(--gold2); text-align: center; }
+.srv { font-family: var(--f-code); color: var(--gold2); word-break: break-all; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.links a { color: var(--gold2); font-size: 13px; }
+/* checklist */
+.chk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.chk fieldset { border: 1px solid var(--line); border-radius: 4px; margin: 0; padding: 10px 12px; background: var(--card); min-width: 0; }
+.chk legend { color: var(--gold); font-family: var(--f-display); padding: 0 4px; }
+.chk label { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; padding: 3px 0; color: var(--paper); cursor: pointer; }
+.chk label.done span { color: var(--dim); text-decoration: line-through; }
+/* trailer lightbox */
+.tlbox { position: fixed; inset: 0; z-index: 30; background: rgba(4,6,12,.92); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-left, 0px)); }
+.tlbox video { width: min(1100px, 100%); max-height: 80vh; background: #000; }
+.tlbox button { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (max-width: 1100px) { .chk { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .ost, .start { grid-template-columns: minmax(0, 1fr); } .ost .list { grid-template-columns: minmax(0, 1fr); max-height: none; } .chk { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <canvas class="sky" id="sky" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <div class="kicker">공개 테스트 · 마인크래프트 포켓몬 서버</div>
-    <h1>포켓몬 리그</h1>
-    <p class="lead">네 개의 지방을 기차로 건너며, 서른두 명의 관장과 네 개의 리그, 그리고 전설을 손에 넣으려는 조직과 마주하는 오픈월드 이야기.</p>
-    <p><a class="topdl" href="#dl">⬇ 모드팩 다운로드 · 설치 방법</a></p>
-    <ul class="facts">
-      <li><b>4</b><span>지방</span></li>
-      <li><b>45</b><span>마을</span></li>
-      <li><b>32</b><span>체육관</span></li>
-      <li><b>4</b><span>포켓몬 리그</span></li>
-      <li><b>45</b><span>주민 이야기</span></li>
-      <li><b>46</b><span>칭호</span></li>
-      <li><b>25</b><span>오리지널 곡</span></li>
-    </ul>
-    <video class="trailer" id="trailer" src="trailer.mp4" poster="img/poster.jpg" controls preload="metadata" playsinline></video>
-    <div class="dl" id="dl">
-      <a class="btn" id="dlBtn" href="#" target="_blank" rel="noopener">⬇ 모드팩 다운로드<span class="sub">구글 드라이브</span></a>
-      <small class="ver" id="ver"></small>
-      <small>구글 드라이브가 열리면 오른쪽 위 다운로드(⬇)로 받으세요. "바이러스 검사를 할 수 없음" 안내가 뜨면 "무시하고 다운로드". 설치 방법은 아래 01 시작하기에 있어요.</small>
-      <div class="copy"><code id="link"></code><button type="button" id="copyBtn">링크 복사</button></div>
+
+<button class="snd" id="snd" type="button" aria-pressed="false"><span class="eq"><i></i><i></i><i></i></span><span id="sndt">배경음악 켜기</span></button>
+<audio id="bgm" src="audio/start.mp3" loop preload="auto"></audio>
+
+<main class="reel" id="reel">
+  <section class="scene bars on" data-name="오프닝">
+    <div class="bg" style="background-image:url(img2/cover.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 00 · Opening</span>
+      <h1>포켓몬 <em>리그</em></h1>
+      <p class="lede">네 개의 지방을 기차로 건너며 서른두 명의 관장과 네 개의 리그, 그리고 전설을 노리는 조직과 마주하는 오픈월드.<br><span class="g">맵도, 모드도, 쉐이더도, 음악도 — 전부 둘이서 직접 만들었어요.</span></p>
+      <div class="made"><span>🗺 45개 마을을 짓는 맵</span><span>🧩 직접 짠 모드</span><span>🌌 직접 만든 쉐이더</span><span>🎼 새로 작곡한 26곡</span><span>🧪 쉐이더 시험용 테스트 엔진</span></div>
+      <div><button class="tlbtn" id="tlOpen" type="button">▶ 트레일러 보기</button></div>
+      <p class="hint">스크롤하거나 → 키를 누르면 여정이 시작돼요 <b>→</b></p>
     </div>
-    <nav class="links" id="links"></nav>
-    <div class="meta">Minecraft Java 1.21.1 · Fabric · Cobblemon 1.8.4 · 직접 만든 모드(league_ui)와 데이터팩 · 레벨 캡 없음</div>
-  </div>
-</div>
+  </section>
 
-<main class="wrap">
-
-  <section class="s" id="start">
-    <header><span class="n">01</span><h2>시작하기</h2><p>설치부터 첫 접속까지</p></header>
-    <div>
-      <ol class="steps">
-        <li><b>준비물</b> — 마인크래프트 자바 에디션(정품), <a href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱</a>(무료 런처), 램 16GB 이상 PC 권장</li>
-        <li><b>모드팩 받기</b> — 위의 다운로드 버튼으로 모드팩 파일을 받아요.</li>
-        <li><b>가져오기</b> — 받은 파일을 더블클릭하거나, Modrinth 앱 왼쪽 <b>＋</b> 버튼에서 파일로 가져오기. 모드는 앱이 알아서 내려받아요.</li>
-        <li><b>메모리</b> — 프로필 설정 → Java 메모리를 <b>6GB 이상</b>으로. 기본값이면 느리거나 튕길 수 있어요.</li>
-        <li><b>실행</b> — ▶ 플레이. 첫 실행은 몇 분 걸려요.</li>
-      </ol>
-      <p class="srv" id="srvNone">서버 접속 방법과 주소는 디스코드 공지를 확인해 주세요.</p>
-      <p class="srv" id="srvBox" hidden>서버 주소 <code id="srv"></code> <button type="button" id="srvCopy">복사</button> <span class="meta">멀티플레이 → 서버 추가 → 붙여넣기</span></p>
-      <ul class="list">
-        <li><b>첫 접속</b> <span>— 마우스로 주위를 둘러보면 첫 열차가 출발해요. 도착하면 새싹마을.</span></li>
-        <li><b>음악</b> <span>— 설정 → 음악 및 소리 → '주크박스/소리 블록' 볼륨이 서버 배경음악이에요.</span></li>
-        <li><b>포켓기어</b> <span>— 처음 받는 포켓기어를 우클릭하면 앱 16개와 빠른 설정이 한 화면에. (알림 끄기, 배경음악 끄기 포함)</span></li>
-        <li><b>쉐이더</b> <span>— 서버 전용 쉐이더 「리그 스카이」가 자동으로 켜져요. 버벅이면 F10으로 끄기.</span></li>
-        <li><b>문제가 생기면</b> <span>— 디스코드에 화면을 캡처해서 올려 주세요.</span></li>
-      </ul>
-      <div class="keys">
-        <div><kbd>J</kbd>오른쪽 위 진행 상황 켜기/끄기</div>
-        <div><kbd>,</kbd>지방 지도</div>
-        <div><kbd>K</kbd>화면 위 길 안내 켜기/끄기</div>
-        <div><kbd>.</kbd>포켓기어 라디오</div>
-        <div><kbd>F10</kbd>쉐이더 켜기/끄기</div>
+  <section class="scene" data-name="우리의 여정">
+    <div class="bg" style="background-image:url(img2/journey.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 01 · 우리의 여정</span>
+      <h2>마을 하나에서 <em>세계 하나</em>까지</h2>
+      <p class="sub">처음엔 체육관 하나였어요. 친구들과 함께 놀 세계를 만들겠다고 시작해서, 열흘 남짓 동안 세계 전체를 두 번 짓고 서른 번 넘게 패치했어요.</p>
+      <div class="track">
+        <div class="stop"><span class="v">10월 말 · 구상</span><h3>방향 잡기</h3><p>지방 넷, 체육관 서른둘, 이긴 사람이 챔피언이 되는 리그, 악당 조직 헤일로</p></div>
+        <div class="stop"><span class="v">데이터팩 시작</span><h3>league 네임스페이스</h3><p>트레이너 · 배지 · 스킨을 함수로. 건물도 손이 아니라 설계도로 짓기로</p></div>
+        <div class="stop"><span class="v">v8</span><h3>첫 모드팩</h3><p>포켓기어, 배지 케이스, 의뢰 게시판. 둘이서만 돌려 본 첫 판</p></div>
+        <div class="stop big"><span class="v">10.29 · v9</span><h3>친구들에게 첫 배포</h3><p>처음으로 우리 말고 다른 사람이 들어온 날</p></div>
+        <div class="stop big"><span class="v">10.30 · v10</span><h3>세계를 처음부터 다시</h3><p>건물을 전부 새로 설계. 목표는 "세상에서 가장 예쁜 마크 포켓몬 맵"</p></div>
+        <div class="stop"><span class="v">11.01 · v11</span><h3>45개 마을이 한 세계에</h3><p>주민 이야기 45개, 4개 리그, 지방 열차</p></div>
+        <div class="stop big"><span class="v">11.02</span><h3>테스트 서버 첫 오픈</h3><p>친구들이 같은 세계에서 함께 모험을 시작</p></div>
+        <div class="stop big"><span class="v">11.02 → 03 새벽</span><h3>밤샘 v11.9</h3><p>밤 11시 47분부터 새벽 4시까지, <span class="g">하룻밤에 15번</span> 빌드하고 고쳤어요</p></div>
+        <div class="stop"><span class="v">11.03</span><h3>리그 스카이 쉐이더</h3><p>첫 쉐이더를 하루에 다섯 번 갈아엎으며 완성</p></div>
+        <div class="stop"><span class="v">11.04 · v11.9.7</span><h3>모든 화면을 새로</h3><p>리그 도감, 사진 콘테스트, 배틀 시작 연출, 길 안내, 알림 카드</p></div>
+        <div class="stop big"><span class="v">11.05</span><h3>리그 호라이즌</h3><p>쉐이더를 처음부터 다시. 하늘, 물, 비, 밤까지 직접 계산</p></div>
+        <div class="stop"><span class="v">11.06</span><h3>맵 대보수</h3><p>길바닥 구멍 <span class="g">931칸</span>을 프로그램으로 찾아 메우고, 리그 출구와 집 목장 수리</p></div>
+        <div class="stop now"><span class="v">11.07 · v11.10</span><h3>지금 여기</h3><p>리그톡, 게임코너, 카드팩, 마을 보호, 건물 복구. 본서버 전 마지막 대형 패치</p></div>
+        <div class="stop"><span class="v">다음 · v12</span><h3>본서버</h3><p>지금까지 만든 모든 것을 들고 정식 출발</p></div>
       </div>
     </div>
   </section>
 
-  <section class="s" id="world">
-    <header><span class="n">02</span><h2>세계</h2><p>걸어서도, 날아서도, 기차로도</p></header>
-    <div class="grid">
-      <article class="card"><img src="img/r1.jpg" alt="푸른들 지방의 아침 마을"><div class="t"><span class="tag">1지방</span><h3>푸른들 지방</h3><p>과수원과 들판, 모험이 시작되는 곳.</p></div></article>
-      <article class="card"><img src="img/r2.jpg" alt="백암산 지방의 산간 풍경"><div class="t"><span class="tag">2지방</span><h3>백암산 지방</h3><p>흰 바위 산맥과 산사, 호숫가 마을.</p></div></article>
-      <article class="card"><img src="img/r3.jpg" alt="남해 제도의 섬마을"><div class="t"><span class="tag">3지방</span><h3>남해 제도</h3><p>암초와 섬을 잇는 바다의 지방.</p></div></article>
-      <article class="card"><img src="img/r4.jpg" alt="북부 고원의 설경"><div class="t"><span class="tag">4지방</span><h3>북부 고원</h3><p>눈 덮인 고원과 연구탑, 마지막 지방.</p></div></article>
-    </div>
-    <ul class="list">
-      <li><b>지방 열차</b> <span>— 역 매표소에서 행선지를 고르면 컷신으로 이동</span></li>
-      <li><b>하늘 택시</b> <span>— 한 번 가 본 마을로 날아가기</span></li>
-      <li><b>사파리 존</b> <span>— 특수 바이옴의 포켓몬</span></li>
-      <li><b>탐험 이스터에그</b> <span>— 길에서 벗어나면 보이는 것들</span></li>
-    </ul>
-  </section>
-
-  <section class="s" id="story">
-    <header><span class="n">03</span><h2>이야기</h2><p>스포일러 없이, 시작만</p></header>
-    <div class="grid">
-      <article class="card halo"><img src="img/halo.jpg" alt="헤일로 작전 현장"><div class="t"><span class="tag">메인 스토리</span><h3>헤일로</h3><p>전설의 포켓몬을 '보호'한다는 조직. 하늘의 고리가 무엇을 붙잡고 있는지는 직접 확인해 주세요.</p></div></article>
-      <article class="card"><img src="img/rival.jpg" alt="마을 거리"><div class="t"><span class="tag">라이벌</span><h3>하루</h3><p>새싹마을의 꼬마가 길 곳곳에서 기다려요. 갈수록 강해져요.</p></div></article>
-      <article class="card"><img src="img/town.jpg" alt="해 질 녘 마을"><div class="t"><span class="tag">사이드</span><h3>주민 이야기 45</h3><p>마을마다 한 명, 세 단계로 이어지는 부탁과 결말.</p></div></article>
+  <section class="scene" data-name="숫자로 보면">
+    <div class="bg" style="background-image:url(img2/river.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 02 · 숫자로 보는 제작기</span>
+      <h2>밤을 새운 만큼, <em>숫자</em>가 쌓였어요</h2>
+      <div class="nums">
+        <div class="num"><b>12,298<small>줄</small></b><span>직접 짠 모드 코드</span><i>포켓기어 앱, 상점, 배틀 팩토리, 리그톡… 화면 하나하나를 Java로</i></div>
+        <div class="num"><b>17,062<small>개</small></b><span>데이터팩 함수</span><i>23만 줄. 마을, NPC, 의뢰, 이벤트, 컷신이 전부 여기서 나와요</i></div>
+        <div class="num"><b>3,710<small>줄</small></b><span>쉐이더 코드</span><i>166개 렌더 단계를 우리 손으로</i></div>
+        <div class="num"><b>26<small>곡</small></b><span>새로 작곡한 음악</span><i>지방, 도로, 밤길, 동굴, 바다, 리그마다 다른 곡</i></div>
+        <div class="num"><b>45<small>마을</small></b><span>4개 지방</span><i>마을마다 콘셉트와 랜드마크, 주민 이야기 하나씩</i></div>
+        <div class="num"><b>639<small>명</small></b><span>트레이너</span><i>길가, 체육관, 리그, 헤일로까지</i></div>
+        <div class="num"><b>35<small>번+</small></b><span>패치 배포</span><i>친구들이 찾아 준 버그를 그날 밤 바로</i></div>
+        <div class="num"><b>978<small>종</small></b><span>찍을 수 있는 포켓몬</span><i>앨범을 다 채우면 마스터볼</i></div>
+      </div>
     </div>
   </section>
 
-  <section class="s" id="battle">
-    <header><span class="n">04</span><h2>배틀</h2><p>혼자서도, 같이서도</p></header>
-    <div class="grid">
-      <article class="card"><img src="img/league.jpg" alt="포켓몬 리그 건물"><div class="t"><span class="tag">진행</span><h3>체육관 32 · 리그 4</h3><p>지방마다 관장 여덟 명과 리그. 챔피언을 이기면 그 트레이너가 다음 챔피언이 돼요.</p></div></article>
-      <article class="card"><img src="img/factory.jpg" alt="배틀 팩토리"><div class="t"><span class="tag">배틀 타워</span><h3>배틀 팩토리</h3><p>렌탈 포켓몬 54마리 중 셋을 골라 7연승 도전.</p></div></article>
-      <article class="card"><img src="img/cup.jpg" alt="리그 대회 대진표"><div class="t"><span class="tag">멀티</span><h3>랭크 매칭 · 리그 대회</h3><p>접속한 친구와 자동 매칭, 토너먼트 대진표.</p></div></article>
-      <article class="card"><img src="img/boss.jpg" alt="월드 보스"><div class="t"><span class="tag">협동</span><h3>월드 보스 레이드</h3><p>지방마다 하루 한 번 거대해지는 포켓몬.</p></div></article>
-    </div>
-    <ul class="list">
-      <li><b>관장 재대결</b> <span>— 챔피언이 된 뒤 최강 상태의 관장과</span></li>
-      <li><b>PvP 레이팅</b> <span>— 이기면 RP, 트레이너 카드에 등급</span></li>
-      <li><b>명예의 전당</b> <span>— 서버 공유 순위 6종</span></li>
-      <li><b>길가 트레이너</b> <span>— 도로와 마을 곳곳</span></li>
-    </ul>
-  </section>
-
-  <section class="s" id="life">
-    <header><span class="n">05</span><h2>생활</h2><p>배틀만 하는 게 아니에요</p></header>
-    <div class="grid">
-      <article class="card"><img src="img/house.jpg" alt="바닷가 마을의 집"><div class="t"><span class="tag">집</span><h3>내 집 마련</h3><p>집을 사고, 꾸미고, 증축하고, 푹 쉬기.</p></div></article>
-      <article class="card"><img src="img/cos.jpg" alt="리그 부티크"><div class="t"><span class="tag">꾸미기</span><h3>부티크 · 옷장</h3><p>모자 17종, 발자국 11종, 오라 7종.</p></div></article>
-    </div>
-    <ul class="list">
-      <li><b>직업 5종</b> <span>— 낚시꾼 · 농부 · 광부 · 브리더 · 연구원, 10레벨</span></li>
-      <li><b>나무열매 농사 · 냄비 요리</b> <span>— 농부 숙련도로, 작물 · 열매 · 요리를 골라 팔기</span></li>
-      <li><b>의뢰 게시판 · 평판</b> <span>— 마을마다 매일 바뀌는 부탁</span></li>
-      <li><b>교환소 · NPC 교환 의뢰</b> <span>— 친구와, 그리고 주민과</span></li>
-      <li><b>우체국 · 주간 신문</b> <span>— 서버 기록이 실리는 신문</span></li>
-      <li><b>축제 · 낚시 대회 · 채집 대회</b> <span>— 마을별 요일 행사</span></li>
-      <li><b>코인 케이스 · 출석 도장</b> <span>— 리그 화폐와 매일 보상</span></li>
-    </ul>
-  </section>
-
-  <section class="s" id="events">
-    <header><span class="n">06</span><h2>이벤트</h2><p>접속해 있으면 세계가 움직여요</p></header>
-    <div class="grid">
-      <article class="card"><img src="img/outbreak.jpg" alt="대량발생"><div class="t"><span class="tag">약 40분마다</span><h3>대량발생</h3><p>마을 근처 들판에 한 종류가 가득. 색이 다른 포켓몬 확률 상승.</p></div></article>
-      <article class="card"><img src="img/storm.jpg" alt="기상 특보"><div class="t"><span class="tag">90분 안팎</span><h3>기상 특보</h3><p>폭풍, 강풍, 폭염, 안개, 유성우. 날씨마다 다른 포켓몬.</p></div></article>
-      <article class="card halo"><img src="img/raid.jpg" alt="헤일로 작전"><div class="t"><span class="tag">약 75분마다</span><h3>헤일로 작전</h3><p>밀렵 단속, 보급 열차, 전파 방해, 광장 점거. 막으면 작전 문서 조각.</p></div></article>
-      <article class="card"><img src="img/meteor.jpg" alt="유성우 밤"><div class="t"><span class="tag">하늘 아래</span><h3>준전설 목격 제보</h3><p>특정한 하늘에서만 나타나는 11마리.</p></div></article>
+  <section class="scene" data-name="직접 만든 기술">
+    <div class="bg" style="background-image:url(img2/milkyway.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 03 · 직접 만든 기술</span>
+      <h2>서버를 만들려고 <em>도구부터</em> 만들었어요</h2>
+      <div class="tech">
+        <div class="tk"><img src="img2/sky.jpg" alt="리그 호라이즌 쉐이더의 노을"><div><h3><small>SHADER</small>리그 호라이즌</h3><p>실제 대기를 계산한 하늘, <span class="g">은하수와 별똥별</span>이 흐르는 밤, 하류로 떠내려가는 강, 해변에서 부서지는 파도. 비 물결은 <span class="g">비가 실제로 닿는 곳에만</span>.</p></div></div>
+        <div class="tk"><img src="img2/test.jpg" alt="테스트 엔진이 같은 장면을 시간대별로 찍은 비교"><div><h3><small>TEST ENGINE</small>쉐이더 테스트 엔진</h3><p>서버 안 가상 화면에 게임을 띄워 같은 장면을 <span class="g">아침 · 낮 · 노을 · 밤 · 비</span>로 자동 촬영하고 전후를 비교해요. 눈으로는 놓치는 반투명 버그도 여기서 잡았어요.</p></div></div>
+        <div class="tk"><img src="img2/flow.jpg" alt="흐르는 강"><div><h3><small>FLOW MAP</small>물길 계산기</h3><p>마크의 물은 원래 고여 있어요. 맵 전체 물을 분석해 <span class="g">강폭 · 방향 · 속도 지도</span>를 만들고, 쉐이더가 그걸 읽어 강을 흐르게 해요.</p></div></div>
+        <div class="tk"><img src="img2/towns.jpg" alt="설계도로 지은 마을들"><div><h3><small>WORLD BUILDER</small>설계도로 짓는 맵</h3><p>마을 배치, 길, 다리, 건물을 설계도로 만들면 데이터팩이 <span class="g">4,947개 묶음</span>으로 한 칸씩 지어요. 구멍 탐지기가 빈칸을 찾아 메워요.</p></div></div>
+        <div class="tk"><img src="img2/gear.jpg" alt="포켓기어 화면"><div><h3><small>MOD</small>league_ui 모드</h3><p>포켓기어 앱 16개, 트레이너 카드, 배지 케이스, 리그 도감, 상점, 배틀 연출, 리그톡까지 <span class="g">화면을 전부</span> 직접 그렸어요.</p></div></div>
+        <div class="tk"><img src="img2/music.jpg" alt="밤의 마을"><div><h3><small>SOUND ENGINE</small>음악 엔진</h3><p>실제 악기 샘플로 연주하고, 잔향과 마스터링은 <span class="g">직접 만든 엔진</span>으로. 정상에 처음 오르면 곡의 절정부터 시작해요.</p></div></div>
+      </div>
     </div>
   </section>
 
-  <section class="s" id="collect">
-    <header><span class="n">07</span><h2>수집 · 탐험</h2><p>도감 밖의 기록들</p></header>
-    <div class="grid">
-      <article class="card"><img src="img/album.jpg" alt="포켓몬 앨범"><div class="t"><span class="tag">포켓기어</span><h3>카메라와 앨범</h3><p>망원경 카메라로 찍고, 앨범에 모아요.</p></div></article>
-      <article class="card"><img src="img/badge.jpg" alt="배지 케이스"><div class="t"><span class="tag">32칸</span><h3>배지 케이스</h3><p>배지 모양 칸에 직접 끼우는 케이스.</p></div></article>
-      <article class="card"><img src="img/riddle.jpg" alt="수수께끼 수첩"><div class="t"><span class="tag">비밀</span><h3>수수께끼 수첩</h3><p>전설의 흔적, 오래된 석판, 목격담, 작전 문서.</p></div></article>
-    </div>
-    <ul class="list">
-      <li><b>리그 도감</b> <span>— 서식지 보기, 추적하기를 누르면 가장 가까운 넓은 서식지로 길 안내, 보상 13단계</span></li>
-      <li><b>주간 사진 콘테스트</b> <span>— 매주 주제 타입, 잘 찍으면 코인 (/contest)</span></li>
-      <li><b>칭호 46종</b> <span>— 이름 위에 다는 기록</span></li>
-      <li><b>지방마다 하나의 수상한 알</b> <span>— 길 밖 어딘가에</span></li>
-    </ul>
-  </section>
-
-  <section class="s" id="made">
-    <header><span class="n">08</span><h2>직접 만든 것</h2><p>이 서버에만 있는 모드와 음악</p></header>
-    <div>
-      <ul class="list">
-        <li><b>league_ui 모드</b> <span>— 포켓기어, 리그 도감, 지도, 트레이너 카드, 배지 케이스, 교환소, 앨범, 랭크 매칭, 배틀 팩토리, 수수께끼 수첩 화면과 길 안내 · 알림 카드 · 배틀 시작 연출</span></li>
-        <li><b>리그 스카이 쉐이더</b> <span>— 이 서버를 위해 직접 짠 쉐이더. 화려하기보다 절제된 RPG 느낌, 부드러운 그림자와 뭉게구름</span></li>
-        <li><b>포켓기어 라디오</b> <span>— 왼쪽 위 뉴스 자막. 이벤트가 생기면 바로 알려 줘요</span></li>
-        <li><b>스토리 컷신</b> <span>— 화면 위아래 검은 띠와 함께 대사가 타이핑돼요</span></li>
-        <li><b>데이터팩</b> <span>— 45개 마을의 건물, NPC, 의뢰, 이벤트를 전부 함수로 생성</span></li>
-      </ul>
+  <section class="scene" data-name="세계">
+    <div class="bg" style="background-image:url(img2/r1bg.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 04 · 세계</span>
+      <h2>걸어서도, 날아서도, <em>기차로도</em></h2>
+      <div class="stills">
+        <figure class="still"><img src="img2/r1.jpg" alt="푸른들 지방"><figcaption><h3>푸른들 지방</h3><p>과수원과 풍차, 모험이 시작되는 들판</p></figcaption></figure>
+        <figure class="still"><img src="img2/r2.jpg" alt="백암산 지방"><figcaption><h3>백암산 지방</h3><p>흰 바위 산맥 위의 산사와 온천</p></figcaption></figure>
+        <figure class="still"><img src="img2/r3.jpg" alt="남해 제도"><figcaption><h3>남해 제도</h3><p>산호 해변과 섬을 잇는 바다</p></figcaption></figure>
+        <figure class="still"><img src="img2/r4.jpg" alt="북부 고원"><figcaption><h3>북부 고원</h3><p>설원과 연구탑, 마지막 지방</p></figcaption></figure>
+      </div>
+      <p class="more"><span><b>지방 열차</b> 컷신으로 이동</span><span><b>하늘 택시</b> 가 본 마을로 비행</span><span><b>사파리 존</b> 특수 바이옴</span><span><b>탐험 이스터에그</b> 길 밖 어딘가에</span></p>
     </div>
   </section>
 
-  <section class="s" id="music">
-    <header><span class="n">09</span><h2>사운드트랙</h2><p>장소와 진행에 따라 바뀌는 오리지널 곡</p></header>
-    <div>
-      <div class="groups" id="groups" role="group" aria-label="곡 분류"></div>
-      <div class="tracks" id="tracks"></div>
-      <p class="engine">모든 곡은 이 서버를 위해 새로 작곡했어요. 실제 악기 녹음 샘플(MuseScore 음원)로 연주하고, 잔향과 마스터링은 직접 만든 엔진으로 입혔어요. 도로 음악은 지방이 바뀔수록, 리그 음악은 지방이 깊어질수록 무거워져요. 밤길과 동굴, 바다 위에서는 그곳만의 곡이 흐르고, 정상에 처음 오르면 곡의 절정부터 시작해요. ★ 버튼은 곡이 가장 커지는 곳 바로 앞에서 시작해요.</p>
+  <section class="scene" data-name="이야기 · 배틀">
+    <div class="bg" style="background-image:url(img2/league.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 05 · 이야기와 배틀</span>
+      <h2>전설을 노리는 조직, 그리고 <em>리그</em></h2>
+      <div class="stills">
+        <figure class="still"><img src="img/halo.jpg" alt="헤일로"><figcaption><h3>헤일로</h3><p>전설을 '보호'한다는 조직. 하늘의 고리가 붙잡은 것은 직접 확인해요</p></figcaption></figure>
+        <figure class="still"><img src="img2/talk.jpg" alt="대화창"><figcaption><h3>라이벌 하루 · 주민 이야기 45</h3><p>얼굴이 나오는 대화창, 한 글자씩 타자 소리</p></figcaption></figure>
+        <figure class="still"><img src="img2/tower.jpg" alt="배틀 타워"><figcaption><h3>체육관 32 · 리그 4</h3><p>챔피언을 이기면 <span class="g">내가 다음 챔피언</span>이 돼요</p></figcaption></figure>
+        <figure class="still"><img src="img2/factory.jpg" alt="배틀 팩토리"><figcaption><h3>배틀 타워 · 팩토리</h3><p>렌탈 54마리 중 셋으로 7연승 도전</p></figcaption></figure>
+      </div>
+      <p class="more"><span><b>월드 보스 레이드</b> 지방마다 하루 한 번</span><span><b>랭크 매칭 · 리그 대회</b> 토너먼트 대진표</span><span><b>관장 재대결</b></span><span><b>명예의 전당</b> 서버 순위 6종</span></p>
     </div>
   </section>
 
-  <section class="s" id="test">
-    <header><span class="n">10</span><h2>테스트 항목</h2><p>해 본 것에 체크해 주세요<br><span class="progress" id="prog">0 / 0</span></p></header>
-    <div>
-      <div class="check" id="check"></div>
-      <p class="report">이상한 점을 찾으면 <b>F3을 눌러 좌표가 보이게 화면을 캡처</b>하고, 무엇을 하다가 생겼는지 한 줄만 적어 보내 주세요. 체크 표시는 이 브라우저에만 저장돼요.</p>
+  <section class="scene" data-name="생활 · 수집">
+    <div class="bg" style="background-image:url(img2/house.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 06 · 생활과 수집</span>
+      <h2>배틀만 하는 세계가 <em>아니에요</em></h2>
+      <div class="stills">
+        <figure class="still"><img src="img2/housecard.jpg" alt="내 집"><figcaption><h3>내 집 · 목장</h3><p>오늘의 선물, 귀가 비행, 넓은 울타리 목장</p></figcaption></figure>
+        <figure class="still"><img src="img2/boutique.jpg" alt="부티크"><figcaption><h3>부티크 · 직업 5종</h3><p>모자 17 · 발자국 11 · 오라 7, 낚시꾼부터 연구원까지</p></figcaption></figure>
+        <figure class="still"><img src="img2/card.jpg" alt="트레이너 카드"><figcaption><h3>트레이너 카드 · 배지 32칸</h3><p>신분증 모양 카드, 배지를 직접 끼우는 케이스</p></figcaption></figure>
+        <figure class="still"><img src="img/album.jpg" alt="앨범"><figcaption><h3>카메라 · 앨범 · 도감</h3><p>978종을 다 찍을 때까지 이어지는 보상</p></figcaption></figure>
+      </div>
+      <p class="more"><span><b>나무열매 농사 · 냄비 요리</b></span><span><b>의뢰 게시판 · 평판</b></span><span><b>우체국 · 주간 신문</b></span><span><b>축제 · 낚시 대회</b></span><span><b>수수께끼 수첩</b></span><span><b>칭호 46종</b></span></p>
     </div>
   </section>
 
-  <footer>포켓몬 리그 서버 · 맵·모드·데이터팩 제작 박준혁 · 스토리·디자인·음악 Claude · Pokémon은 Nintendo / Creatures / GAME FREAK의 상표이며, 이 서버는 친구들끼리 즐기는 비공식 팬 서버예요.</footer>
+  <section class="scene" data-name="움직이는 세계">
+    <div class="bg" style="background-image:url(img2/storm.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 07 · 움직이는 세계</span>
+      <h2>접속해 있으면 <em>세계가 움직여요</em></h2>
+      <div class="stills">
+        <figure class="still"><img src="img/outbreak.jpg" alt="대량발생"><figcaption><h3>대량발생</h3><p>약 40분마다 들판에 한 종류가 가득, 이로치 확률 ↑</p></figcaption></figure>
+        <figure class="still"><img src="img2/stormcard.jpg" alt="기상 특보"><figcaption><h3>기상 특보</h3><p>폭풍 · 강풍 · 폭염 · 안개, 날씨마다 다른 포켓몬</p></figcaption></figure>
+        <figure class="still"><img src="img/boss.jpg" alt="월드 보스"><figcaption><h3>헤일로 작전 · 월드 보스</h3><p>밀렵 단속, 보급 열차, 거대해지는 포켓몬</p></figcaption></figure>
+        <figure class="still"><img src="img2/meteor.jpg" alt="유성우 밤"><figcaption><h3>유성우 밤</h3><p>드물게 별이 쏟아지는 밤, 그날만의 포켓몬과 황금 잉어킹</p></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-name="v11.10">
+    <div class="bg" style="background-image:url(img2/townnight.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 08 · v11.10 새로워진 것</span>
+      <h2>지난 멀티 이후로, <em>이만큼</em></h2>
+      <div class="log">
+        <div><h3>🌌 리그 호라이즌</h3><p>새 쉐이더. 흐르는 강, 큰 물 파도, 은하수와 별똥별이 흐르는 밤하늘</p></div>
+        <div><h3>💬 리그톡</h3><p>서버 게시판에 쪽지, 교환 신청, 레이드 모집, 현상금 걸고 구해요</p></div>
+        <div><h3>🎰 게임코너</h3><p>과수원 마을 백화점 건너편, 슬롯머신과 경품 교환소. 그리고 어딘가 숨겨진 방</p></div>
+        <div><h3>🃏 포켓몬 카드팩</h3><p>지방별 4세트, 홀로 · 이로치 레어, 포켓기어 바인더로 모으기</p></div>
+        <div><h3>🏘 마을 보호 새 규칙</h3><p>마을에도 블록을 놓을 수 있어요. 부술 수 있는 건 내가 놓은 블록만</p></div>
+        <div><h3>🏚 건물 복구</h3><p>버그로 망가진 건물이 원래 설계대로 천천히 돌아와요</p></div>
+        <div><h3>📜 박사님의 연구 노트</h3><p>세계 곳곳에 흩어진 노트 조각을 모으는 수집 이야기</p></div>
+        <div><h3>🏡 집 · 목장</h3><p>오늘의 선물, 귀가 비행, 휴식 강화, 전망 탑 이로치 알림</p></div>
+        <div><h3>🛒 상점</h3><p>기술머신 267종, 지닌 물건 전부, 수량 골라 사기</p></div>
+        <div><h3>📸 앨범 보상</h3><p>978종 완성까지 이어지는 보상, 다 찍으면 마스터볼</p></div>
+        <div><h3>🗓 주간 기록 · 계절 이벤트</h3><p>한 주의 기록이 리그톡에 자동으로, 계절마다 바뀌는 행사</p></div>
+        <div><h3>🛠 고친 것</h3><p>길바닥 구멍 931칸, 밤에 어둡던 아이템, 연타 튕김, 접속 끊김, 음악 볼륨</p></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="scene" data-name="사운드트랙">
+    <div class="bg" style="background-image:url(img2/townnight.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 09 · 사운드트랙</span>
+      <h2>장소마다 다른 노래, <em>전부 새로 작곡</em></h2>
+      <p class="sub">도로 음악은 지방이 바뀔수록, 리그 음악은 지방이 깊어질수록 무거워져요. 밤길·동굴·바다 위에는 그곳만의 곡이, 정상에 처음 오르면 곡의 절정부터. ★ 버튼은 곡이 가장 커지는 곳 바로 앞부터 들려줘요.</p>
+      <div class="ost">
+        <div class="now"><b id="npTitle">곡을 골라 보세요</b><p id="npCap"></p><div class="bar" id="npBar"><i id="npFill"></i></div>
+          <div class="ctl"><button id="btnPlay" type="button">▶ 재생</button><button id="btnHl" type="button">★ 하이라이트</button><span id="npTime" style="font-family:var(--f-code);font-size:12px;color:var(--dim)">0:00 / 0:00</span></div>
+          <div class="grp" id="groups"></div></div>
+        <div class="list" id="tracks"></div>
+      </div>
+    </div>
+  </section>
+  <section class="scene bars" data-name="설치">
+    <div class="bg" style="background-image:url(img2/end.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 10 · 함께 떠나기</span>
+      <h2>이제 <em>당신 차례</em>예요</h2>
+      <div class="dls">
+        <a class="dl" id="dl" href="#" target="_blank" rel="noopener">⬇ 모드팩 받기 <span style="font-weight:500;font-size:15px">v11.10</span></a>
+        <a class="dl alt" href="https://modrinth.com/app" target="_blank" rel="noopener">⬇ Modrinth 앱 받기 <span style="font-weight:500;font-size:13px;opacity:.75">무료 런처</span></a>
+      </div>
+      <div class="steps">
+        <div><h3>준비</h3><p>마인크래프트 자바 에디션, <a href="https://modrinth.com/app" target="_blank" rel="noopener" style="color:var(--gold)">Modrinth 앱</a>(무료 런처), 램 16GB PC</p></div>
+        <div><h3>가져오기</h3><p>받은 파일을 더블클릭하거나 Modrinth 앱의 ＋ 버튼으로</p></div>
+        <div><h3>메모리</h3><p>프로필 설정에서 Java 메모리를 6GB 이상으로</p></div>
+        <div><h3>출발</h3><p>▶ 플레이. 첫 열차가 새싹마을로 데려다줘요</p></div>
+      </div>
+      <p class="credit"><b>박준혁 × Claude</b> — 맵 · 모드 · 데이터팩 박준혁 · 스토리 · 디자인 · 음악 Claude<br>Pokémon은 Nintendo / Creatures / GAME FREAK의 상표이며, 이 서버는 친구들끼리 즐기는 비공식 팬 서버예요.</p>
+    </div>
+  </section>
+
+  <section class="scene" data-name="시작하기">
+    <div class="bg" style="background-image:url(img2/journey.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 11 · 시작하기</span>
+      <h2>처음 접속하는 날 <em>알아 두면 좋은 것</em></h2>
+      <div class="start">
+        <div><h3>서버 접속</h3><p id="srvNone">서버 주소는 디스코드 공지를 확인해 주세요.</p><p id="srvBox" hidden>멀티플레이 → 서버 추가 → 붙여넣기<br><span class="srv" id="srv"></span> <button id="srvCopy" type="button">복사</button></p>
+          <p style="margin-top:8px">첫 접속: 주위를 둘러보면 첫 열차가 출발해요. 도착하면 새싹마을.</p><div class="links" id="links"></div></div>
+        <div><h3>조작키</h3><div class="keys"><kbd>우클릭</kbd><span>포켓기어 (앱 17개 + 빠른 설정)</span><kbd>J</kbd><span>진행 상황 켜기/끄기</span><kbd>,</kbd><span>지방 지도</span><kbd>K</kbd><span>화면 위 길 안내</span><kbd>.</kbd><span>포켓기어 라디오</span><kbd>F10</kbd><span>쉐이더 켜기/끄기</span></div></div>
+        <div><h3>알아 두기</h3><ul><li>음악은 설정 → 음악 및 소리 → 「주크박스/소리 블록」 볼륨</li><li>쉐이더 「리그 호라이즌」은 자동으로 켜져요. 버벅이면 F10</li><li>마을에는 블록을 놓을 수 있어요. 부술 수 있는 건 내가 놓은 블록만</li><li>문제가 생기면 F3 좌표가 보이게 캡처해서 디스코드에</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-name="테스트 체크">
+    <div class="bg" style="background-image:url(img2/r1bg.jpg)"></div><div class="shade"></div>
+    <div class="in">
+      <span class="tc">Scene 12 · 테스트 항목</span>
+      <h2>해 본 것에 <em>체크</em>해 주세요 <span id="prog" style="font-family:var(--f-code);font-size:18px;color:var(--dim)">0 / 0</span></h2>
+      <p class="sub">이상한 점을 찾으면 F3을 눌러 좌표가 보이게 캡처하고, 무엇을 하다가 생겼는지 한 줄만 적어 보내 주세요. 체크 표시는 이 브라우저에만 저장돼요.</p>
+      <div class="chk" id="check"></div>
+    </div>
+  </section>
 </main>
+<audio id="audio" preload="none"></audio>
+<div class="tlbox" id="tlBox" hidden><video id="trailer" controls preload="none" src="trailer.mp4" poster="img2/cover.jpg"></video><button type="button" id="tlClose" class="tlbtn">닫기 ✕</button></div>
 
-<div class="np" id="np" aria-live="polite">
-  <div class="wrap">
-    <canvas class="vis" id="vis" width="420" height="148" aria-hidden="true"></canvas>
-    <div>
-      <div class="title" id="npTitle">곡을 고르면 여기서 재생돼요</div>
-      <div class="cap" id="npCap">★ 하이라이트부터 들으면 곡이 커지는 순간부터 시작해요</div>
-      <canvas class="flow" id="flow" height="52" aria-label="곡 흐름 (누르면 그 위치로 이동)"></canvas>
-      <div class="time" id="npTime">0:00 / 0:00</div>
-    </div>
-    <div class="ctl">
-      <button id="btnPlay" type="button">▶ 재생</button>
-      <button id="btnHl" type="button">★ 하이라이트</button>
-      <label class="vol" title="음량">🔈<input id="vol" type="range" min="0" max="1" step="0.01" value="0.15" aria-label="음량"></label>
-    </div>
-  </div>
-</div>
+<nav class="chap" id="chap" aria-label="장면"></nav>
 
-<audio id="audio" preload="none" crossorigin="anonymous"></audio>
 <script>
-// config.js is fetched fresh every visit (?t=...), so an edit on GitHub shows up as soon as Pages has deployed it
-(function () {
-  "use strict";
-  var sc = document.createElement("script");
-  sc.src = "config.js?t=" + Date.now();
-  sc.onload = sc.onerror = function () { init(window.SITE || {}); };
-  document.head.appendChild(sc);
-  function init(S) {
-  function el(id) { return document.getElementById(id); }
-  if (S.download) { el("dlBtn").href = S.download; el("link").textContent = S.download; }
-  if (S.version) el("ver").textContent = S.version; else el("ver").hidden = true;
-  if (S.server) { el("srvNone").hidden = true; el("srvBox").hidden = false; el("srv").textContent = S.server; }
-  function copy(btn, text, label) { navigator.clipboard.writeText(text).then(function () { btn.textContent = "복사됨 ✓"; }, function () { btn.textContent = "길게 눌러 복사"; }); setTimeout(function () { btn.textContent = label; }, 2000); }
-  el("copyBtn").addEventListener("click", function () { copy(this, S.download || "", "링크 복사"); });
-  el("srvCopy").addEventListener("click", function () { copy(this, S.server || "", "복사"); });
-  var L = [];
-  if (S.discord) L.push({ title: "디스코드 들어가기", url: S.discord });
-  if (S.poster) L.push({ title: "서버 소개 포스터", url: S.poster });
-  (S.links || []).forEach(function (x) { if (x && x.url) L.push(x); });
-  var nav = el("links");
-  L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.title || x.url; nav.appendChild(a); });
-  if (!L.length) nav.hidden = true;
+(() => {
+  const reel = document.getElementById('reel');
+  const scenes = [...reel.querySelectorAll('.scene')];
+  const chap = document.getElementById('chap');
+  scenes.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.textContent = String(i).padStart(2, '0') + ' ' + s.dataset.name;
+    b.addEventListener('click', () => go(i));
+    chap.appendChild(b);
+  });
+  const btns = [...chap.children];
+  const horizontal = () => window.matchMedia('(min-width: 761px)').matches;
+  let cur = 0;
+  function mark(i) {
+    cur = i;
+    btns.forEach((b, k) => b.classList.toggle('on', k === i));
+    scenes.forEach((s, k) => s.classList.toggle('on', k === i));
   }
+  function go(i) {
+    i = Math.max(0, Math.min(scenes.length - 1, i));
+    if (horizontal()) reel.scrollTo({ left: i * reel.clientWidth });
+    else scenes[i].scrollIntoView();
+    mark(i);
+  }
+  reel.addEventListener('scroll', () => { if (horizontal()) mark(Math.round(reel.scrollLeft / reel.clientWidth)); }, { passive: true });
+  let lock = 0;
+  reel.addEventListener('wheel', (e) => {
+    if (!horizontal() || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+    const inner = scenes[cur].querySelector('.in');
+    const down = e.deltaY > 0;
+    if (inner && inner.scrollHeight > inner.clientHeight + 4) {     // a tall scene scrolls inside first
+      const atEnd = down ? inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2 : inner.scrollTop <= 0;
+      if (!atEnd) return;
+    }
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lock < 650) return;
+    lock = now;
+    go(cur + (down ? 1 : -1));
+  }, { passive: false });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { go(cur + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(cur - 1); e.preventDefault(); }
+  });
+  mark(0);
+
+  // background music: our own "새싹마을 · 첫 열차", quiet, from the first touch (browsers need one)
+  const bgm = document.getElementById('bgm'), snd = document.getElementById('snd'), sndt = document.getElementById('sndt');
+  const VOL = 0.14;
+  let want = true;
+  try { want = localStorage.getItem('lg.bgm') !== 'off'; } catch (e) {}
+  function ui(on) { snd.classList.toggle('play', on); snd.setAttribute('aria-pressed', String(on)); sndt.textContent = on ? '배경음악 끄기' : '배경음악 켜기'; }
+  let fadeT = 0;
+  function fadeTo(v, done) {
+    clearTimeout(fadeT);
+    const step = () => {
+      const d = v - bgm.volume;
+      if (Math.abs(d) <= 0.006) { bgm.volume = v; if (done) done(); return; }
+      bgm.volume = Math.max(0, Math.min(1, bgm.volume + Math.sign(d) * 0.005));
+      fadeT = setTimeout(step, 60);
+    };
+    step();
+  }
+  function play() { bgm.volume = 0; bgm.play().then(() => { ui(true); fadeTo(VOL); }).catch(() => ui(false)); }
+  function stop() { ui(false); fadeTo(0, () => bgm.pause()); }
+  snd.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const on = bgm.paused;
+    try { localStorage.setItem('lg.bgm', on ? 'on' : 'off'); } catch (err) {}
+    on ? play() : stop();
+  });
+  const evs = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+  const first = (e) => {
+    if (e.target === snd || snd.contains(e.target)) return;
+    evs.forEach(t => window.removeEventListener(t, first));
+    if (want && bgm.paused) play();
+  };
+  evs.forEach(t => window.addEventListener(t, first, { passive: true }));
+  ui(false);
 })();
 </script>
 <script src="tracks.js"></script>
 <script>
+
 (function () {
   "use strict";
-  var TR = window.TRACKS || [];
-  var css = getComputedStyle(document.documentElement);
-  var C = { brass: css.getPropertyValue("--brass").trim(), dim: css.getPropertyValue("--line").trim(), ink: css.getPropertyValue("--ink").trim(), halo: css.getPropertyValue("--halo").trim() };
-  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var audio = document.getElementById("audio");
-  var cur = null, actx = null, analyser = null, freq = null;
+  function el(id) { return document.getElementById(id); }
+  var bgm = el("bgm");
+  function hushBgm() { if (bgm && !bgm.paused) { bgm.pause(); } }
+  // ---- site settings (config.js, fetched fresh so a GitHub edit shows at once)
+  var sc = document.createElement("script");
+  sc.src = "config.js?t=" + Date.now();
+  sc.onload = sc.onerror = function () {
+    var S = window.SITE || {};
+    var dl = el("dl");
+    if (S.download && dl) dl.href = S.download;
+    var vs = dl && dl.querySelector("span");
+    if (vs) vs.textContent = S.version ? S.version.split(" ")[0] : "";
+    if (S.server) { el("srvNone").hidden = true; el("srvBox").hidden = false; el("srv").textContent = S.server; }
+    el("srvCopy").addEventListener("click", function () {
+      var b = this;
+      try { navigator.clipboard.writeText(S.server || "").then(function () { b.textContent = "복사됨 ✓"; }, function () { b.textContent = "길게 눌러 복사"; }); } catch (e) { b.textContent = "길게 눌러 복사"; }
+    });
+    var L = [];
+    if (S.discord) L.push({ title: "디스코드 들어가기", url: S.discord });
+    if (S.poster) L.push({ title: "서버 소개 포스터", url: S.poster });
+    (S.links || []).forEach(function (x) { if (x && x.url) L.push(x); });
+    var nav = el("links");
+    L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "↗ " + (x.title || x.url); nav.appendChild(a); });
+  };
+  document.head.appendChild(sc);
+
+  // ---- trailer
+  var box = el("tlBox"), vid = el("trailer");
+  el("tlOpen").addEventListener("click", function (e) { e.stopPropagation(); box.hidden = false; hushBgm(); audio.pause(); vid.play().catch(function () {}); });
+  el("tlClose").addEventListener("click", function () { vid.pause(); box.hidden = true; });
+
+  // ---- soundtrack
+  var TR = window.TRACKS || [], audio = el("audio"), cur = null, VOL = 0.35;
   function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
-
-  // ---- flow graph (loudness envelope, section ticks, highlight star, playhead)
-  function drawFlow(cv, t, pos) {
-    var r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
-    var W = Math.max(10, Math.round(r.width * dpr)), H = Math.round((r.height || 44) * dpr);
-    if (cv.width !== W) cv.width = W;
-    cv.height = H;
-    var g = cv.getContext("2d"), env = t.env, n = env.length, bw = W / n;
-    g.clearRect(0, 0, W, H);
-    for (var i = 0; i < n; i++) {
-      var x = i * bw, h = Math.max(2 * dpr, env[i] * (H - 6 * dpr));
-      var played = pos != null && (i + 0.5) / n * t.dur <= pos;
-      g.fillStyle = played ? C.brass : (i / n * t.dur >= t.hl - 0.01 ? "#5d6e62" : "#34505a");
-      g.fillRect(x + bw * 0.15, (H - h) / 2, Math.max(1, bw * 0.7), h);
-    }
-    g.fillStyle = C.ink;
-    (t.caps || []).forEach(function (c) { if (c[0] > 0) g.fillRect(c[0] / t.dur * W, 0, Math.max(1, dpr), 4 * dpr); });
-    var hx = t.hl / t.dur * W;
-    g.fillStyle = C.brass; g.font = (11 * dpr) + "px sans-serif"; g.textBaseline = "top";
-    g.fillText("★", Math.min(W - 12 * dpr, hx - 4 * dpr), H - 13 * dpr);
-    if (pos != null) { g.fillStyle = C.ink; g.fillRect(pos / t.dur * W, 0, Math.max(1, 1.5 * dpr), H); }
-  }
-
-  // ---- track list
   var groups = ["전체"]; TR.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
-  var gbox = document.getElementById("groups"), tbox = document.getElementById("tracks");
-  groups.forEach(function (gname, k) {
-    var b = document.createElement("button"); b.type = "button"; b.textContent = gname; b.setAttribute("aria-pressed", k === 0 ? "true" : "false");
+  var gbox = el("groups"), tbox = el("tracks");
+  groups.forEach(function (g, k) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = g; b.setAttribute("aria-pressed", k === 0 ? "true" : "false");
     b.addEventListener("click", function () {
       [].forEach.call(gbox.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-      [].forEach.call(tbox.children, function (row) { row.hidden = !(gname === "전체" || row.dataset.group === gname); });
-      redrawAll();
+      [].forEach.call(tbox.children, function (r) { r.hidden = !(g === "전체" || r.dataset.group === g); });
     });
     gbox.appendChild(b);
   });
   TR.forEach(function (t) {
-    var row = document.createElement("div"); row.className = "trk"; row.dataset.group = t.group; row.id = "trk-" + t.id;
-    row.innerHTML = '<div><h3></h3><div class="where"></div></div><div class="btns"><button type="button" class="p">▶ 처음부터</button><button type="button" class="hl">★ 하이라이트부터</button></div><canvas aria-label="곡 흐름"></canvas>';
-    row.querySelector("h3").textContent = t.title;
-    row.querySelector(".where").textContent = t.where + " · " + fmt(t.dur);
-    row.querySelector(".p").addEventListener("click", function () { play(t, 0); });
-    row.querySelector(".hl").addEventListener("click", function () { play(t, Math.max(0, t.hl - 6)); });
-    var cv = row.querySelector("canvas");
-    cv.addEventListener("click", function (e) { var r = cv.getBoundingClientRect(); play(t, (e.clientX - r.left) / r.width * t.dur); });
-    t.row = row; t.cv = cv;
-    tbox.appendChild(row);
+    var b = document.createElement("button"); b.type = "button"; b.className = "trk"; b.dataset.group = t.group;
+    b.innerHTML = "<span></span><small></small>";
+    b.querySelector("span").textContent = t.title; b.querySelector("small").textContent = t.where + " · " + fmt(t.dur);
+    b.addEventListener("click", function () { play(t, 0); });
+    t.btn = b; tbox.appendChild(b);
   });
-  function redrawAll() { TR.forEach(function (t) { if (!t.row.hidden) drawFlow(t.cv, t, cur === t ? audio.currentTime : null); }); }
-
-  // ---- player
-  function ensureAudioGraph() {
-    if (actx) return;
-    try {
-      actx = new (window.AudioContext || window.webkitAudioContext)();
-      var src = actx.createMediaElementSource(audio);
-      analyser = actx.createAnalyser(); analyser.fftSize = 512; analyser.smoothingTimeConstant = 0.8;
-      src.connect(analyser); analyser.connect(actx.destination);
-      freq = new Uint8Array(analyser.frequencyBinCount);
-    } catch (e) { actx = null; analyser = null; }
-  }
   function play(t, at) {
-    ensureAudioGraph();
-    if (actx && actx.state === "suspended") actx.resume();
-    if (cur !== t) {
-      if (cur) cur.row.classList.remove("on");
-      cur = t; t.row.classList.add("on");
-      audio.src = "audio/" + t.id + ".mp3";
-      document.getElementById("npTitle").textContent = t.title + " — " + t.where;
-    }
-    var go = function () { try { audio.currentTime = at || 0; } catch (e) {} fadeIn(); audio.play().catch(function () {}); };
-    if (audio.readyState >= 1) go(); else audio.addEventListener("loadedmetadata", go, { once: true });
-    if (audio.preload === "none") { audio.preload = "auto"; audio.load(); }
+    hushBgm();
+    if (cur !== t) { if (cur) cur.btn.classList.remove("on"); cur = t; t.btn.classList.add("on"); audio.src = "audio/" + t.id + ".mp3"; el("npTitle").textContent = t.title + " — " + t.where; }
+    var go = function () { try { audio.currentTime = at || 0; } catch (e) {} audio.volume = VOL; audio.play().catch(function () {}); };
+    if (audio.readyState >= 1) go(); else { audio.preload = "auto"; audio.addEventListener("loadedmetadata", go, { once: true }); audio.load(); }
   }
-  // quiet by default (0.15); the slider sets it for the music and the trailer, remembered per browser
-  var VOL = 0.15;
-  try { var sv = parseFloat(localStorage.getItem("league-vol")); if (sv >= 0 && sv <= 1) VOL = sv; } catch (e) {}
-  var volEl = document.getElementById("vol"), vid = document.getElementById("trailer");
-  volEl.value = VOL; if (vid) vid.volume = VOL;
-  volEl.addEventListener("input", function () { VOL = parseFloat(volEl.value); audio.volume = VOL; if (vid) vid.volume = VOL; try { localStorage.setItem("league-vol", String(VOL)); } catch (e) {} });
-  if (vid) vid.addEventListener("volumechange", function () { if (Math.abs(vid.volume - VOL) > 0.001) { VOL = vid.volume; volEl.value = VOL; audio.volume = VOL; } });
-  function fadeIn() { audio.volume = 0; var v = 0; var id = setInterval(function () { v = Math.min(VOL, v + VOL * 0.08); audio.volume = v; if (v >= VOL) clearInterval(id); }, 60); }
-  var btnPlay = document.getElementById("btnPlay");
-  btnPlay.addEventListener("click", function () {
-    if (!cur) { play(TR[0], 0); return; }
-    if (audio.paused) { ensureAudioGraph(); if (actx) actx.resume(); audio.play().catch(function () {}); } else audio.pause();
-  });
-  document.getElementById("btnHl").addEventListener("click", function () { var t = cur || TR[TR.length - 1]; play(t, Math.max(0, t.hl - 6)); });
-  audio.addEventListener("play", function () { btnPlay.textContent = "❚❚ 멈춤"; });
-  audio.addEventListener("pause", function () { btnPlay.textContent = "▶ 재생"; });
-  audio.addEventListener("ended", function () { var i = TR.indexOf(cur); if (i >= 0 && i + 1 < TR.length && !TR[i + 1].row.hidden) play(TR[i + 1], 0); });
-  var flow = document.getElementById("flow");
-  flow.addEventListener("click", function (e) { if (!cur) return; var r = flow.getBoundingClientRect(); play(cur, (e.clientX - r.left) / r.width * cur.dur); });
-
-  // ---- the caption follows the song: what is happening now, and how far to the high point
-  var capEl = document.getElementById("npCap"), lastCap = "";
-  function caption() {
+  el("btnPlay").addEventListener("click", function () { if (!cur) return play(TR[0], 0); if (audio.paused) { hushBgm(); audio.play().catch(function () {}); } else audio.pause(); });
+  el("btnHl").addEventListener("click", function () { var t = cur || TR[TR.length - 1]; play(t, Math.max(0, t.hl - 6)); });
+  audio.addEventListener("play", function () { el("btnPlay").textContent = "❚❚ 멈춤"; });
+  audio.addEventListener("pause", function () { el("btnPlay").textContent = "▶ 재생"; });
+  audio.addEventListener("ended", function () { var i = TR.indexOf(cur); if (i >= 0 && i + 1 < TR.length) play(TR[i + 1], 0); });
+  el("npBar").addEventListener("click", function (e) { if (!cur) return; var r = this.getBoundingClientRect(); play(cur, (e.clientX - r.left) / r.width * cur.dur); });
+  audio.addEventListener("timeupdate", function () {
     if (!cur) return;
     var p = audio.currentTime, txt = "";
+    el("npFill").style.width = (p / cur.dur * 100) + "%";
+    el("npTime").textContent = fmt(p) + " / " + fmt(cur.dur);
     (cur.caps || []).forEach(function (c) { if (p >= c[0]) txt = c[1]; });
     if (p < cur.hl - 1.5 && cur.hl - p > 8) txt += "  ·  절정까지 " + Math.ceil(cur.hl - p) + "초";
-    if (txt !== lastCap) { lastCap = txt; capEl.textContent = txt; }
-  }
+    el("npCap").textContent = txt;
+  });
 
-  // ---- visualizer: brass light that swells with the music; stars drift faster in loud passages
-  var vis = document.getElementById("vis"), vg = vis.getContext("2d");
-  var motes = []; for (var i = 0; i < 40; i++) motes.push({ x: Math.random(), y: Math.random(), s: Math.random() * 1.5 + 0.5 });
-  var level = 0;
-  function frame() {
-    var e = 0;
-    if (analyser && !audio.paused) { analyser.getByteFrequencyData(freq); var sum = 0; for (var k = 2; k < 90; k++) sum += freq[k]; e = sum / (88 * 255); }
-    level += (e - level) * 0.12;
-    var W = vis.width, H = vis.height;
-    vg.fillStyle = "rgba(9,18,25,0.35)"; vg.fillRect(0, 0, W, H);
-    var grd = vg.createRadialGradient(W / 2, H * 0.62, 4, W / 2, H * 0.62, 30 + level * 200);
-    grd.addColorStop(0, "rgba(226,180,90," + (0.25 + level * 0.9) + ")"); grd.addColorStop(1, "rgba(226,180,90,0)");
-    vg.fillStyle = grd; vg.fillRect(0, 0, W, H);
-    vg.fillStyle = C.ink;
-    motes.forEach(function (m) {
-      if (!reduce) { m.x += (0.0006 + level * 0.01) * m.s; if (m.x > 1) { m.x = 0; m.y = Math.random(); } }
-      vg.globalAlpha = 0.3 + level; vg.fillRect(m.x * W, m.y * H, m.s * 1.6, m.s * 1.6);
-    });
-    vg.globalAlpha = 1;
-    if (analyser && !audio.paused) {
-      var bars = 28, bw = W / bars;
-      for (var b = 0; b < bars; b++) { var v = freq[2 + b * 3] / 255; vg.fillStyle = C.brass; vg.fillRect(b * bw + 2, H - v * H * 0.55, bw - 4, v * H * 0.55); }
-    }
-    if (cur) {
-      drawFlow(flow, cur, audio.currentTime);
-      if (!cur.row.hidden) drawFlow(cur.cv, cur, audio.currentTime);
-      document.getElementById("npTime").textContent = fmt(audio.currentTime) + " / " + fmt(cur.dur);
-      caption();
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-
-  // ---- the trailer pauses the soundtrack
-  var tv = document.getElementById("trailer");
-  tv.addEventListener("play", function () { audio.pause(); });
-
-  // ---- hero sky: slow stars and a train of lamps crossing the horizon
-  var sky = document.getElementById("sky"), sg = sky.getContext("2d"), stars = [];
-  for (var j = 0; j < 120; j++) stars.push({ x: Math.random(), y: Math.random() * 0.75, a: Math.random() * 6.28, s: Math.random() * 1.2 + 0.3 });
-  var tt = 0;
-  function skyFrame() {
-    var r = sky.getBoundingClientRect(), d = window.devicePixelRatio || 1;
-    if (sky.width !== Math.round(r.width * d) || sky.height !== Math.round(r.height * d)) { sky.width = Math.round(r.width * d); sky.height = Math.round(r.height * d); }
-    var W = sky.width, H = sky.height; sg.clearRect(0, 0, W, H);
-    var dawn = sg.createLinearGradient(0, H * 0.55, 0, H); dawn.addColorStop(0, "rgba(240,167,122,0)"); dawn.addColorStop(1, "rgba(240,167,122,0.16)");
-    sg.fillStyle = dawn; sg.fillRect(0, 0, W, H);
-    stars.forEach(function (s) { s.a += reduce ? 0 : 0.02; sg.globalAlpha = 0.35 + 0.35 * Math.sin(s.a); sg.fillStyle = C.ink; sg.fillRect(s.x * W, s.y * H, s.s * d, s.s * d); });
-    sg.globalAlpha = 1;
-    var y = H * 0.93, x0 = ((tt * 0.0009) % 1.6 - 0.3) * W;
-    for (var c = 0; c < 6; c++) { sg.fillStyle = "rgba(226,180,90,0.75)"; for (var w = 0; w < 4; w++) sg.fillRect(x0 - c * 70 * d + w * 14 * d, y, 6 * d, 4 * d); }
-    if (!reduce) tt += 16;
-    requestAnimationFrame(skyFrame);
-  }
-  requestAnimationFrame(skyFrame);
-
-  // ---- checklist (kept in this browser only)
+  // ---- tester checklist (this browser only)
   var CHECK = [
     ["첫걸음", ["첫 열차 컷신이 끝까지 재생된다", "새싹마을에서 스타팅 포켓몬을 받는다", "박사에게 파트너 선물을 받는다", "모험 수첩·코인 케이스·트레이너 카드가 열린다", "J / , / K 키가 작동한다"]],
     ["이동", ["역 매표소에서 다른 지방으로 기차 이동", "하늘 택시로 가 본 마을에 이동", "마을에 들어가면 마을 이름이 뜬다", "도로를 걸으면 길가 트레이너·이벤트가 생긴다"]],
@@ -553,28 +572,29 @@ body { word-break: keep-all; }
     ["생활", ["의뢰 게시판 의뢰 1개 완료", "직업 하나를 정하고 경험치 얻기", "집 구매·꾸미기 (돈이 되면)", "교환소에서 친구와 교환", "NPC 교환 의뢰 1건", "부티크에서 모자 써 보기"]],
     ["이벤트", ["대량발생 현장 가 보기", "기상 특보 때 날씨 포켓몬 만나기", "헤일로 작전 막기 (작전 문서 얻기)", "채집 대회 참가", "포켓기어 라디오 소식 확인"]],
     ["수집", ["카메라로 사진 찍고 앨범 확인", "도감 마일스톤 보상 받기", "칭호 하나 얻고 바꿔 달기", "수수께끼 수첩에 무언가 기록되기"]],
-    ["소리", ["마을·도로·리그에서 음악이 바뀐다", "밤길·동굴·바다 위에서 그곳의 음악이 나온다", "배틀 중에는 배경음악이 멈추고 배틀 음악만 나온다", "헤일로 작전 근처에서 습격 음악이 나온다", "모험 수첩에서 배경음악 끄기/켜기"]]
+    ["소리", ["마을·도로·리그에서 음악이 바뀐다", "밤길·동굴·바다 위에서 그곳의 음악이 나온다", "배틀 중에는 배경음악이 멈추고 배틀 음악만 나온다", "헤일로 작전 근처에서 습격 음악이 나온다", "모험 수첩에서 배경음악 끄기/켜기"]],
+    ["v11.10", ["리그톡에 글 쓰기 · 쪽지 보내기", "게임코너 슬롯 한 판", "카드팩 하나 열어 보기", "박사님의 연구 노트 1장 찾기", "마을에 블록 놓고 다시 부수기", "밤하늘 은하수 찾아보기"]]
   ];
   var store = {}; try { store = JSON.parse(localStorage.getItem("league-test-v1") || "{}"); } catch (e) { store = {}; }
-  var box = document.getElementById("check"), total = 0;
+  var cbox = el("check"), total = 0;
   function save() { try { localStorage.setItem("league-test-v1", JSON.stringify(store)); } catch (e) {} }
-  function count() { var n = 0; for (var k in store) if (store[k]) n++; document.getElementById("prog").textContent = n + " / " + total; }
+  function count() { var n = 0; for (var k in store) if (store[k]) n++; el("prog").textContent = n + " / " + total; }
   CHECK.forEach(function (grp, gi) {
     var fs = document.createElement("fieldset"), lg = document.createElement("legend"); lg.textContent = grp[0]; fs.appendChild(lg);
     grp[1].forEach(function (item, ii) {
       total++;
-      var key = gi + "-" + ii, id = "c" + key, lab = document.createElement("label"), inp = document.createElement("input"), sp = document.createElement("span");
-      inp.type = "checkbox"; inp.id = id; inp.checked = !!store[key]; lab.htmlFor = id; sp.textContent = item;
+      var key = gi + "-" + ii, lab = document.createElement("label"), inp = document.createElement("input"), sp = document.createElement("span");
+      inp.type = "checkbox"; inp.checked = !!store[key]; sp.textContent = item;
       if (inp.checked) lab.classList.add("done");
       inp.addEventListener("change", function () { store[key] = inp.checked; lab.classList.toggle("done", inp.checked); save(); count(); });
       lab.appendChild(inp); lab.appendChild(sp); fs.appendChild(lab);
     });
-    box.appendChild(fs);
+    cbox.appendChild(fs);
   });
   count();
-  window.addEventListener("resize", redrawAll);
-  redrawAll();
 })();
+
 </script>
+
 </body>
 </html>
