@@ -1,636 +1,770 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>포켓몬 리그</title>
-<meta name="description" content="둘이서 만든 마인크래프트 포켓몬 서버 '포켓몬 리그' — 네 개의 지방, 서른두 명의 관장, 직접 만든 모드·쉐이더·음악. 모드팩 다운로드.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="포켓몬 리그">
-<meta property="og:description" content="네 개의 지방, 서른두 명의 관장, 네 개의 리그. 맵·모드·쉐이더·음악까지 전부 직접 만든 포켓몬 서버.">
-<meta property="og:image" content="https://junpark254800-dot.github.io/pokemon-league/img2/cover.jpg">
-<meta property="og:url" content="https://junpark254800-dot.github.io/pokemon-league/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#060913">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<title>포켓몬 리그 · v12 새 시즌</title>
+<meta name="description" content="네 개의 지방, 서른두 명의 관장, 처음부터 다시 지은 세계. 친구들과 함께하는 마인크래프트 코블몬 서버 「포켓몬 리그」 v12 새 시즌.">
+<meta property="og:title" content="포켓몬 리그 · v12 새 시즌">
+<meta property="og:description" content="새 월드에서 처음부터. 지방마다 다른 건축, 탐험 명소 13곳, 서버에 단 한 명뿐인 전설.">
+<meta property="og:image" content="img/v12/og.jpg">
+<meta name="theme-color" content="#140f10">
+<link rel="icon" href="img/v12/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
 <style>
-/* NEW SEASON · 리그 호라이즌 — the same reel of scenes, in the colours of the new sky:
-   midnight ink, a horizon line that runs coral → amber → teal, and broadcast-style cut corners */
-:root {
-  --ink: #060913;
-  --ink2: #0c1222;
-  --paper: #eef2fb;
-  --dim: #9aa6bf;
-  --coral: #ff6a4d;
-  --amber: #ffb547;
-  --teal: #35d6c4;
-  --sky: #7fb7ff;
-  --edge: rgba(238,242,251,.10);
-  --card: rgba(10,15,30,.70);
-  --horizon: linear-gradient(90deg, var(--coral) 0%, var(--amber) 45%, var(--teal) 100%);
-  --cut: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-  --f-display: "Black Han Sans", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --f-body: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --f-code: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-  color-scheme: dark;
+:root{
+  --ink:#140f10; --ink2:#1c1517; --ink3:#251b1e; --line:rgba(245,239,227,.12); --line2:rgba(245,239,227,.22);
+  --ivory:#f5efe3; --ivory2:#d9d0c2; --mute:#a59c90; --crimson:#8e1b2b; --crimson2:#b3283c; --gold:#e8c860; --gold2:#c9a23a;
+  --serif:"Gowun Batang","Noto Serif KR",serif; --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; --caps:"Cinzel","Gowun Batang",serif;
+  --w:1120px; --pad:max(20px,env(safe-area-inset-left,0px));
+  color-scheme:dark;
 }
-html, body { height: 100%; }
-body { background: var(--ink); color: var(--paper); font-family: var(--f-body); margin: 0; overflow: hidden; }
-a { color: inherit; }
-.g { color: var(--amber); font-weight: 700; }
-.reel { display: flex; height: 100%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; counter-reset: sc -1; }
-.reel::-webkit-scrollbar { display: none; }
-.scene { position: relative; flex: 0 0 100%; height: 100%; scroll-snap-align: start; overflow: hidden; display: grid; counter-increment: sc; }
-/* the big ghost numeral of each chapter */
-.scene::after { content: counter(sc, decimal-leading-zero); position: absolute; right: max(18px, env(safe-area-inset-right, 0px)); bottom: -0.16em; z-index: 1;
-  font-family: var(--f-display); font-size: clamp(160px, 30vw, 440px); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(238,242,251,.13); pointer-events: none; }
-.scene > .in { position: relative; z-index: 2; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px));
-  padding-block: 78px 96px; display: grid; align-content: center; gap: 22px; max-width: 1240px; margin-inline: auto; width: 100%; box-sizing: border-box; overflow-y: auto; scrollbar-width: none; }
-.bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transform: scale(1.06); filter: saturate(1.08) contrast(1.04); transition: transform 10s ease-out; }
-.scene.on .bg { transform: scale(1); }
-.shade { position: absolute; inset: 0; z-index: 1; background:
-  radial-gradient(120% 90% at 78% 30%, rgba(6,9,19,0) 0%, rgba(6,9,19,.55) 60%, rgba(6,9,19,.88) 100%),
-  linear-gradient(0deg, rgba(6,9,19,.96) 0%, rgba(6,9,19,.55) 38%, rgba(6,9,19,.15) 70%, rgba(6,9,19,.55) 100%); }
-/* the horizon: a thin glowing line across the bottom of every scene */
-.shade::after { content: ""; position: absolute; left: 0; right: 0; bottom: 74px; height: 1px; background: var(--horizon); opacity: .55; box-shadow: 0 0 18px rgba(255,181,71,.5); }
-.tc { font-family: var(--f-code); font-size: 12px; font-weight: 600; letter-spacing: .18em; color: var(--paper); text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; width: fit-content; }
-.tc::before { content: ""; width: 28px; height: 3px; background: var(--horizon); border-radius: 2px; }
-h1, h2 { font-family: var(--f-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -.005em; line-height: 1.04; text-shadow: 0 4px 30px rgba(0,0,0,.45); }
-h1 { font-size: clamp(64px, 11vw, 156px); line-height: .92; }
-h1 em, h2 em { font-style: normal; background: var(--horizon); -webkit-background-clip: text; background-clip: text; color: transparent; }
-h2 { font-size: clamp(34px, 4.8vw, 68px); }
-.kicker { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.kicker b { font-family: var(--f-code); font-size: 12px; letter-spacing: .2em; padding: 7px 12px 6px; background: var(--horizon); color: var(--ink); clip-path: var(--cut); }
-.kicker span { font-family: var(--f-code); font-size: 12px; letter-spacing: .14em; color: var(--dim); }
-.lede { font-size: clamp(17px, 1.6vw, 21px); line-height: 1.75; margin: 0; max-width: 36em; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
-.sub { color: var(--dim); font-size: 16px; line-height: 1.75; max-width: 44em; margin: 0; }
-.hint { font-family: var(--f-code); font-size: 13px; color: var(--dim); display: flex; gap: 10px; align-items: center; }
-.hint b { color: var(--amber); font-weight: 500; animation: nudge 1.8s ease-in-out infinite; display: inline-block; }
-@keyframes nudge { 50% { transform: translateX(6px); } }
-.made { display: flex; flex-wrap: wrap; gap: 8px; }
-.made span { font-size: 13px; border: 1px solid var(--edge); background: rgba(10,15,30,.55); color: var(--paper); padding: 7px 13px; clip-path: var(--cut); backdrop-filter: blur(4px); }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--ivory);font:16px/1.75 var(--sans);letter-spacing:-.005em;overflow-x:hidden;word-break:keep-all;overflow-wrap:anywhere}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+::selection{background:var(--crimson);color:var(--ivory)}
+.wrap{max-width:var(--w);margin:0 auto;padding-left:var(--pad);padding-right:max(20px,env(safe-area-inset-right,0px))}
 
-/* shared card look: dark glass, a horizon stripe on top, one cut corner */
-.stop, .tk, .still, .log div, .start > div, .ost .now, .chk fieldset { position: relative; background: var(--card); border: 1px solid var(--edge); clip-path: var(--cut); backdrop-filter: blur(6px); }
-.stop::before, .tk::before, .still::before, .log div::before, .start > div::before, .ost .now::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--horizon); opacity: .35; z-index: 1; }
+/* ---------- top bar */
+.bar{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.bar.solid{background:rgba(20,15,16,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 13px/1 var(--caps);letter-spacing:.22em}
+.brand img{width:26px;height:26px}
+.bar nav{display:flex;gap:4px;margin-left:auto;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav a{font-size:13px;text-decoration:none;color:var(--ivory2);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.bar nav a:hover{color:var(--ivory);background:rgba(245,239,227,.06)}
+.bar .dl-mini{margin-left:6px;font-size:13px;font-weight:600;text-decoration:none;padding:7px 14px;border-radius:999px;background:var(--crimson);color:var(--ivory);white-space:nowrap}
+@media (max-width:860px){.bar nav{display:none}.bar .dl-mini{margin-left:auto}}
 
-/* journey: the version strip */
-.track { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; }
-.stop { padding: 13px 12px 14px; min-width: 0; }
-.stop.big::before, .stop.now::before { opacity: 1; }
-.stop.now { background: linear-gradient(160deg, rgba(255,106,77,.22), rgba(53,214,196,.14)); border-color: rgba(255,181,71,.45); }
-.stop .v { font-family: var(--f-code); color: var(--teal); font-size: 11.5px; display: block; letter-spacing: .04em; }
-.stop.now .v { color: var(--amber); }
-.stop h3 { font-family: var(--f-display); font-weight: 400; font-size: 17px; margin: 6px 0 5px; line-height: 1.3; }
-.stop p { color: var(--dim); font-size: 12.5px; line-height: 1.55; margin: 0; }
+/* ---------- hero */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
+.hero .bg{position:absolute;inset:0;z-index:-2;background:#1a1214 center/cover no-repeat;transform:scale(1.04);animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.1) translate3d(-1.5%,-1%,0)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(ellipse 70% 55% at 50% 45%,rgba(20,15,16,.25),rgba(20,15,16,.78) 70%,var(--ink)),
+  linear-gradient(180deg,rgba(20,15,16,.55),rgba(20,15,16,.1) 35%,rgba(20,15,16,.9) 88%,var(--ink))}
+.hero-in{padding:110px 20px 90px;max-width:760px}
+.hero .logo{width:min(440px,78vw);margin:0 auto 26px;filter:drop-shadow(0 10px 40px rgba(0,0,0,.55))}
+.kicker{display:inline-flex;align-items:center;gap:12px;font:600 12px/1 var(--caps);letter-spacing:.32em;color:var(--gold);text-transform:uppercase}
+.kicker::before,.kicker::after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2))}
+.kicker::after{transform:scaleX(-1)}
+.hero h1{font:700 clamp(30px,5.4vw,52px)/1.25 var(--serif);margin:18px 0 14px;text-wrap:balance;letter-spacing:-.01em}
+.hero p.lead{font-size:clamp(15px,2vw,18px);color:var(--ivory2);margin:0 auto 34px;max-width:560px;text-wrap:balance}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:4px;text-decoration:none;font-weight:600;font-size:16px;border:1px solid var(--line2);background:rgba(245,239,227,.04);cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+.btn:hover{transform:translateY(-1px);border-color:rgba(245,239,227,.4)}
+.btn.main{background:linear-gradient(180deg,#a3213a,var(--crimson));border-color:rgba(232,200,96,.55);box-shadow:0 10px 30px rgba(142,27,43,.35),inset 0 1px 0 rgba(255,255,255,.12)}
+.btn.main:hover{background:linear-gradient(180deg,#b2263f,#9a1f31)}
+.btn small{font-weight:500;font-size:12px;opacity:.75;letter-spacing:.02em}
+.hero .meta{margin-top:22px;font-size:13px;color:var(--mute)}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font:600 11px/1 var(--caps);letter-spacing:.3em;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:10px}
+.scrollcue::after{content:"";width:1px;height:38px;background:linear-gradient(var(--gold2),transparent);animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* numbers */
-.nums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 30px; }
-.num { padding-top: 14px; min-width: 0; position: relative; }
-.num::before { content: ""; position: absolute; left: 0; top: 0; width: 44px; height: 3px; background: var(--horizon); }
-.num b { display: block; font-family: var(--f-display); font-weight: 400; font-size: clamp(38px, 4.6vw, 66px); color: var(--paper); font-variant-numeric: tabular-nums; line-height: 1; }
-.num b small { font-size: .42em; color: var(--amber); margin-left: 5px; }
-.num span { display: block; font-size: 15px; margin-top: 10px; font-weight: 700; }
-.num i { display: block; font-style: normal; color: var(--dim); font-size: 13px; margin-top: 4px; line-height: 1.55; }
+/* ---------- sections */
+section{padding:clamp(80px,11vw,140px) 0;position:relative}
+section.alt{background:linear-gradient(180deg,var(--ink),var(--ink2) 12%,var(--ink2) 88%,var(--ink))}
+.head{max-width:720px;margin-bottom:clamp(36px,5vw,56px)}
+.head .num{font:600 12px/1 var(--caps);letter-spacing:.3em;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.head .num::after{content:"";height:1px;width:56px;background:var(--gold2);opacity:.6}
+.head h2{font:700 clamp(28px,4.2vw,42px)/1.3 var(--serif);margin:0 0 16px;text-wrap:balance;letter-spacing:-.01em}
+.head h2 em{font-style:normal;color:var(--gold)}
+.head p{color:var(--ivory2);margin:0;font-size:17px;text-wrap:pretty}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+.center .num{justify-content:center}.center .num::before{content:"";height:1px;width:56px;background:var(--gold2);opacity:.6}
 
-/* tech cards */
-.tech { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.tk { overflow: hidden; min-width: 0; display: grid; grid-template-rows: auto 1fr; }
-.tk img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; display: block; }
-.tk div { padding: 14px 16px 16px; }
-.tk h3 { font-family: var(--f-display); font-weight: 400; font-size: 21px; margin: 0 0 6px; }
-.tk h3 small { font-family: var(--f-code); font-size: 11px; color: var(--teal); display: block; margin-bottom: 5px; letter-spacing: .14em; }
-.tk p { color: var(--dim); font-size: 13.5px; line-height: 1.65; margin: 0; }
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:28px 22px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font:700 clamp(30px,4vw,44px)/1 var(--serif);color:var(--ivory);font-variant-numeric:tabular-nums}
+.stat b small{font-size:.45em;color:var(--gold);margin-left:4px;font-family:var(--sans);font-weight:600}
+.stat span{display:block;margin-top:10px;color:var(--mute);font-size:14px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
-/* stills */
-.stills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.still { margin: 0; min-width: 0; overflow: hidden; }
-.still img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; transition: transform .6s ease; }
-.still:hover img { transform: scale(1.04); }
-.still figcaption { padding: 12px 14px 15px; }
-.still h3 { font-family: var(--f-display); font-weight: 400; font-size: 19px; margin: 0 0 5px; }
-.still p { color: var(--dim); font-size: 13.5px; line-height: 1.6; margin: 0; }
-.more { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--dim); font-size: 14px; margin: 0; }
-.more b { color: var(--paper); font-weight: 700; }
-.more span::before { content: "◆ "; color: var(--teal); font-size: 10px; }
+.newgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px}
+.newgrid div{background:var(--ink);padding:26px 24px}
+section.alt .newgrid div{background:var(--ink2)}
+.newgrid h3{font:700 18px/1.4 var(--serif);margin:0 0 8px}
+.newgrid p{margin:0;color:var(--ivory2);font-size:15px}
+.newgrid .tag{font:600 11px/1 var(--caps);letter-spacing:.24em;color:var(--gold);display:block;margin-bottom:12px}
+@media (max-width:860px){.newgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.newgrid{grid-template-columns:1fr}}
 
-/* season log */
-.log { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.log div { padding: 14px 15px 15px; min-width: 0; }
-.log div.new { background: linear-gradient(160deg, rgba(255,106,77,.20), rgba(10,15,30,.72) 60%); }
-.log div.new::before { opacity: 1; }
-.log h3 { font-family: var(--f-display); font-weight: 400; font-size: 18px; margin: 0 0 5px; color: var(--paper); }
-.log p { margin: 0; color: var(--dim); font-size: 13px; line-height: 1.6; }
-.log .tag { font-family: var(--f-code); font-size: 10.5px; letter-spacing: .14em; color: var(--coral); display: block; margin-bottom: 4px; }
+/* regions */
+.regions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.region{position:relative;border-radius:6px;overflow:hidden;min-height:420px;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background:#221a1c center/cover;border:1px solid var(--line);isolation:isolate;cursor:pointer;text-align:left}
+.region::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,15,16,0) 22%,rgba(20,15,16,.72) 52%,rgba(20,15,16,.97) 78%);transition:opacity .3s}
+.region:hover::before{opacity:.85}
+.region .rn{font:600 11px/1 var(--caps);letter-spacing:.26em;color:var(--gold)}
+.region h3{font:700 24px/1.3 var(--serif);margin:10px 0 6px}
+.region p{margin:0;font-size:14px;color:var(--ivory2)}
+.region .style{display:inline-block;margin-top:14px;font-size:12px;padding:4px 10px;border:1px solid var(--line2);border-radius:999px;color:var(--ivory2)}
+@media (max-width:980px){.regions{grid-template-columns:1fr 1fr}.region{min-height:320px}}
+@media (max-width:540px){.regions{grid-template-columns:1fr}}
 
-/* install end card */
-.dl { display: inline-flex; align-items: center; gap: 14px; background: var(--horizon); color: var(--ink); text-decoration: none; font-family: var(--f-display); font-weight: 400; font-size: 24px; padding: 20px 34px; width: fit-content; clip-path: var(--cut); box-shadow: 0 10px 40px rgba(255,181,71,.25); transition: filter .2s; }
-.dl:hover { filter: brightness(1.08); }
-.dls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-.dl.alt { background: rgba(10,15,30,.6); color: var(--paper); border: 1px solid rgba(238,242,251,.3); box-shadow: none; font-size: 18px; padding: 18px 26px; }
-.dl.alt:hover { border-color: var(--teal); }
-.dl:focus-visible, .chap button:focus-visible, .snd:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
-.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; counter-reset: s; }
-.steps div { min-width: 0; }
-.steps div::before { counter-increment: s; content: "0" counter(s); font-family: var(--f-display); font-size: 30px; display: block; margin-bottom: 4px; background: var(--horizon); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; }
-.steps h3 { font-size: 17px; margin: 0 0 4px; }
-.steps p { color: var(--dim); font-size: 14px; line-height: 1.6; margin: 0; }
-.credit { font-size: 13px; color: var(--dim); line-height: 1.8; margin: 0; }
-.credit b { color: var(--paper); }
+/* gallery strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.strip figure{margin:0;position:relative;border-radius:4px;overflow:hidden;aspect-ratio:16/10;background:#221a1c;cursor:zoom-in;border:1px solid var(--line)}
+.strip img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.strip figure:hover img{transform:scale(1.04)}
+.strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;font-size:12.5px;background:linear-gradient(transparent,rgba(20,15,16,.88));color:var(--ivory2)}
+@media (max-width:860px){.strip{grid-template-columns:1fr 1fr}}
 
-/* chapter bar + sound + season badge */
-.chap { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; gap: 4px; padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
-.chap button { flex: 1; min-width: 0; background: none; border: 0; color: var(--dim); font-family: var(--f-code); font-size: 11px; letter-spacing: .03em; text-align: left; padding: 10px 2px 0; cursor: pointer; position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.chap button::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: rgba(238,242,251,.16); }
-.chap button.on { color: var(--paper); }
-.chap button.on::before { background: var(--horizon); box-shadow: 0 0 12px rgba(255,181,71,.6); }
-.badge { position: fixed; z-index: 11; top: calc(14px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 10px;
-  font-family: var(--f-code); font-size: 11.5px; letter-spacing: .16em; color: var(--paper); background: rgba(6,9,19,.6); border: 1px solid var(--edge); padding: 8px 12px; clip-path: var(--cut); backdrop-filter: blur(4px); }
-.badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 10px var(--coral); }
-.snd { position: fixed; z-index: 11; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(6,9,19,.6); color: var(--paper);
-  border: 1px solid var(--edge); padding: 8px 14px; font-family: var(--f-body); font-size: 13px; cursor: pointer; display: flex; gap: 8px; align-items: center; clip-path: var(--cut); backdrop-filter: blur(4px); }
-.snd .eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
-.snd .eq i { width: 2px; background: var(--teal); height: 3px; }
-.snd.play .eq i { animation: eq 1s ease-in-out infinite; }
-.snd.play .eq i:nth-child(2) { animation-delay: .3s; } .snd.play .eq i:nth-child(3) { animation-delay: .6s; }
-@keyframes eq { 50% { height: 12px; } }
+/* feature rows */
+.feature{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,5vw,64px);align-items:center;margin-bottom:clamp(60px,8vw,96px)}
+.feature:last-child{margin-bottom:0}
+.feature.flip .shot{order:2}
+.shot{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px rgba(0,0,0,.35);background:#221a1c;aspect-ratio:16/10;cursor:zoom-in}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot .cap{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ivory2);background:rgba(20,15,16,.7);padding:3px 9px;border-radius:3px}
+.feature h3{font:700 clamp(22px,3vw,30px)/1.35 var(--serif);margin:0 0 14px;text-wrap:balance}
+.feature .tag{font:600 11px/1 var(--caps);letter-spacing:.26em;color:var(--gold);display:block;margin-bottom:14px}
+.feature p{color:var(--ivory2);margin:0 0 16px}
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.ticks li{position:relative;padding-left:22px;color:var(--ivory2);font-size:15px}
+.ticks li::before{content:"";position:absolute;left:2px;top:.72em;width:7px;height:7px;border:1px solid var(--gold);transform:rotate(45deg)}
+.ticks b{color:var(--ivory);font-weight:600}
+@media (max-width:860px){.feature{grid-template-columns:1fr}.feature.flip .shot{order:0}}
 
-@media (max-width: 1100px) { .track { grid-template-columns: repeat(4, minmax(0, 1fr)); } .log { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 760px) {
-  body { overflow: auto; }
-  .reel { display: block; height: auto; overflow: visible; scroll-snap-type: none; }
-  .scene { height: auto; }
-  .scene::after { font-size: 150px; }
-  .scene > .in { padding-block: 72px 64px; overflow: visible; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .shade::after { bottom: 0; }
-  .track, .nums, .stills, .steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .tech, .log { grid-template-columns: minmax(0, 1fr); }
-  .chap { display: none; }
-  .shade { background: rgba(6,9,19,.84); }
-  .badge { display: none; }
-}
-@media (prefers-reduced-motion: reduce) { .bg, .scene.on .bg { transition: none; transform: none; } .hint b, .snd.play .eq i { animation: none; } .reel { scroll-behavior: auto; } .still img { transition: none; } }
+/* cards list (spots) */
+.spots{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.spots div{background:var(--ink2);padding:22px 20px}
+.spots .r{font:600 11px/1 var(--caps);letter-spacing:.24em;color:var(--gold)}
+.spots ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.spots li{font-size:15px;color:var(--ivory)}
+.spots li small{display:block;color:var(--mute);font-size:13px}
+@media (max-width:900px){.spots{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.spots{grid-template-columns:1fr}}
 
-[hidden] { display: none !important; }
+/* legend */
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.lg{border:1px solid var(--line);border-radius:6px;padding:28px 24px;background:linear-gradient(180deg,rgba(142,27,43,.14),transparent 60%)}
+.lg .ic{width:42px;height:42px;border:1px solid rgba(232,200,96,.5);transform:rotate(45deg);display:grid;place-items:center;margin:6px 0 22px 6px}
+.lg .ic span{transform:rotate(-45deg);font-size:18px}
+.lg h3{font:700 20px/1.4 var(--serif);margin:0 0 10px}
+.lg p{margin:0;color:var(--ivory2);font-size:15px}
+@media (max-width:860px){.legend{grid-template-columns:1fr}}
+
+/* econ table */
+.econ{width:100%;border-collapse:collapse;font-size:15px}
+.econ th,.econ td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.econ th{font-weight:500;color:var(--mute);font-size:13px}
+.econ td:first-child{color:var(--ivory);font-weight:600;white-space:nowrap}
+.econ td{color:var(--ivory2)}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;padding:4px 14px}
+
 /* soundtrack */
-.ost { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 22px; }
-.ost .now { padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
-.ost .now b { font-family: var(--f-display); font-weight: 400; font-size: 21px; }
-.ost .now p { margin: 0; color: var(--dim); font-size: 13.5px; min-height: 1.6em; }
-.ost .bar { height: 6px; background: rgba(238,242,251,.12); overflow: hidden; cursor: pointer; }
-.ost .bar i { display: block; height: 100%; width: 0; background: var(--horizon); }
-.ost .ctl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.ost button, .start button, .tlbtn { background: rgba(10,15,30,.6); color: var(--paper); border: 1px solid rgba(238,242,251,.22); padding: 8px 13px; font: 500 13px var(--f-body); cursor: pointer; clip-path: var(--cut); }
-.ost button:hover, .start button:hover, .tlbtn:hover { border-color: var(--teal); background: rgba(53,214,196,.12); }
-.tlbtn { font-size: 15px; padding: 11px 18px; }
-.ost .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; max-height: 52vh; overflow-y: auto; min-width: 0; }
-.ost .trk { text-align: left; background: var(--card); border: 1px solid var(--edge); padding: 8px 10px; min-width: 0; clip-path: none; }
-.ost .trk.on { border-color: var(--amber); }
-.ost .trk small { display: block; color: var(--dim); font-size: 11.5px; }
-.ost .grp { display: flex; gap: 6px; flex-wrap: wrap; }
-.ost .grp button[aria-pressed="true"] { background: var(--horizon); color: var(--ink); border-color: transparent; }
-/* start: keys, server */
-.start { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.start > div { padding: 15px 16px; min-width: 0; }
-.start h3 { font-family: var(--f-display); font-weight: 400; font-size: 19px; margin: 0 0 8px; color: var(--paper); }
-.start p, .start li { color: var(--paper); font-size: 13.5px; line-height: 1.7; margin: 0; }
-.start ul { margin: 0; padding-left: 18px; }
-.start li::marker { color: var(--teal); }
-.keys { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 13.5px; }
-.keys kbd { font-family: var(--f-code); background: rgba(238,242,251,.08); border: 1px solid var(--edge); padding: 1px 7px; color: var(--amber); text-align: center; }
-.srv { font-family: var(--f-code); color: var(--amber); word-break: break-all; }
-.links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-.links a { color: var(--teal); font-size: 13px; }
+.player{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}
+.groups{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.groups button{border:1px solid var(--line2);background:transparent;padding:6px 13px;border-radius:999px;font-size:13px;color:var(--ivory2);cursor:pointer}
+.groups button[aria-pressed=true]{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:430px;overflow:auto;padding-right:4px}
+.trk{display:flex;flex-direction:column;gap:2px;text-align:left;padding:11px 14px;border:1px solid var(--line);background:rgba(245,239,227,.02);border-radius:4px;cursor:pointer}
+.trk:hover{border-color:var(--line2)}
+.trk.on{border-color:rgba(232,200,96,.6);background:rgba(142,27,43,.18)}
+.trk span{font-weight:600;font-size:15px}
+.trk small{color:var(--mute);font-size:12.5px}
+.trk .nw{font:600 10px/1 var(--caps);letter-spacing:.18em;color:var(--gold);margin-left:6px}
+.np{border:1px solid var(--line);border-radius:6px;padding:22px;background:var(--ink3);position:sticky;top:80px}
+.np .ttl{font:700 18px/1.4 var(--serif);min-height:2.8em}
+.np .cap{font-size:13px;color:var(--gold);min-height:1.6em;margin:6px 0 14px}
+.npbar{height:6px;background:rgba(245,239,227,.1);border-radius:3px;cursor:pointer;overflow:hidden}
+.npbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--crimson2),var(--gold))}
+.np .ctl{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.np .ctl button{border:1px solid var(--line2);background:transparent;padding:9px 16px;border-radius:4px;cursor:pointer;font-size:14px}
+.np .ctl button.main{background:var(--crimson);border-color:rgba(232,200,96,.5)}
+.np .tm{font-size:12px;color:var(--mute);margin-top:10px;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.player{grid-template-columns:1fr}.np{position:static}.tracks{grid-template-columns:1fr;max-height:360px}}
+
+/* install */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;border-top:1px solid var(--line)}
+.steps li{list-style:none;padding:26px 22px 26px 0;border-right:1px solid var(--line);margin-right:22px;counter-increment:s}
+.steps li:last-child{border-right:0;margin-right:0}
+.steps li::before{content:counter(s,decimal-leading-zero);font:600 13px/1 var(--caps);letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:14px}
+.steps b{display:block;font:700 18px/1.4 var(--serif);margin-bottom:6px}
+.steps span{color:var(--ivory2);font-size:15px}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.steps li:nth-child(2){border-right:0}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.steps li{border-right:0;margin-right:0;border-bottom:1px solid var(--line)}}
+.dlbox{margin-top:44px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.dlbox .note{color:var(--mute);font-size:14px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel{border:1px solid var(--line);border-radius:6px;padding:26px 24px;background:var(--ink2)}
+.panel h3{font:700 19px/1.4 var(--serif);margin:0 0 16px}
+.keys{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;align-items:center}
+.keys kbd{font:600 13px/1 var(--sans);min-width:44px;text-align:center;padding:7px 9px;border:1px solid var(--line2);border-bottom-width:2px;border-radius:4px;background:rgba(245,239,227,.04)}
+.keys span{color:var(--ivory2);font-size:15px}
+.srv{display:flex;gap:8px;align-items:center;margin:4px 0 10px;flex-wrap:wrap}
+.srv code{font:600 16px/1 ui-monospace,Menlo,Consolas,monospace;padding:11px 14px;border:1px solid var(--line2);border-radius:4px;background:var(--ink);user-select:all}
+.srv button{border:1px solid var(--line2);background:transparent;padding:10px 14px;border-radius:4px;cursor:pointer}
+.panel p{color:var(--ivory2);font-size:15px;margin:0 0 10px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.links a{font-size:14px;text-decoration:none;padding:7px 13px;border:1px solid var(--line2);border-radius:999px;color:var(--ivory2)}
+
+/* timeline */
+.tl{position:relative;display:grid;gap:0;margin-left:8px;border-left:1px solid var(--line2)}
+.tl div{position:relative;padding:0 0 26px 28px}
+.tl div::before{content:"";position:absolute;left:-5px;top:.55em;width:9px;height:9px;background:var(--ink);border:1px solid var(--gold);transform:rotate(45deg)}
+.tl div.now::before{background:var(--gold)}
+.tl time{font:600 12px/1 var(--caps);letter-spacing:.18em;color:var(--gold);display:block;margin-bottom:6px}
+.tl b{font:700 17px/1.45 var(--serif)}
+.tl p{margin:4px 0 0;color:var(--ivory2);font-size:14.5px}
+
 /* checklist */
-.chk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.chk fieldset { margin: 0; padding: 10px 12px; min-width: 0; }
-.chk legend { color: var(--amber); font-family: var(--f-display); padding: 0 4px; }
-.chk label { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.5; padding: 3px 0; color: var(--paper); cursor: pointer; }
-.chk input { accent-color: var(--teal); }
-.chk label.done span { color: var(--dim); text-decoration: line-through; }
-/* trailer lightbox */
-.tlbox { position: fixed; inset: 0; z-index: 30; background: rgba(4,6,12,.94); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-left, 0px)); }
-.tlbox video { width: min(1100px, 100%); max-height: 80vh; background: #000; }
-.tlbox button { position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); }
-@media (max-width: 1100px) { .chk { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 760px) { .ost, .start { grid-template-columns: minmax(0, 1fr); } .ost .list { grid-template-columns: minmax(0, 1fr); max-height: none; } .chk { grid-template-columns: minmax(0, 1fr); } }
+.chk{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chk fieldset{border:1px solid var(--line);border-radius:6px;padding:18px 20px 14px;margin:0;background:var(--ink2)}
+.chk legend{font:700 16px/1 var(--serif);padding:0 8px;margin-left:-8px}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:15px;color:var(--ivory2);cursor:pointer}
+.chk input{accent-color:var(--crimson2);width:17px;height:17px;margin-top:4px;flex:none}
+.chk input:checked+span{color:var(--mute);text-decoration:line-through;text-decoration-color:rgba(232,200,96,.6)}
+.chkhead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.prog{flex:1;min-width:180px;height:6px;background:rgba(245,239,227,.1);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--crimson2),var(--gold));transition:width .3s}
+.chkhead b{font-variant-numeric:tabular-nums}
+@media (max-width:760px){.chk{grid-template-columns:1fr}}
+
+footer{padding:70px 0 calc(50px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);text-align:center;color:var(--mute);font-size:13px}
+footer img{width:54px;margin:0 auto 18px;opacity:.9}
+footer .cr{font:700 17px/1.5 var(--serif);color:var(--ivory);margin-bottom:6px}
+footer .who{margin-bottom:22px}
+footer .old{display:inline-block;margin-bottom:22px;font-size:13px;color:var(--ivory2);text-decoration:none;border-bottom:1px solid var(--line2);background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;padding:0}
+
+/* lightbox + trailer */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(10,7,8,.92);display:grid;place-items:center;padding:24px;cursor:zoom-out}
+.lb img{max-height:86vh;border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lb p{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;color:var(--ivory2);font-size:14px;margin:0}
+.lb video{width:min(1100px,92vw);max-height:80vh;background:#000;border-radius:4px}
+.lb .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:18px;font-size:14px;color:var(--ivory2);background:none;border:1px solid var(--line2);padding:6px 12px;border-radius:4px;cursor:pointer}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.hero .bg{animation:none}html{scroll-behavior:auto}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
 
+<header class="bar" id="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/v12/emblem.png" alt="">POKÉMON LEAGUE</a>
+    <nav aria-label="바로가기">
+      <a href="#new">새 시즌</a><a href="#world">네 지방</a><a href="#town">마을</a><a href="#explore">탐험</a><a href="#legend">전설</a><a href="#battle">배틀</a><a href="#music">음악</a><a href="#start">설치</a><a href="#check">체크리스트</a>
+    </nav>
+    <a class="dl-mini dl" href="#start">모드팩 받기</a>
+  </div>
+</header>
 
-<div class="badge" aria-hidden="true"><i></i>NEW SEASON · v11.10.7</div>
-<button class="snd" id="snd" type="button" aria-pressed="false"><span class="eq"><i></i><i></i><i></i></span><span id="sndt">배경음악 켜기</span></button>
-<audio id="bgm" src="audio/start.mp3" loop preload="auto"></audio>
-
-<main class="reel" id="reel">
-  <section class="scene on" data-name="오프닝">
-    <div class="bg" style="background-image:url(img2/cover.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <div class="kicker"><b>NEW SEASON</b><span>v11.10.7 · 리그 호라이즌</span></div>
-      <h1>포켓몬 <em>리그</em></h1>
-      <p class="lede">네 개의 지방을 기차로 건너며 서른두 명의 관장과 네 개의 리그, 그리고 전설을 노리는 조직과 마주하는 오픈월드.<br><span class="g">맵도, 모드도, 쉐이더도, 음악도 — 전부 둘이서 직접 만들었어요.</span></p>
-      <div class="made"><span>🗺 45개 마을을 짓는 맵</span><span>🧩 직접 짠 모드</span><span>🌌 직접 만든 쉐이더</span><span>🎼 새로 작곡한 26곡</span><span>🧪 쉐이더 시험용 테스트 엔진</span><span>🌧 직접 만든 비</span></div>
-      <div><button class="tlbtn" id="tlOpen" type="button">▶ 트레일러 보기</button></div>
-      <p class="hint">스크롤하거나 → 키를 누르면 여정이 시작돼요 <b>→</b></p>
+<main id="top">
+<!-- HERO -->
+<section class="hero" aria-label="소개">
+  <div class="bg" style="background-image:url(img/v12/hero.jpg)"></div>
+  <div class="hero-in">
+    <img class="logo" src="img/v12/logo_v.png" alt="POKÉMON LEAGUE 포켓몬 리그">
+    <span class="kicker">Season v12</span>
+    <h1>새 월드에서, 처음부터</h1>
+    <p class="lead">지형과 마을 자리는 그대로, 건물·이야기·화면·경제는 전부 새로. 지금까지의 서버는 튜토리얼이었어요.</p>
+    <div class="cta">
+      <a class="btn main dl" id="dlHero" href="#start">⬇ 모드팩 받기 <small class="ver">v12</small></a>
+      <a class="btn" href="#new">무엇이 바뀌었나</a>
     </div>
-  </section>
+    <div class="meta">마인크래프트 자바 1.21.1 · Fabric · Cobblemon 1.8 · Modrinth 앱으로 설치</div>
+  </div>
+  <div class="scrollcue">SCROLL</div>
+</section>
 
-  <section class="scene" data-name="우리의 여정">
-    <div class="bg" style="background-image:url(img2/journey.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 01 · 우리의 여정</span>
-      <h2>마을 하나에서 <em>세계 하나</em>까지</h2>
-      <p class="sub">처음엔 체육관 하나였어요. 친구들과 함께 놀 세계를 만들겠다고 시작해서, 열흘 남짓 동안 세계 전체를 두 번 짓고 서른 번 넘게 패치했어요.</p>
-      <div class="track">
-        <div class="stop"><span class="v">10월 말 · 구상</span><h3>방향 잡기</h3><p>지방 넷, 체육관 서른둘, 이긴 사람이 챔피언이 되는 리그, 악당 조직 헤일로</p></div>
-        <div class="stop"><span class="v">데이터팩 시작</span><h3>league 네임스페이스</h3><p>트레이너 · 배지 · 스킨을 함수로. 건물도 손이 아니라 설계도로 짓기로</p></div>
-        <div class="stop"><span class="v">v8</span><h3>첫 모드팩</h3><p>포켓기어, 배지 케이스, 의뢰 게시판. 둘이서만 돌려 본 첫 판</p></div>
-        <div class="stop big"><span class="v">10.29 · v9</span><h3>친구들에게 첫 배포</h3><p>처음으로 우리 말고 다른 사람이 들어온 날</p></div>
-        <div class="stop big"><span class="v">10.30 · v10</span><h3>세계를 처음부터 다시</h3><p>건물을 전부 새로 설계. 목표는 "세상에서 가장 예쁜 마크 포켓몬 맵"</p></div>
-        <div class="stop"><span class="v">11.01 · v11</span><h3>45개 마을이 한 세계에</h3><p>주민 이야기 45개, 4개 리그, 지방 열차</p></div>
-        <div class="stop big"><span class="v">11.02</span><h3>테스트 서버 첫 오픈</h3><p>친구들이 같은 세계에서 함께 모험을 시작</p></div>
-        <div class="stop big"><span class="v">11.02 → 03 새벽</span><h3>밤샘 v11.9</h3><p>밤 11시 47분부터 새벽 4시까지, <span class="g">하룻밤에 15번</span> 빌드하고 고쳤어요</p></div>
-        <div class="stop"><span class="v">11.03</span><h3>리그 스카이 쉐이더</h3><p>첫 쉐이더를 하루에 다섯 번 갈아엎으며 완성</p></div>
-        <div class="stop"><span class="v">11.04 · v11.9.7</span><h3>모든 화면을 새로</h3><p>리그 도감, 사진 콘테스트, 배틀 시작 연출, 길 안내, 알림 카드</p></div>
-        <div class="stop big"><span class="v">11.05</span><h3>리그 호라이즌</h3><p>쉐이더를 처음부터 다시. 하늘, 물, 비, 밤까지 직접 계산</p></div>
-        <div class="stop"><span class="v">11.06</span><h3>맵 대보수</h3><p>길바닥 구멍 <span class="g">931칸</span>을 프로그램으로 찾아 메우고, 리그 출구와 집 목장 수리</p></div>
-        <div class="stop big"><span class="v">11.07 오전</span><h3>v11.10 첫 판</h3><p>리그톡, 게임코너, 카드팩, 마을 보호, 건물 복구</p></div>
-        <div class="stop now"><span class="v">11.07 · v11.10.7</span><h3>지금 여기</h3><p>카드 거래, 몬스터 없는 세계, 새로 만든 비와 물속 풍경. <span class="g">새 시즌급</span> 대형 패치</p></div>
-        <div class="stop"><span class="v">다음 · v12</span><h3>본서버</h3><p>지금까지 만든 모든 것을 들고 정식 출발</p></div>
+<!-- NEW SEASON -->
+<section id="new">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">01 · NEW SEASON</div>
+      <h2>모두가 같은 출발선에서 <em>다시</em></h2>
+      <p>v12는 패치가 아니라 새 시즌이에요. 플레이어 기록이 없는 새 월드에서 첫 열차를 타고 새싹마을로 들어가요. 그동안 고치고 더한 모든 것을 처음부터 다시 구워 넣었어요.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b>45<small>곳</small></b><span>새로 지은 포켓몬센터</span></div>
+      <div class="stat"><b>32<small>곳</small></b><span>지방마다 양식이 다른 체육관</span></div>
+      <div class="stat"><b>13<small>곳</small></b><span>새 탐험 명소</span></div>
+      <div class="stat"><b>8<small>종</small></b><span>서버에 한 명뿐인 새 전설</span></div>
+    </div>
+    <div class="newgrid reveal">
+      <div><span class="tag">WORLD</span><h3>다시 지은 마을</h3><p>센터·체육관·역·게시판·백화점·게임코너·리그까지. 고깔 지붕 약 230채는 긴 박공지붕으로.</p></div>
+      <div><span class="tag">DETAIL</span><h3>Macaw · 가구 모드</h3><p>덧창·문·울타리·창틀을 지방 양식으로, 계단 의자는 진짜 의자로. 로비엔 소파, 창엔 커튼.</p></div>
+      <div><span class="tag">EXPLORE</span><h3>들어가서 노는 마을</h3><p>난파선·다이빙 코스·별 관측소·그림자 동굴·폐광… 체육관만 깨고 지나가던 마을에 할 거리가.</p></div>
+      <div><span class="tag">LEGEND</span><h3>서버에 단 한 명</h3><p>제단의 전설과 새 전설 8종은 처음 잡은 한 명만. 나머지는 기념 배틀과 기념 보상.</p></div>
+      <div><span class="tag">BATTLE</span><h3>Z기술 · 다이맥스 · 테라스탈</h3><p>세 기믹 전부. 트레이너는 위급하면 회복약을 쓰고, 공식 챔피언과는 실시간 타이틀 매치.</p></div>
+      <div><span class="tag">INTERFACE</span><h3>모든 화면을 새로</h3><p>타이틀·로딩·전투·파티·PC·배지 케이스까지 반투명 유리와 앰버 한 색으로 통일.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGIONS -->
+<section id="world" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">02 · FOUR REGIONS</div>
+      <h2>같은 체육관도, 지방이 다르면 <em>다른 건물</em></h2>
+      <p>네 지방은 건축 양식부터 달라요. 재료와 지붕, 창 모양만 봐도 지금 어느 지방에 있는지 알 수 있게 지었어요. 지방 사이는 진홍색 여행 열차가 이어 줘요.</p>
+    </div>
+    <div class="regions reveal">
+      <button class="region" data-img="img/v12/r1_town.jpg" data-cap="푸른들 지방 · 새싹마을" style="background-image:url(img/v12/r1_town.jpg)"><span class="rn">REGION 1</span><h3>푸른들</h3><p>과수원과 풍차, 모험이 시작되는 들판</p><span class="style">서양 시골 · 루버 덧창</span></button>
+      <button class="region" data-img="img/v12/r2_town.jpg" data-cap="백암산 지방 · 광산 도시" style="background-image:url(img/v12/r2_town.jpg)"><span class="rn">REGION 2</span><h3>백암산</h3><p>흰 바위 산맥 위의 산사와 온천</p><span class="style">일본 산마을 · 창호지</span></button>
+      <button class="region" data-img="img/v12/r3_town.jpg" data-cap="남해 제도 · 등대 마을" style="background-image:url(img/v12/r3_town.jpg)"><span class="rn">REGION 3</span><h3>남해 제도</h3><p>산호 해변과 섬을 잇는 바다</p><span class="style">무어 양식 · 격자창</span></button>
+      <button class="region" data-img="img/v12/r4_town.jpg" data-cap="북부 고원 · 빙하 마을" style="background-image:url(img/v12/r4_town.jpg)"><span class="rn">REGION 4</span><h3>북부 고원</h3><p>설원과 연구탑, 마지막 지방</p><span class="style">북유럽 · X 버팀 덧창</span></button>
+    </div>
+    <div class="strip reveal">
+      <figure data-cap="푸른들 체육관"><img loading="lazy" src="img/v12/r1_gym.jpg" alt=""><figcaption>푸른들 체육관</figcaption></figure>
+      <figure data-cap="백암산 체육관"><img loading="lazy" src="img/v12/r2_gym.jpg" alt=""><figcaption>백암산 체육관</figcaption></figure>
+      <figure data-cap="남해 체육관"><img loading="lazy" src="img/v12/r3_gym.jpg" alt=""><figcaption>남해 체육관</figcaption></figure>
+      <figure data-cap="북부 체육관"><img loading="lazy" src="img/v12/r4_gym.jpg" alt=""><figcaption>북부 체육관</figcaption></figure>
+      <figure data-cap="푸른들 기차역"><img loading="lazy" src="img/v12/r1_station.jpg" alt=""><figcaption>푸른들 기차역</figcaption></figure>
+      <figure data-cap="백암산 기차역"><img loading="lazy" src="img/v12/r2_station.jpg" alt=""><figcaption>백암산 기차역</figcaption></figure>
+      <figure data-cap="남해 기차역"><img loading="lazy" src="img/v12/r3_station.jpg" alt=""><figcaption>남해 기차역</figcaption></figure>
+      <figure data-cap="북부 기차역"><img loading="lazy" src="img/v12/r4_station.jpg" alt=""><figcaption>북부 기차역</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- TOWN -->
+<section id="town">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">03 · TOWNS</div>
+      <h2>마을의 모든 건물을 <em>다시 설계</em>했어요</h2>
+    </div>
+
+    <div class="feature reveal">
+      <div class="shot" data-img="img/v12/r1_pc.jpg" data-cap="포켓몬센터"><img loading="lazy" src="img/v12/r1_pc.jpg" alt="새 포켓몬센터"><span class="cap">포켓몬센터 · 새싹마을</span></div>
+      <div>
+        <span class="tag">POKÉMON CENTER · 45</span>
+        <h3>붉은 망사르 지붕과 시계탑</h3>
+        <p>45곳 전부 새 설계예요. 시계탑 유리 돔과 새 몬스터볼 엠블럼, 지방마다 다른 기단. 로비엔 진짜 소파 640여 칸.</p>
+        <ul class="ticks">
+          <li>상점은 1층 매대에서, 메가스톤·기믹 물건은 <b>백화점 3층</b>으로</li>
+          <li>로비 김영, 센터 앞 가영·가인 — 어디서 본 듯한 얼굴들</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <section class="scene" data-name="숫자로 보면">
-    <div class="bg" style="background-image:url(img2/river.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 02 · 숫자로 보는 제작기</span>
-      <h2>밤을 새운 만큼, <em>숫자</em>가 쌓였어요</h2>
-      <div class="nums">
-        <div class="num"><b>14,530<small>줄</small></b><span>직접 짠 모드 코드</span><i>포켓기어 앱, 상점, 배틀 팩토리, 리그톡… 화면 하나하나를 Java로</i></div>
-        <div class="num"><b>17,102<small>개</small></b><span>데이터팩 함수</span><i>23만 줄. 마을, NPC, 의뢰, 이벤트, 컷신이 전부 여기서 나와요</i></div>
-        <div class="num"><b>3,953<small>줄</small></b><span>쉐이더 코드</span><i>166개 렌더 단계를 우리 손으로</i></div>
-        <div class="num"><b>26<small>곡</small></b><span>새로 작곡한 음악</span><i>지방, 도로, 밤길, 동굴, 바다, 리그마다 다른 곡</i></div>
-        <div class="num"><b>45<small>마을</small></b><span>4개 지방</span><i>마을마다 콘셉트와 랜드마크, 주민 이야기 하나씩</i></div>
-        <div class="num"><b>639<small>명</small></b><span>트레이너</span><i>길가, 체육관, 리그, 헤일로까지</i></div>
-        <div class="num"><b>40<small>번+</small></b><span>패치 배포</span><i>친구들이 찾아 준 버그를 그날 밤 바로</i></div>
-        <div class="num"><b>978<small>종</small></b><span>찍을 수 있는 포켓몬</span><i>앨범을 다 채우면 마스터볼</i></div>
+    <div class="feature flip reveal">
+      <div class="shot" data-img="img/v12/r1_dept.jpg" data-cap="백화점 · 과수원 마을"><img loading="lazy" src="img/v12/r1_dept.jpg" alt="백화점"><span class="cap">백화점 · 과수원 마을</span></div>
+      <div>
+        <span class="tag">DEPARTMENT STORE · 4</span>
+        <h3>5층 백화점, 바로 옆엔 게임코너</h3>
+        <p>층별 매장과 엘리베이터, 옥상 정원. 주황 불빛 버튼을 누르면 층 선택 창이 떠요.</p>
+        <ul class="ticks">
+          <li>3층 <b>기믹 · 메가스톤 코너</b> — Z링 · 테라스탈 오브 · 다이맥스 밴드 · 메가스톤</li>
+          <li>PP 업 200 · PP 맥스 500코인</li>
+          <li>게임코너 — 새 슬롯머신, 병뚜껑 교환</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <section class="scene" data-name="직접 만든 기술">
-    <div class="bg" style="background-image:url(img2/milkyway.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 03 · 직접 만든 기술</span>
-      <h2>서버를 만들려고 <em>도구부터</em> 만들었어요</h2>
-      <div class="tech">
-        <div class="tk"><img src="img2/sky.jpg" alt="리그 호라이즌 쉐이더의 노을"><div><h3><small>SHADER</small>리그 호라이즌</h3><p>실제 대기를 계산한 하늘, <span class="g">은하수와 별똥별</span>이 흐르는 밤, 하류로 떠내려가는 강, 해변에서 부서지는 파도. 비는 <span class="g">가늘고 투명한 빗줄기</span>, 물 위 물보라, 비마다 다른 웅덩이. 물속에서 올려다보면 물 밖 하늘이 일렁여요.</p></div></div>
-        <div class="tk"><img src="img2/test.jpg" alt="테스트 엔진이 같은 장면을 시간대별로 찍은 비교"><div><h3><small>TEST ENGINE</small>쉐이더 테스트 엔진</h3><p>서버 안 가상 화면에 게임을 띄워 같은 장면을 <span class="g">아침 · 낮 · 노을 · 밤 · 비</span>로 자동 촬영하고 전후를 비교해요. 눈으로는 놓치는 반투명 버그도 여기서 잡았어요.</p></div></div>
-        <div class="tk"><img src="img2/flow.jpg" alt="흐르는 강"><div><h3><small>FLOW MAP</small>물길 계산기</h3><p>마크의 물은 원래 고여 있어요. 맵 전체 물을 분석해 <span class="g">강폭 · 방향 · 속도 지도</span>를 만들고, 쉐이더가 그걸 읽어 강을 흐르게 해요.</p></div></div>
-        <div class="tk"><img src="img2/towns.jpg" alt="설계도로 지은 마을들"><div><h3><small>WORLD BUILDER</small>설계도로 짓는 맵</h3><p>마을 배치, 길, 다리, 건물을 설계도로 만들면 데이터팩이 <span class="g">4,947개 묶음</span>으로 한 칸씩 지어요. 구멍 탐지기가 빈칸을 찾아 메워요.</p></div></div>
-        <div class="tk"><img src="img2/gear.jpg" alt="포켓기어 화면"><div><h3><small>MOD</small>league_ui 모드</h3><p>포켓기어 앱 16개, 트레이너 카드, 배지 케이스, 리그 도감, 상점, 배틀 연출, 리그톡까지 <span class="g">화면을 전부</span> 직접 그렸어요.</p></div></div>
-        <div class="tk"><img src="img2/music.jpg" alt="밤의 마을"><div><h3><small>SOUND ENGINE</small>음악 엔진</h3><p>실제 악기 샘플로 연주하고, 잔향과 마스터링은 <span class="g">직접 만든 엔진</span>으로. 정상에 처음 오르면 곡의 절정부터 시작해요.</p></div></div>
+    <div class="feature reveal">
+      <div class="shot" data-img="img/v12/train.jpg" data-cap="여행 열차 객실"><img loading="lazy" src="img/v12/train.jpg" alt="여행 열차"><span class="cap">여행 열차 · 객실 창가</span></div>
+      <div>
+        <span class="tag">RAILWAY</span>
+        <h3>진홍 · 아이보리 · 금장 객차</h3>
+        <p>지방을 잇는 열차를 클래식 객차로 새로 만들었어요. 황동 띠와 큰 창, 객실 테이블의 촛대까지. 역은 지방마다 실제 역을 참고한 새 역사예요.</p>
+        <ul class="ticks">
+          <li>기차역 4곳 + 간이역 4곳</li>
+          <li>가 본 마을은 하늘 택시로</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <section class="scene" data-name="세계">
-    <div class="bg" style="background-image:url(img2/r1bg.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 04 · 세계</span>
-      <h2>걸어서도, 날아서도, <em>기차로도</em></h2>
-      <div class="stills">
-        <figure class="still"><img src="img2/r1.jpg" alt="푸른들 지방"><figcaption><h3>푸른들 지방</h3><p>과수원과 풍차, 모험이 시작되는 들판</p></figcaption></figure>
-        <figure class="still"><img src="img2/r2.jpg" alt="백암산 지방"><figcaption><h3>백암산 지방</h3><p>흰 바위 산맥 위의 산사와 온천</p></figcaption></figure>
-        <figure class="still"><img src="img2/r3.jpg" alt="남해 제도"><figcaption><h3>남해 제도</h3><p>산호 해변과 섬을 잇는 바다</p></figcaption></figure>
-        <figure class="still"><img src="img2/r4.jpg" alt="북부 고원"><figcaption><h3>북부 고원</h3><p>설원과 연구탑, 마지막 지방</p></figcaption></figure>
-      </div>
-      <p class="more"><span><b>지방 열차</b> 컷신으로 이동</span><span><b>하늘 택시</b> 가 본 마을로 비행</span><span><b>사파리 존</b> 특수 바이옴</span><span><b>탐험 이스터에그</b> 길 밖 어딘가에</span></p>
-    </div>
-  </section>
-
-  <section class="scene" data-name="이야기 · 배틀">
-    <div class="bg" style="background-image:url(img2/league.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 05 · 이야기와 배틀</span>
-      <h2>전설을 노리는 조직, 그리고 <em>리그</em></h2>
-      <div class="stills">
-        <figure class="still"><img src="img/halo.jpg" alt="헤일로"><figcaption><h3>헤일로</h3><p>전설을 '보호'한다는 조직. 하늘의 고리가 붙잡은 것은 직접 확인해요</p></figcaption></figure>
-        <figure class="still"><img src="img2/talk.jpg" alt="대화창"><figcaption><h3>라이벌 하루 · 주민 이야기 45</h3><p>얼굴이 나오는 대화창, 한 글자씩 타자 소리</p></figcaption></figure>
-        <figure class="still"><img src="img2/tower.jpg" alt="배틀 타워"><figcaption><h3>체육관 32 · 리그 4</h3><p>챔피언을 이기면 <span class="g">내가 다음 챔피언</span>이 돼요</p></figcaption></figure>
-        <figure class="still"><img src="img2/factory.jpg" alt="배틀 팩토리"><figcaption><h3>배틀 타워 · 팩토리</h3><p>렌탈 54마리 중 셋으로 7연승 도전</p></figcaption></figure>
-      </div>
-      <p class="more"><span><b>월드 보스 레이드</b> 지방마다 하루 한 번</span><span><b>랭크 매칭 · 리그 대회</b> 토너먼트 대진표</span><span><b>관장 재대결</b></span><span><b>명예의 전당</b> 서버 순위 6종</span></p>
-    </div>
-  </section>
-
-  <section class="scene" data-name="생활 · 수집">
-    <div class="bg" style="background-image:url(img2/house.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 06 · 생활과 수집</span>
-      <h2>배틀만 하는 세계가 <em>아니에요</em></h2>
-      <div class="stills">
-        <figure class="still"><img src="img2/housecard.jpg" alt="내 집"><figcaption><h3>내 집 · 목장</h3><p>오늘의 선물, 귀가 비행, 넓은 울타리 목장</p></figcaption></figure>
-        <figure class="still"><img src="img2/boutique.jpg" alt="부티크"><figcaption><h3>부티크 · 직업 5종</h3><p>모자 17 · 발자국 11 · 오라 7, 낚시꾼부터 연구원까지</p></figcaption></figure>
-        <figure class="still"><img src="img2/card.jpg" alt="트레이너 카드"><figcaption><h3>트레이너 카드 · 배지 32칸</h3><p>신분증 모양 카드, 배지를 직접 끼우는 케이스</p></figcaption></figure>
-        <figure class="still"><img src="img/album.jpg" alt="앨범"><figcaption><h3>카메라 · 앨범 · 도감</h3><p>978종을 다 찍을 때까지 이어지는 보상</p></figcaption></figure>
-      </div>
-      <p class="more"><span><b>나무열매 농사 · 냄비 요리</b></span><span><b>의뢰 게시판 · 평판</b></span><span><b>우체국 · 주간 신문</b></span><span><b>축제 · 낚시 대회</b></span><span><b>수수께끼 수첩</b></span><span><b>칭호 46종</b></span></p>
-    </div>
-  </section>
-
-  <section class="scene" data-name="움직이는 세계">
-    <div class="bg" style="background-image:url(img2/storm.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 07 · 움직이는 세계</span>
-      <h2>접속해 있으면 <em>세계가 움직여요</em></h2>
-      <div class="stills">
-        <figure class="still"><img src="img/outbreak.jpg" alt="대량발생"><figcaption><h3>대량발생</h3><p>약 40분마다 들판에 한 종류가 가득, 이로치 확률 ↑</p></figcaption></figure>
-        <figure class="still"><img src="img2/stormcard.jpg" alt="기상 특보"><figcaption><h3>기상 특보</h3><p>폭풍 · 강풍 · 폭염 · 안개, 날씨마다 다른 포켓몬</p></figcaption></figure>
-        <figure class="still"><img src="img/boss.jpg" alt="월드 보스"><figcaption><h3>헤일로 작전 · 월드 보스</h3><p>밀렵 단속, 보급 열차, 거대해지는 포켓몬</p></figcaption></figure>
-        <figure class="still"><img src="img2/meteor.jpg" alt="유성우 밤"><figcaption><h3>유성우 밤</h3><p>드물게 별이 쏟아지는 밤, 그날만의 포켓몬과 황금 잉어킹</p></figcaption></figure>
+    <div class="feature flip reveal">
+      <div class="shot" data-img="img/v12/board.jpg" data-cap="의뢰 게시판"><img loading="lazy" src="img/v12/board.jpg" alt="의뢰 게시판"><span class="cap">새싹마을 광장 · 의뢰 게시판</span></div>
+      <div>
+        <span class="tag">GUILD BOARD · 44</span>
+        <h3>판타지 길드 게시판과 마을 사람들</h3>
+        <p>의뢰 게시판 44곳을 길드 게시판 모양으로. 마을 사람 74명은 지방과 직업에 맞는 옷을 새로 입었어요 — 푸른들 목장 주인, 백암산 스님, 남해 해녀, 북부 대장장이.</p>
+        <ul class="ticks">
+          <li>의뢰 보상 지방별 ×1.5 · 2.5 · 3.5 · 5</li>
+          <li>이름 없는 트레이너 438명도 전원 다른 얼굴</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <section class="scene" data-name="새 시즌">
-    <div class="bg" style="background-image:url(img2/townnight.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 08 · 새 시즌 패치 노트</span>
-      <h2>지난 멀티 이후로, <em>이만큼</em></h2>
-      <div class="log">
-        <div class="new"><span class="tag">NEW</span><h3>🃏 카드팩 · 카드 거래</h3><p>4등급 × 홀로 · 이로치 인쇄. 운 좋으면 팩값보다 비싼 카드, 리그톡에서 판매 · 구해요 · 교환</p></div>
-        <div class="new"><span class="tag">NEW</span><h3>🎰 게임코너</h3><p>100 · 500 · 2,000코인 슬롯, 이기면 코인 + 메달 보너스. 지하 어딘가엔 숨은 방</p></div>
-        <div class="new"><span class="tag">NEW</span><h3>💬 리그톡</h3><p>서버 게시판, 쪽지, 교환 신청, 레이드 모집, 현상금 걸고 구해요</p></div>
-        <div class="new"><span class="tag">NEW</span><h3>👾 몬스터 없는 세계</h3><p>좀비 · 크리퍼 · 팬텀이 사라졌어요. 밤에도 포켓몬만</p></div>
-        <div><span class="tag">SHADER</span><h3>🌧 새로 만든 비</h3><p>가늘고 투명한 빗줄기, 밤에도 보이는 달빛 비, 물 위 물보라, 비마다 다른 자리에 고이는 웅덩이</p></div>
-        <div><span class="tag">SHADER</span><h3>🌊 물속에서 보는 하늘</h3><p>물속에서 올려다보면 투명한 수면 너머로 하늘 · 구름 · 집이 물결 따라 일렁여요</p></div>
-        <div><span class="tag">SHADER</span><h3>🌌 깊어진 밤하늘</h3><p>달의 모양마다 다른 밤, 남색 하늘과 청록 대기광, 은빛 구름</p></div>
-        <div><span class="tag">EVENT</span><h3>🌠 유성우 · 별의 조각</h3><p>별의 조각은 500코인, 유성우 밤엔 황금 잉어킹</p></div>
-        <div><span class="tag">STORY</span><h3>📜 박사님의 연구 노트</h3><p>세계 곳곳의 노트 12권, 다 모으면 연구 일지와 보상</p></div>
-        <div><span class="tag">LIFE</span><h3>🏡 집 · 목장</h3><p>오늘의 선물, 귀가 비행, 넓은 울타리 목장, 전망 탑 이로치 알림</p></div>
-        <div><span class="tag">TOWN</span><h3>🏘 마을 보호 · 건물 복구</h3><p>내가 놓은 블록만 부수기, 망가진 건물은 설계도대로 복구</p></div>
-        <div><span class="tag">FIX</span><h3>🛠 고친 것</h3><p>길바닥 구멍 931칸, 연타 튕김, 노을 그림자 떨림, 접속 끊김, 음악 볼륨</p></div>
+    <div class="strip reveal">
+      <figure data-cap="푸른들 포켓몬 리그"><img loading="lazy" src="img/v12/r1_league.jpg" alt=""><figcaption>푸른들 포켓몬 리그</figcaption></figure>
+      <figure data-cap="게임코너"><img loading="lazy" src="img/v12/corner.jpg" alt=""><figcaption>게임코너 · 백화점 옆</figcaption></figure>
+      <figure data-cap="배틀 타워"><img loading="lazy" src="img/v12/tower.jpg" alt=""><figcaption>배틀 타워</figcaption></figure>
+      <figure data-cap="마을 사람 21종"><img loading="lazy" src="img/v12/skins.jpg" alt=""><figcaption>마을 사람 21종</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">04 · EXPLORE</div>
+      <h2>체육관만 깨고 지나가던 마을에 <em>놀 거리</em>가</h2>
+      <p>탐험 명소 13곳. 기록이 남는 코스도 있고, 무엇이든 중간에 언제든 그만둘 수 있어요 — 채팅의 [✖ 포기하기], 또는 웅크린 채 하늘을 1.5초.</p>
+    </div>
+    <div class="spots reveal">
+      <div><span class="r">푸른들</span><ul><li>🏺 도자기 공방</li><li>🔭 별 관측소</li><li>🫐 나무열매 텃밭</li></ul></div>
+      <div><span class="r">백암산</span><ul><li>🕯 그림자 동굴</li><li>⛰ 산길 등반 코스<small>시간 기록</small></li><li>🎣 얼음 낚시터<small>낚시 대회</small></li></ul></div>
+      <div><span class="r">남해</span><ul><li>🚢 난파선 탐험</li><li>🤿 산호초 다이빙 코스<small>시간 기록</small></li><li>⚡ 번개 관측소</li></ul></div>
+      <div><span class="r">북부</span><ul><li>⛏ 폐광 · 광산 수레</li><li>🍄 미로 숲<small>시간 기록</small></li><li>🛡 수비대 연전<small>Lv80~90</small></li><li>❄ 얼음 미끄럼 동굴</li></ul></div>
+    </div>
+    <div class="feature reveal" style="margin-top:64px">
+      <div class="shot" data-img="img/v12/seabase.jpg" data-cap="해저 기지"><img loading="lazy" src="img/v12/seabase.jpg" alt="해저 기지"><span class="cap">해저 기지 · 관측 홀</span></div>
+      <div>
+        <span class="tag">SEA BASE · SAFARI</span>
+        <h3>바다 밑 유리 통로, 다시 만든 사파리</h3>
+        <p>해저 기지 섬의 입구 돔에서 승강기를 타고 내려가면 바다 밑 유리 통로와 관측 홀, 수조실이 이어져요. 사파리 존은 240×720 크기에 서식지 26곳과 산 속 동굴로 다시 만들었어요.</p>
+        <ul class="ticks"><li>마을 상징물 5곳을 어울리는 자리로 — 지키는 사람이 하루 한 번 작은 선물</li></ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
+<!-- LEGEND -->
+<section id="legend">
+  <div class="wrap">
+    <div class="head center reveal">
+      <div class="num">05 · LEGENDS</div>
+      <h2>서버에 단 <em>한 명</em></h2>
+      <p>전설은 이제 먼저 찾는 사람의 것이에요. 실마리는 연구소 박사님의 「전설 이야기」와 마을 사람들 이야기 속에 있어요.</p>
+    </div>
+    <div class="legend reveal">
+      <div class="lg"><div class="ic"><span>✦</span></div><h3>하늘 이벤트</h3><p>유성우 · 뇌우 · 강풍 · 비 갠 날에만 나타나는 전설이 있어요. 첫 지방 챔피언을 이긴 뒤부터.</p></div>
+      <div class="lg"><div class="ic"><span>◈</span></div><h3>봉인의 제단</h3><p>제단의 전설은 서버에서 처음 잡은 한 명만. 그 뒤엔 잡을 수 없는 기념 배틀과 기념 보상(제단마다 한 번).</p></div>
+      <div class="lg"><div class="ic"><span>？</span></div><h3>새 전설 8종</h3><p>어디에 있는지, 무엇이 필요한지는 직접. 「전설의 목격자」 · 「세 호수의 증인」 · 「창조의 증인」 같은 칭호가 기다려요.</p></div>
+    </div>
+  </div>
+</section>
 
-  <section class="scene" data-name="사운드트랙">
-    <div class="bg" style="background-image:url(img2/townnight.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 09 · 사운드트랙</span>
-      <h2>장소마다 다른 노래, <em>전부 새로 작곡</em></h2>
-      <p class="sub">도로 음악은 지방이 바뀔수록, 리그 음악은 지방이 깊어질수록 무거워져요. 밤길·동굴·바다 위에는 그곳만의 곡이, 정상에 처음 오르면 곡의 절정부터. ★ 버튼은 곡이 가장 커지는 곳 바로 앞부터 들려줘요.</p>
-      <div class="ost">
-        <div class="now"><b id="npTitle">곡을 골라 보세요</b><p id="npCap"></p><div class="bar" id="npBar"><i id="npFill"></i></div>
-          <div class="ctl"><button id="btnPlay" type="button">▶ 재생</button><button id="btnHl" type="button">★ 하이라이트</button><span id="npTime" style="font-family:var(--f-code);font-size:12px;color:var(--dim)">0:00 / 0:00</span></div>
-          <div class="grp" id="groups"></div></div>
-        <div class="list" id="tracks"></div>
+<!-- BATTLE -->
+<section id="battle" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">06 · BATTLE</div>
+      <h2>한 파티로 다 밀리지 않게, <em>더 영리한</em> 배틀</h2>
+    </div>
+    <div class="feature reveal">
+      <div class="shot" data-img="img/v12/battle.jpg" data-cap="새 전투 화면"><img loading="lazy" src="img/v12/battle.jpg" alt="새 전투 화면"><span class="cap">새 전투 화면 · 기술 설명 창</span></div>
+      <div>
+        <span class="tag">GIMMICKS · AI</span>
+        <h3>메가진화 · Z기술 · 다이맥스 · 테라스탈</h3>
+        <ul class="ticks">
+          <li>기믹 도구는 체육관 보상 — 메가 팔찌 · Z링 · 테라스탈 오브 · 다이맥스 밴드. 다이맥스는 어디서나</li>
+          <li>트레이너가 위급하면 <b>회복약</b>을 써요 (관장급 1개, 사천왕·챔피언 2개)</li>
+          <li>후반 트레이너는 날씨 뺏기 · 물 흡수 카운터까지</li>
+          <li>새 전투 화면 — 기술 칸에 마우스를 올리면 위력 · 상성 · 명중률</li>
+        </ul>
       </div>
     </div>
-  </section>
-  <section class="scene" data-name="설치">
-    <div class="bg" style="background-image:url(img2/end.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 10 · 함께 떠나기</span>
+    <div class="feature flip reveal">
+      <div class="shot" data-img="img/v12/r4_league.jpg" data-cap="북부 포켓몬 리그"><img loading="lazy" src="img/v12/r4_league.jpg" alt="북부 포켓몬 리그"><span class="cap">북부 포켓몬 리그</span></div>
+      <div>
+        <span class="tag">LEAGUE · TITLE MATCH</span>
+        <h3>이긴 사람이 다음 챔피언</h3>
+        <p>네 리그의 사천왕 방은 실제 타입 테마로 다시 꾸몄어요. 사천왕과 공식 챔피언은 한 번 이기면 끝, 대신 보상이 커졌어요.</p>
+        <ul class="ticks">
+          <li><b>타이틀 매치</b> — 공식 챔피언을 이긴 사람은 챔피언 홀에서 현 챔피언에게 언제든 도전</li>
+          <li>현 챔피언이 접속 중이면 실시간 1:1, 아니면 분신이 상대</li>
+          <li>모든 지방을 정복하면 … 정상에서 온 초대장</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECONOMY -->
+<section id="econ">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">07 · LIFE &amp; ECONOMY</div>
+      <h2>지방이 깊어질수록 <em>보상도</em> 깊어져요</h2>
+    </div>
+    <div class="tablebox reveal">
+      <table class="econ">
+        <thead><tr><th>항목</th><th>v12</th></tr></thead>
+        <tbody>
+          <tr><td>의뢰 보상</td><td>지방별 ×1.5 · ×2.5 · ×3.5 · ×5</td></tr>
+          <tr><td>집값</td><td>지방별 ×1 · ×1.5 · ×2 · ×3 · 2층 큰 집 8채 새로 판매</td></tr>
+          <tr><td>사천왕</td><td>한 번만 · 1명당 1,000 / 2,000 / 3,100 / 4,400코인</td></tr>
+          <tr><td>공식 챔피언</td><td>한 번만 · 1,600 / 3,200 / 5,000 / 7,000코인</td></tr>
+          <tr><td>브리더</td><td>알 부화 30 · 진화 20코인, 종마다 처음 Lv100이면 1,000코인</td></tr>
+          <tr><td>연구원</td><td>포획 1마리 10코인 · 새 연구원 상점 (화석 · 병뚜껑 · 진화 도구)</td></tr>
+          <tr><td>떠돌이 상인</td><td>마스터볼 하루 1개 · 만난 뒤 30분은 다른 이벤트</td></tr>
+          <tr><td>화석 복원기</td><td>연구소 4곳 책장 앞</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">08 · SOUNDTRACK</div>
+      <h2>장소마다 다른 노래, <em>새 곡 8개</em></h2>
+      <p>지방별 체육관 곡과 백화점 · 게임코너 · 배틀 타워 · 마을의 밤이 새로 생겼어요. 곡이 바뀔 땐 부드럽게 겹쳐 넘어가요. ★ 버튼은 곡이 가장 커지는 곳 바로 앞부터 들려줘요.</p>
+    </div>
+    <div class="player reveal">
+      <div class="np" aria-live="polite">
+        <div class="ttl" id="npTitle">곡을 골라 보세요</div>
+        <div class="cap" id="npCap"></div>
+        <div class="npbar" id="npBar"><i id="npFill"></i></div>
+        <div class="tm" id="npTime">0:00 / 0:00</div>
+        <div class="ctl"><button class="main" id="btnPlay" type="button">▶ 재생</button><button id="btnHl" type="button">★ 하이라이트</button></div>
+      </div>
+      <div>
+        <div class="groups" id="groups"></div>
+        <div class="tracks" id="tracks"></div>
+      </div>
+    </div>
+    <audio id="audio" preload="none"></audio>
+  </div>
+</section>
+
+<!-- START -->
+<section id="start">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">09 · GET STARTED</div>
       <h2>이제 <em>당신 차례</em>예요</h2>
-      <div class="dls">
-        <a class="dl" id="dl" href="#" target="_blank" rel="noopener">⬇ 모드팩 받기 <span style="font-weight:500;font-size:15px">v11.10.7</span></a>
-        <a class="dl alt" href="https://modrinth.com/app" target="_blank" rel="noopener">⬇ Modrinth 앱 받기 <span style="font-weight:500;font-size:13px;opacity:.75">무료 런처</span></a>
-      </div>
-      <div class="steps">
-        <div><h3>준비</h3><p>마인크래프트 자바 에디션, <a href="https://modrinth.com/app" target="_blank" rel="noopener" style="color:var(--gold)">Modrinth 앱</a>(무료 런처), 램 16GB PC</p></div>
-        <div><h3>가져오기</h3><p>받은 파일을 더블클릭하거나 Modrinth 앱의 ＋ 버튼으로</p></div>
-        <div><h3>메모리</h3><p>프로필 설정에서 Java 메모리를 6GB 이상으로</p></div>
-        <div><h3>출발</h3><p>▶ 플레이. 첫 열차가 새싹마을로 데려다줘요</p></div>
-      </div>
-      <p class="credit"><b>박준혁 × Claude</b> — 맵 · 모드 · 데이터팩 박준혁 · 스토리 · 디자인 · 음악 Claude<br>Pokémon은 Nintendo / Creatures / GAME FREAK의 상표이며, 이 서버는 친구들끼리 즐기는 비공식 팬 서버예요.</p>
+      <p>v11 프로필에 덮어쓰지 말고, 새 프로필로 설치해 주세요. 리그 파일이 전부 바뀌었고 건축·가구 모드 13개가 새로 들어갔어요.</p>
     </div>
-  </section>
+    <ol class="steps reveal">
+      <li><b>준비</b><span>마인크래프트 자바 에디션과 무료 런처 Modrinth 앱</span></li>
+      <li><b>가져오기</b><span>받은 .mrpack 파일을 더블클릭하거나 Modrinth 앱의 ＋ 버튼으로</span></li>
+      <li><b>메모리</b><span>프로필 설정 → Java 메모리 4GB 이상 (여유가 있으면 6GB)</span></li>
+      <li><b>출발</b><span>▶ 플레이. 첫 열차가 새싹마을로 데려다줘요</span></li>
+    </ol>
+    <div class="dlbox reveal">
+      <a class="btn main dl" id="dl" href="#" target="_blank" rel="noopener">⬇ 모드팩 받기 <small class="ver">v12</small></a>
+      <a class="btn" href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱 받기 <small>무료 런처</small></a>
+      <span class="note" id="dlNote"></span>
+    </div>
 
-  <section class="scene" data-name="시작하기">
-    <div class="bg" style="background-image:url(img2/journey.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 11 · 시작하기</span>
-      <h2>처음 접속하는 날 <em>알아 두면 좋은 것</em></h2>
-      <div class="start">
-        <div><h3>서버 접속</h3><p id="srvNone">서버 주소는 디스코드 공지를 확인해 주세요.</p><p id="srvBox" hidden>멀티플레이 → 서버 추가 → 붙여넣기<br><span class="srv" id="srv"></span> <button id="srvCopy" type="button">복사</button></p>
-          <p style="margin-top:8px">첫 접속: 주위를 둘러보면 첫 열차가 출발해요. 도착하면 새싹마을.</p><div class="links" id="links"></div></div>
-        <div><h3>조작키</h3><div class="keys"><kbd>우클릭</kbd><span>포켓기어 (앱 17개 + 빠른 설정)</span><kbd>J</kbd><span>진행 상황 켜기/끄기</span><kbd>,</kbd><span>지방 지도</span><kbd>K</kbd><span>화면 위 길 안내</span><kbd>.</kbd><span>포켓기어 라디오</span><kbd>F10</kbd><span>쉐이더 켜기/끄기</span></div></div>
-        <div><h3>알아 두기</h3><ul><li>음악은 설정 → 음악 및 소리 → 「주크박스/소리 블록」 볼륨</li><li>쉐이더 「리그 호라이즌」은 자동으로 켜져요. 버벅이면 F10</li><li>마을에는 블록을 놓을 수 있어요. 부술 수 있는 건 내가 놓은 블록만</li><li>적대 몬스터는 나오지 않아요. 밤길도 안심</li><li>문제가 생기면 F3 좌표가 보이게 캡처해서 디스코드에</li></ul></div>
+    <div class="two" style="margin-top:56px">
+      <div class="panel reveal">
+        <h3>서버 접속</h3>
+        <div id="srvNone"><p>서버 주소는 디스코드 공지를 확인해 주세요.</p></div>
+        <div id="srvBox" hidden><div class="srv"><code id="srv"></code><button id="srvCopy" type="button">복사</button></div><p>멀티플레이 → 서버 추가 → 붙여넣기</p></div>
+        <p>첫 접속하면 첫 열차가 출발해요. 도착하면 새싹마을.</p>
+        <div class="links" id="links"></div>
+      </div>
+      <div class="panel reveal">
+        <h3>조작키</h3>
+        <div class="keys">
+          <kbd>우클릭</kbd><span>포켓기어 (앱 + 빠른 설정)</span>
+          <kbd>J</kbd><span>진행 상황 켜기 / 끄기</span>
+          <kbd>,</kbd><span>지방 지도</span>
+          <kbd>K</kbd><span>화면 위 길 안내</span>
+          <kbd>.</kbd><span>포켓기어 라디오</span>
+          <kbd>F10</kbd><span>쉐이더 켜기 / 끄기</span>
+        </div>
       </div>
     </div>
-  </section>
-
-  <section class="scene" data-name="테스트 체크">
-    <div class="bg" style="background-image:url(img2/r1bg.jpg)"></div><div class="shade"></div>
-    <div class="in">
-      <span class="tc">Chapter 12 · 테스트 항목</span>
-      <h2>해 본 것에 <em>체크</em>해 주세요 <span id="prog" style="font-family:var(--f-code);font-size:18px;color:var(--dim)">0 / 0</span></h2>
-      <p class="sub">이상한 점을 찾으면 F3을 눌러 좌표가 보이게 캡처하고, 무엇을 하다가 생겼는지 한 줄만 적어 보내 주세요. 체크 표시는 이 브라우저에만 저장돼요.</p>
-      <div class="chk" id="check"></div>
+    <div class="panel reveal" style="margin-top:20px">
+      <h3>알아 두기</h3>
+      <ul class="ticks">
+        <li>쉐이더 「리그 호라이즌」은 자동으로 켜져요. 버벅이면 F10</li>
+        <li>마을에는 블록을 놓을 수 있어요. 부술 수 있는 건 내가 놓은 블록만</li>
+        <li>적대 몬스터는 나오지 않아요. 밤길도 안심</li>
+        <li>음악 볼륨은 설정 → 음악 및 소리 → 「주크박스/소리 블록」</li>
+        <li>문제가 생기면 F3을 눌러 좌표가 보이게 캡처해서 디스코드에</li>
+      </ul>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story" class="alt">
+  <div class="wrap">
+    <div class="two">
+      <div class="reveal">
+        <div class="head" style="margin-bottom:28px">
+          <div class="num">10 · MAKING</div>
+          <h2>체육관 하나에서, <em>새 시즌</em>까지</h2>
+          <p>맵도, 모드도, 쉐이더도, 음악도 — 전부 둘이서 직접 만들었어요.</p>
+        </div>
+      </div>
+      <div class="tl reveal">
+        <div><time>10월 말</time><b>구상</b><p>지방 넷, 체육관 서른둘, 이긴 사람이 챔피언이 되는 리그</p></div>
+        <div><time>10.29 · v9</time><b>친구들에게 첫 배포</b></div>
+        <div><time>11.01 · v11</time><b>45개 마을이 한 세계에</b><p>주민 이야기 45개, 4개 리그, 지방 열차</p></div>
+        <div><time>11.02 → 03</time><b>밤샘 패치</b><p>하룻밤에 15번 빌드하고 고쳤어요</p></div>
+        <div><time>11.05</time><b>리그 호라이즌 쉐이더</b><p>하늘, 물, 비, 밤까지 직접 계산</p></div>
+        <div><time>11.07</time><b>v11.10.7 · 새 시즌 결정</b><p>"지금 맵은 튜토리얼이었구나" 싶을 만큼</p></div>
+        <div><time>11.08</time><b>새 월드 굽기</b><p>모든 건물 재설계, 탐험 명소 · 해저 기지 · 새 전설</p></div>
+        <div class="now"><time>11.09 · v12</time><b>새 시즌 출발</b><p>Macaw 디테일, 열차 리메이크, 새 화면, 마을 사람 스킨</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="check">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="num">11 · TEST</div>
+      <h2>해 본 것에 <em>체크</em>해 주세요</h2>
+      <p>이상한 점을 찾으면 F3을 눌러 좌표가 보이게 캡처하고, 무엇을 하다가 생겼는지 한 줄만 적어 보내 주세요. 체크 표시는 이 브라우저에만 저장돼요.</p>
+    </div>
+    <div class="chkhead"><b id="chkCount">0 / 0</b><div class="prog"><i id="chkBar"></i></div><button class="btn" id="chkReset" type="button" style="padding:8px 14px;font-size:13px">초기화</button></div>
+    <div class="chk" id="chk"></div>
+  </div>
+</section>
 </main>
-<audio id="audio" preload="none"></audio>
-<div class="tlbox" id="tlBox" hidden><video id="trailer" controls preload="none" src="trailer.mp4" poster="img2/cover.jpg"></video><button type="button" id="tlClose" class="tlbtn">닫기 ✕</button></div>
 
-<nav class="chap" id="chap" aria-label="장면"></nav>
+<footer>
+  <div class="wrap">
+    <img src="img/v12/emblem.png" alt="">
+    <div class="cr">박준혁 × Claude</div>
+    <div class="who">맵 · 모드 · 데이터팩 박준혁 · 스토리 · 디자인 · 음악 Claude</div>
+    <button class="old" id="tlOpen" type="button">▶ 지난 시즌(v11) 트레일러 보기</button>
+    <p>Pokémon은 Nintendo / Creatures / GAME FREAK의 상표이며, 이 서버는 친구들끼리 즐기는 비공식 팬 서버예요.</p>
+  </div>
+</footer>
 
-<script>
-(() => {
-  const reel = document.getElementById('reel');
-  const scenes = [...reel.querySelectorAll('.scene')];
-  const chap = document.getElementById('chap');
-  scenes.forEach((s, i) => {
-    const b = document.createElement('button');
-    b.textContent = String(i).padStart(2, '0') + ' ' + s.dataset.name;
-    b.addEventListener('click', () => go(i));
-    chap.appendChild(b);
-  });
-  const btns = [...chap.children];
-  const horizontal = () => window.matchMedia('(min-width: 761px)').matches;
-  let cur = 0;
-  function mark(i) {
-    cur = i;
-    btns.forEach((b, k) => b.classList.toggle('on', k === i));
-    scenes.forEach((s, k) => s.classList.toggle('on', k === i));
-  }
-  function go(i) {
-    i = Math.max(0, Math.min(scenes.length - 1, i));
-    if (horizontal()) reel.scrollTo({ left: i * reel.clientWidth });
-    else scenes[i].scrollIntoView();
-    mark(i);
-  }
-  reel.addEventListener('scroll', () => { if (horizontal()) mark(Math.round(reel.scrollLeft / reel.clientWidth)); }, { passive: true });
-  let lock = 0;
-  reel.addEventListener('wheel', (e) => {
-    if (!horizontal() || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-    const inner = scenes[cur].querySelector('.in');
-    const down = e.deltaY > 0;
-    if (inner && inner.scrollHeight > inner.clientHeight + 4) {     // a tall scene scrolls inside first
-      const atEnd = down ? inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2 : inner.scrollTop <= 0;
-      if (!atEnd) return;
-    }
-    e.preventDefault();
-    const now = Date.now();
-    if (now - lock < 650) return;
-    lock = now;
-    go(cur + (down ? 1 : -1));
-  }, { passive: false });
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { go(cur + 1); e.preventDefault(); }
-    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { go(cur - 1); e.preventDefault(); }
-  });
-  mark(0);
+<div class="lb" id="lb" hidden><img id="lbImg" alt=""><p id="lbCap"></p></div>
+<div class="lb" id="tlBox" hidden><button class="x" id="tlClose" type="button">닫기 ✕</button><video id="trailer" src="trailer.mp4" poster="cover.jpg" controls playsinline preload="none"></video></div>
 
-  // background music: our own "새싹마을 · 첫 열차", quiet, from the first touch (browsers need one)
-  const bgm = document.getElementById('bgm'), snd = document.getElementById('snd'), sndt = document.getElementById('sndt');
-  const VOL = 0.035;   // very soft: just audible under the page
-  let want = true;
-  try { want = localStorage.getItem('lg.bgm') !== 'off'; } catch (e) {}
-  function ui(on) { snd.classList.toggle('play', on); snd.setAttribute('aria-pressed', String(on)); sndt.textContent = on ? '배경음악 끄기' : '배경음악 켜기'; }
-  let fadeT = 0;
-  function fadeTo(v, done) {
-    clearTimeout(fadeT);
-    const step = () => {
-      const d = v - bgm.volume;
-      if (Math.abs(d) <= 0.006) { bgm.volume = v; if (done) done(); return; }
-      bgm.volume = Math.max(0, Math.min(1, bgm.volume + Math.sign(d) * 0.005));
-      fadeT = setTimeout(step, 60);
-    };
-    step();
-  }
-  function play() { bgm.volume = 0; bgm.play().then(() => { ui(true); fadeTo(VOL); }).catch(() => ui(false)); }
-  function stop() { ui(false); fadeTo(0, () => bgm.pause()); }
-  snd.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const on = bgm.paused;
-    try { localStorage.setItem('lg.bgm', on ? 'on' : 'off'); } catch (err) {}
-    on ? play() : stop();
-  });
-  const evs = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
-  const first = (e) => {
-    if (e.target === snd || snd.contains(e.target)) return;
-    evs.forEach(t => window.removeEventListener(t, first));
-    if (want && bgm.paused) play();
-  };
-  evs.forEach(t => window.addEventListener(t, first, { passive: true }));
-  ui(false);
-})();
-</script>
 <script src="tracks.js"></script>
 <script>
-
 (function () {
   "use strict";
-  function el(id) { return document.getElementById(id); }
-  var bgm = el("bgm");
-  function hushBgm() { if (bgm && !bgm.paused) { bgm.pause(); } }
-  // ---- site settings (config.js, fetched fresh so a GitHub edit shows at once)
+  function $(id) { return document.getElementById(id); }
+
+  // ---- settings from config.js (fetched fresh so a GitHub edit shows at once)
   var sc = document.createElement("script");
   sc.src = "config.js?t=" + Date.now();
   sc.onload = sc.onerror = function () {
     var S = window.SITE || {};
-    var dl = el("dl");
-    if (S.download && dl) dl.href = S.download;
-    var vs = dl && dl.querySelector("span");
-    if (vs) vs.textContent = S.version ? S.version.split(" ")[0] : "";
-    if (S.server) { el("srvNone").hidden = true; el("srvBox").hidden = false; el("srv").textContent = S.server; }
-    el("srvCopy").addEventListener("click", function () {
+    var ver = (S.version || "").split(" ")[0];
+    [].forEach.call(document.querySelectorAll("a.dl"), function (a) {
+      if (S.download) { a.href = S.download; a.target = "_blank"; a.rel = "noopener"; }
+      var v = a.querySelector(".ver"); if (v && ver) v.textContent = ver;
+    });
+    if (S.version) $("dlNote").textContent = S.version + " · .mrpack (Modrinth 모드팩)";
+    if (S.server) { $("srvNone").hidden = true; $("srvBox").hidden = false; $("srv").textContent = S.server; }
+    $("srvCopy").addEventListener("click", function () {
       var b = this;
       try { navigator.clipboard.writeText(S.server || "").then(function () { b.textContent = "복사됨 ✓"; }, function () { b.textContent = "길게 눌러 복사"; }); } catch (e) { b.textContent = "길게 눌러 복사"; }
     });
     var L = [];
     if (S.discord) L.push({ title: "디스코드 들어가기", url: S.discord });
     if (S.poster) L.push({ title: "서버 소개 포스터", url: S.poster });
-    (S.links || []).forEach(function (x) { if (x && x.url) L.push(x); });
-    var nav = el("links");
-    L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "↗ " + (x.title || x.url); nav.appendChild(a); });
+    (S.links || []).forEach(function (x) { if (x && x.url && !/modrinth\.com\/app/.test(x.url)) L.push(x); });
+    L.forEach(function (x) { var a = document.createElement("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "↗ " + (x.title || x.url); $("links").appendChild(a); });
   };
   document.head.appendChild(sc);
 
-  // ---- trailer
-  var box = el("tlBox"), vid = el("trailer");
-  el("tlOpen").addEventListener("click", function (e) { e.stopPropagation(); box.hidden = false; hushBgm(); audio.pause(); vid.play().catch(function () {}); });
-  el("tlClose").addEventListener("click", function () { vid.pause(); box.hidden = true; });
+  // ---- top bar + reveal
+  var bar = $("bar");
+  function onScroll() { bar.classList.toggle("solid", window.scrollY > 40); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+    [].forEach.call(document.querySelectorAll(".reveal"), function (el) { io.observe(el); });
+  } else { [].forEach.call(document.querySelectorAll(".reveal"), function (el) { el.classList.add("in"); }); }
+
+  // ---- lightbox
+  var lb = $("lb");
+  function openLb(src, cap) { $("lbImg").src = src; $("lbCap").textContent = cap || ""; lb.hidden = false; }
+  lb.addEventListener("click", function () { lb.hidden = true; });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { lb.hidden = true; closeTrailer(); } });
+  [].forEach.call(document.querySelectorAll("[data-img]"), function (el) { el.addEventListener("click", function () { openLb(el.dataset.img, el.dataset.cap); }); });
+  [].forEach.call(document.querySelectorAll(".strip figure"), function (f) { f.addEventListener("click", function () { openLb(f.querySelector("img").src, f.dataset.cap); }); });
+
+  // ---- old trailer
+  var tbox = $("tlBox"), vid = $("trailer");
+  function closeTrailer() { vid.pause(); tbox.hidden = true; }
+  $("tlOpen").addEventListener("click", function () { audio.pause(); tbox.hidden = false; vid.play().catch(function () {}); });
+  $("tlClose").addEventListener("click", closeTrailer);
 
   // ---- soundtrack
-  var TR = window.TRACKS || [], audio = el("audio"), cur = null, VOL = 0.22;
+  var TR = window.TRACKS || [], audio = $("audio"), cur = null, VOL = 0.3;
+  var NEW = { gym_r1: 1, gym_r2: 1, gym_r3: 1, gym_r4: 1, town_night: 1, dept: 1, corner: 1, tower: 1 };
   function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
-  var groups = ["전체"]; TR.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
-  var gbox = el("groups"), tbox = el("tracks");
+  var groups = ["전체", "새 곡"]; TR.forEach(function (t) { if (groups.indexOf(t.group) < 0) groups.push(t.group); });
+  var gbox = $("groups"), tbx = $("tracks");
   groups.forEach(function (g, k) {
     var b = document.createElement("button"); b.type = "button"; b.textContent = g; b.setAttribute("aria-pressed", k === 0 ? "true" : "false");
     b.addEventListener("click", function () {
       [].forEach.call(gbox.children, function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-      [].forEach.call(tbox.children, function (r) { r.hidden = !(g === "전체" || r.dataset.group === g); });
+      [].forEach.call(tbx.children, function (r) { r.hidden = !(g === "전체" || (g === "새 곡" ? r.dataset.nw : r.dataset.group === g)); });
     });
     gbox.appendChild(b);
   });
   TR.forEach(function (t) {
     var b = document.createElement("button"); b.type = "button"; b.className = "trk"; b.dataset.group = t.group;
+    if (NEW[t.id]) b.dataset.nw = "1";
     b.innerHTML = "<span></span><small></small>";
-    b.querySelector("span").textContent = t.title; b.querySelector("small").textContent = t.where + " · " + fmt(t.dur);
+    b.querySelector("span").textContent = t.title;
+    if (NEW[t.id]) { var n = document.createElement("i"); n.className = "nw"; n.textContent = "NEW"; n.style.fontStyle = "normal"; b.querySelector("span").appendChild(n); }
+    b.querySelector("small").textContent = t.where + " · " + fmt(t.dur);
     b.addEventListener("click", function () { play(t, 0); });
-    t.btn = b; tbox.appendChild(b);
+    t.btn = b; tbx.appendChild(b);
   });
   function play(t, at) {
-    hushBgm();
-    if (cur !== t) { if (cur) cur.btn.classList.remove("on"); cur = t; t.btn.classList.add("on"); audio.src = "audio/" + t.id + ".mp3"; el("npTitle").textContent = t.title + " — " + t.where; }
+    if (cur !== t) { if (cur) cur.btn.classList.remove("on"); cur = t; t.btn.classList.add("on"); audio.src = "audio/" + t.id + ".mp3"; $("npTitle").textContent = t.title + " — " + t.where; }
     var go = function () { try { audio.currentTime = at || 0; } catch (e) {} audio.volume = VOL; audio.play().catch(function () {}); };
     if (audio.readyState >= 1) go(); else { audio.preload = "auto"; audio.addEventListener("loadedmetadata", go, { once: true }); audio.load(); }
   }
-  el("btnPlay").addEventListener("click", function () { if (!cur) return play(TR[0], 0); if (audio.paused) { hushBgm(); audio.play().catch(function () {}); } else audio.pause(); });
-  el("btnHl").addEventListener("click", function () { var t = cur || TR[TR.length - 1]; play(t, Math.max(0, t.hl - 6)); });
-  audio.addEventListener("play", function () { el("btnPlay").textContent = "❚❚ 멈춤"; });
-  audio.addEventListener("pause", function () { el("btnPlay").textContent = "▶ 재생"; });
+  $("btnPlay").addEventListener("click", function () { if (!cur) return play(TR[0], 0); if (audio.paused) audio.play().catch(function () {}); else audio.pause(); });
+  $("btnHl").addEventListener("click", function () { var t = cur || TR[0]; play(t, Math.max(0, t.hl - 6)); });
+  audio.addEventListener("play", function () { $("btnPlay").textContent = "❚❚ 멈춤"; });
+  audio.addEventListener("pause", function () { $("btnPlay").textContent = "▶ 재생"; });
   audio.addEventListener("ended", function () { var i = TR.indexOf(cur); if (i >= 0 && i + 1 < TR.length) play(TR[i + 1], 0); });
-  el("npBar").addEventListener("click", function (e) { if (!cur) return; var r = this.getBoundingClientRect(); play(cur, (e.clientX - r.left) / r.width * cur.dur); });
+  $("npBar").addEventListener("click", function (e) { if (!cur) return; var r = this.getBoundingClientRect(); play(cur, (e.clientX - r.left) / r.width * cur.dur); });
   audio.addEventListener("timeupdate", function () {
     if (!cur) return;
     var p = audio.currentTime, txt = "";
-    el("npFill").style.width = (p / cur.dur * 100) + "%";
-    el("npTime").textContent = fmt(p) + " / " + fmt(cur.dur);
+    $("npFill").style.width = (p / cur.dur * 100) + "%";
+    $("npTime").textContent = fmt(p) + " / " + fmt(cur.dur);
     (cur.caps || []).forEach(function (c) { if (p >= c[0]) txt = c[1]; });
     if (p < cur.hl - 1.5 && cur.hl - p > 8) txt += "  ·  절정까지 " + Math.ceil(cur.hl - p) + "초";
-    el("npCap").textContent = txt;
+    $("npCap").textContent = txt;
   });
 
   // ---- tester checklist (this browser only)
   var CHECK = [
-    ["첫걸음", ["첫 열차 컷신이 끝까지 재생된다", "새싹마을에서 스타팅 포켓몬을 받는다", "박사에게 파트너 선물을 받는다", "모험 수첩·코인 케이스·트레이너 카드가 열린다", "J / , / K 키가 작동한다"]],
-    ["이동", ["역 매표소에서 다른 지방으로 기차 이동", "하늘 택시로 가 본 마을에 이동", "마을에 들어가면 마을 이름이 뜬다", "도로를 걸으면 길가 트레이너·이벤트가 생긴다"]],
-    ["배틀", ["첫 체육관 관장을 이긴다 (배지 케이스에 끼우기)", "배틀 팩토리 1판 도전", "친구와 랭크 매칭 1판", "월드 보스에 참여한다", "길가 트레이너와 재대결"]],
-    ["생활", ["의뢰 게시판 의뢰 1개 완료", "직업 하나를 정하고 경험치 얻기", "집 구매·꾸미기 (돈이 되면)", "교환소에서 친구와 교환", "NPC 교환 의뢰 1건", "부티크에서 모자 써 보기"]],
-    ["이벤트", ["대량발생 현장 가 보기", "기상 특보 때 날씨 포켓몬 만나기", "헤일로 작전 막기 (작전 문서 얻기)", "채집 대회 참가", "포켓기어 라디오 소식 확인"]],
-    ["수집", ["카메라로 사진 찍고 앨범 확인", "도감 마일스톤 보상 받기", "칭호 하나 얻고 바꿔 달기", "수수께끼 수첩에 무언가 기록되기"]],
-    ["소리", ["마을·도로·리그에서 음악이 바뀐다", "밤길·동굴·바다 위에서 그곳의 음악이 나온다", "배틀 중에는 배경음악이 멈추고 배틀 음악만 나온다", "헤일로 작전 근처에서 습격 음악이 나온다", "모험 수첩에서 배경음악 끄기/켜기"]],
-    ["새 시즌", ["리그톡에 글 쓰기 · 쪽지 보내기", "게임코너 슬롯 한 판", "카드팩 하나 열어 보기", "리그톡에 카드 올려 보기 (판매 · 구해요 · 교환)", "박사님의 연구 노트 1장 찾기", "마을에 블록 놓고 다시 부수기", "밤하늘 은하수 찾아보기", "비 오는 날 웅덩이 · 물보라 보기", "물속에서 하늘 올려다보기"]]
+    ["첫걸음", ["첫 열차를 타고 새싹마을에 도착한다", "스타팅 포켓몬을 고른다", "포켓기어 · 코인 케이스 · 트레이너 카드가 열린다", "J / , / K 키가 작동한다"]],
+    ["마을", ["포켓몬센터 로비 소파에 앉아 본다", "백화점 엘리베이터 버튼으로 층을 옮긴다", "백화점 3층 기믹 · 메가스톤 코너에서 둘러본다", "게임코너에서 슬롯 한 판", "마을 사람들에게 말 걸어 보기 (옷이 지방마다 달라요)"]],
+    ["이동", ["역 매표소에서 다른 지방으로 기차 이동", "하늘 택시로 가 본 마을에 이동"]],
+    ["배틀", ["첫 체육관 관장을 이긴다 (배지 케이스에 끼우기)", "기술 칸에 마우스를 올려 기술 설명 창 보기", "Z기술 · 다이맥스 · 테라스탈 중 하나 써 보기", "회복약을 쓰는 트레이너 만나기"]],
+    ["탐험", ["탐험 명소 한 곳 해 보기", "기록 코스 하나 완주 (등반 · 다이빙 · 미로 숲)", "해저 기지 유리 통로까지 내려가기", "사파리 존 들어가 보기"]],
+    ["전설", ["박사님의 「전설 이야기」 듣기", "하늘 이벤트(유성우 · 뇌우 · 강풍 · 무지개) 목격"]],
+    ["생활", ["의뢰 게시판 의뢰 1개 완료", "직업 하나를 정하고 경험치 얻기", "화석 복원기 써 보기"]],
+    ["소리 · 화면", ["체육관 · 백화점 · 게임코너 · 배틀 타워 새 곡 듣기", "밤이 된 마을에서 「마을의 밤」 듣기", "곡이 바뀔 때 부드럽게 넘어가는지", "전투 메시지 글씨가 또렷한지"]]
   ];
-  var store = {}; try { store = JSON.parse(localStorage.getItem("league-test-v2") || "{}"); } catch (e) { store = {}; }
-  var cbox = el("check"), total = 0;
-  function save() { try { localStorage.setItem("league-test-v2", JSON.stringify(store)); } catch (e) {} }
-  function count() { var n = 0; for (var k in store) if (store[k]) n++; el("prog").textContent = n + " / " + total; }
+  var KEY = "league-test-v12", store = {};
+  try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+  var total = 0, box = $("chk");
   CHECK.forEach(function (grp, gi) {
     var fs = document.createElement("fieldset"), lg = document.createElement("legend"); lg.textContent = grp[0]; fs.appendChild(lg);
-    grp[1].forEach(function (item, ii) {
-      total++;
-      var key = gi + "-" + ii, lab = document.createElement("label"), inp = document.createElement("input"), sp = document.createElement("span");
-      inp.type = "checkbox"; inp.checked = !!store[key]; sp.textContent = item;
-      if (inp.checked) lab.classList.add("done");
-      inp.addEventListener("change", function () { store[key] = inp.checked; lab.classList.toggle("done", inp.checked); save(); count(); });
-      lab.appendChild(inp); lab.appendChild(sp); fs.appendChild(lab);
+    grp[1].forEach(function (txt, i) {
+      var id = gi + "-" + i; total++;
+      var l = document.createElement("label"), c = document.createElement("input"), s = document.createElement("span");
+      c.type = "checkbox"; c.checked = !!store[id]; s.textContent = txt;
+      c.addEventListener("change", function () { if (c.checked) store[id] = 1; else delete store[id]; save(); count(); });
+      l.appendChild(c); l.appendChild(s); fs.appendChild(l);
     });
-    cbox.appendChild(fs);
+    box.appendChild(fs);
   });
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  function count() { var n = Object.keys(store).length; $("chkCount").textContent = n + " / " + total; $("chkBar").style.width = (n / total * 100) + "%"; }
+  $("chkReset").addEventListener("click", function () { store = {}; save(); [].forEach.call(box.querySelectorAll("input"), function (c) { c.checked = false; }); count(); });
   count();
 })();
-
 </script>
-
 </body>
 </html>
