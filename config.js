@@ -8,7 +8,7 @@ window.SITE = {
   download: "https://drive.google.com/file/d/11AqAX-JzPbm87JF26d9wunKaGB_L1fkK/view?usp=sharing",
 
   // 모드팩 버전 / 올린 날짜 (다운로드 버튼 아래에 표시)
-  version: "v13 · 2026-11-22",
+  version: "v15 · 2026-11-22",
 
   // 서버 주소 — 비워 두면 "디스코드 공지 확인" 문구가 나와요. 예: "play.example.com"
   server: "",
