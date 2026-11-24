@@ -37,34 +37,34 @@
     gear:'<rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M9 6.5h6M9 9.5h6M9 12.5h3"/><circle cx="12" cy="17.5" r="1"/>'
   };
   var FEAT = [
-    { ic:"legend", tag:"LEGENDS", t:"전설은 한 사람을 골라요", img:"r2_league",
+    { ic:"legend", tag:"LEGENDS", t:"전설은 한 사람을 골라요", imgs:["r2_league","r4_glacier"],
       b:["전설과 준전설 모두, 서버에서 처음 만나 잡은 한 명만 데려갈 수 있어요. 단서는 마을 곳곳의 메모와 옛 돌에 흩어져 있고, 하늘이 유성우나 뇌우로 바뀌는 날에만 나타나는 전설도 있어요.","누군가 먼저 데려갔다면 남은 잔상과 기념 배틀을 해 「인정」을 받고 다음 전설로 넘어가면 돼요. 교환은 되지만, 처음 고른 트레이너의 이름은 기록에 남아요."],
       n:[["44종","전설 도감"],["1명","종마다 첫 주인"]] },
-    { ic:"cards", tag:"CARDS", t:"리그 카드", img:"feat_cards",
+    { ic:"cards", tag:"CARDS", t:"리그 카드", imgs:["ui_card","ui_binder"], fit:["contain","contain"],
       b:["포켓몬 카드로 겨루는 카드 배틀. 과수원 마을 북쪽 카드 클럽에서 트레이너 8명과 카드 마스터가 기다려요.","관장 · 사천왕 · 챔피언이 그려진 인물 카드도 팩에서 나와요. 카드 사이트에 디스코드로 들어오면 마크 친구와 그대로 대전할 수 있어요."],
       n:[["67장","트레이너스 카드"],["크로스플레이","사이트 ↔ 마크"]] },
-    { ic:"tv", tag:"LIVE", t:"리그 TV와 배틀 카메라", img:"feat_tv",
+    { ic:"tv", tag:"LIVE", t:"리그 TV와 배틀 카메라", imgs:["feat_tv"],
       b:["챔피언전 · 사천왕 · 체육관 · 전설 조우 · 카드 대전을 포켓기어 TV로 생중계해요. 관전석에 들어가 응원하고, 나가면 원래 자리로 돌아와요.","내 배틀은 시작할 때, 큰 기술이 맞을 때, 포켓몬이 쓰러질 때 카메라가 잠깐 두 포켓몬을 비춰요."],
       n:[["7종","중계되는 배틀"]] },
-    { ic:"people", tag:"PEOPLE", t:"마을 사람과 가까워지기", img:"feat_people",
+    { ic:"people", tag:"PEOPLE", t:"마을 사람과 가까워지기", imgs:["ui_phone","feat_people"], fit:["contain","cover"],
       b:["직업 NPC 24종과 「이야기 나누기」로 친해지면 그 사람만의 이야기가 이어져요. 관장 · 사천왕 · 챔피언과는 포켓기어로 전화를 주고받아요.","이야기 의뢰를 모두 마치면 지방마다 후일담이 열리고, 도서관엔 사천왕 수기와 전설 연구 노트가 꽂혀 있어요."],
       n:[["24종","마음을 나누는 NPC"],["53명","전화 연락처"]] },
-    { ic:"style", tag:"STYLE", t:"여섯 부위 꾸미기", img:"feat_style",
+    { ic:"style", tag:"STYLE", t:"여섯 부위 꾸미기", imgs:["ui_style"],
       b:["모자 · 얼굴 · 목 · 등 · 손 · 신발. 날개, 안경, 목에 건 카메라, 잠자리채, 찻잔까지 300가지 가까운 꾸미기가 있어요.","부티크 거울 앞의 꾸미기 상자로 모으고, 겹친 건 조각으로 바꿔 원하는 걸 골라요. 현금 결제는 없어요."],
       n:[["6칸","부위"],["0원","현금 결제"]] },
-    { ic:"season", tag:"SEASONS", t:"달력을 따라 바뀌는 계절", img:"r1_sprout",
+    { ic:"season", tag:"SEASONS", t:"달력을 따라 바뀌는 계절", imgs:["r1_sprout","r2_temple"],
       b:["실제 달력을 따라 봄 · 여름 · 가을 · 겨울이 와요. 나뭇잎 색이 바뀌고, 봄엔 꽃잎이, 가을엔 낙엽이, 겨울엔 비 대신 눈이 내려요.","주민들은 시간대마다 괭이, 낚싯대, 밤엔 등불을 들고 하루 일과대로 움직여요."],
       n:[["4계절","실제 달력 기준"]] },
-    { ic:"ask", tag:"ASK", t:"무엇이든 박사님께", img:"feat_ask",
+    { ic:"ask", tag:"ASK", t:"무엇이든 박사님께", imgs:["ui_ask"], fit:["contain"],
       b:["서버에 대해 궁금한 건 박사님께 물어보세요. 3,400개가 넘는 답 중에서 찾아 줘요.","답하지 못한 질문은 모아 두었다가 새 답으로 돌아와요. 물어볼수록 똑똑해지는 박사님이에요."],
       n:[["3,400+","준비된 답"]] },
-    { ic:"battle", tag:"BATTLE", t:"더 영리한 배틀", img:"feat_battle",
+    { ic:"battle", tag:"BATTLE", t:"더 영리한 배틀", imgs:["feat_battle"],
       b:["메가진화 · Z기술 · 다이맥스 · 테라스탈을 모두 써요. 길 트레이너는 눈이 마주치면 「!」 하고 다가와 승부를 걸어요.","공식 챔피언과는 실전으로 겨뤄, 이긴 사람이 다음 챔피언이 돼요."],
       n:[["4가지","배틀 기믹"]] },
-    { ic:"explore", tag:"EXPLORE", t:"들어가서 노는 마을", img:"feat_explore",
+    { ic:"explore", tag:"EXPLORE", t:"들어가서 노는 마을", imgs:["feat_explore","r3_shrine"],
       b:["난파선, 다이빙 코스, 별 관측소, 그림자 동굴, 폐광, 해저 기지. 체육관만 깨고 지나가던 마을에 들러 볼 이유가 생겼어요."],
       n:[["45곳","들를 마을"]] },
-    { ic:"gear", tag:"POKÉGEAR", t:"정리된 포켓기어", img:"feat_gear",
+    { ic:"gear", tag:"POKÉGEAR", t:"정리된 포켓기어", imgs:["ui_gear"], fit:["contain"],
       b:["앱을 12개로 묶고 「기능 찾기」를 넣었어요. 지도, 도감, 위키, 전화, TV를 우클릭 한 번으로 열어요.","오늘 할 일, 물건 찾기, 어디서나 PC까지 손안에 있어요."],
       n:[["12개","앱"]] }
   ];
@@ -199,13 +199,27 @@
     b.addEventListener("keydown", function(e){ var k = e.key; if (k === "ArrowDown" || k === "ArrowRight"){ e.preventDefault(); pickF((i + 1) % FEAT.length, true); } if (k === "ArrowUp" || k === "ArrowLeft"){ e.preventDefault(); pickF((i + FEAT.length - 1) % FEAT.length, true); } });
     li.appendChild(b); flist.appendChild(li);
   });
+  var slideT = null, dots = el("div", "dots"); $("#fpic").appendChild(dots);
+  function showImg(f, k){
+    var nx = fl[1 - ff]; nx.src = "img/v15/" + f.imgs[k] + ".jpg"; nx.alt = f.t;
+    nx.style.objectFit = (f.fit && f.fit[k]) || "cover";
+    nx.classList.add("on"); fl[ff].classList.remove("on"); ff = 1 - ff;
+    $$("button", dots).forEach(function(d, j){ d.setAttribute("aria-current", j === k ? "true" : "false"); });
+  }
   function pickF(i, focus){
-    if (i === fcur) return; fcur = i; var f = FEAT[i];
-    $$("button", flist).forEach(function(b, k){ b.setAttribute("aria-selected", k === i ? "true" : "false"); b.tabIndex = k === i ? 0 : -1; });
+    if (i === fcur) return; fcur = i; var f = FEAT[i], k = 0;
+    $$("button", flist).forEach(function(b, j){ b.setAttribute("aria-selected", j === i ? "true" : "false"); b.tabIndex = j === i ? 0 : -1; });
     if (focus) $("#ftab" + i).focus();
     fstage.setAttribute("aria-labelledby", "ftab" + i);
-    var nx = fl[1 - ff]; nx.src = "img/v15/" + f.img + ".jpg"; nx.alt = f.t;
-    nx.classList.add("on"); fl[ff].classList.remove("on"); ff = 1 - ff;
+    dots.innerHTML = "";
+    if (f.imgs.length > 1) f.imgs.forEach(function(_, j){
+      var d = el("button"); d.type = "button"; d.setAttribute("aria-label", (j + 1) + "번째 장면");
+      d.addEventListener("click", function(){ k = j; showImg(f, k); restart(); }); dots.appendChild(d);
+    });
+    showImg(f, 0);
+    clearInterval(slideT);
+    function restart(){ clearInterval(slideT); if (f.imgs.length > 1 && !reduce) slideT = setInterval(function(){ k = (k + 1) % f.imgs.length; showImg(f, k); }, 4200); }
+    restart();
     fstage.classList.add("out");
     setTimeout(function(){
       $("#ft").textContent = f.t;
@@ -216,7 +230,7 @@
     var sel = $("#ftab" + i); if (flist.scrollWidth > flist.clientWidth) flist.scrollTo({ left: sel.parentNode.offsetLeft - 16, behavior: reduce ? "auto" : "smooth" });
   }
   pickF(0);
-  FEAT.forEach(function(f){ var im = new Image(); im.src = "img/v15/" + f.img + ".jpg"; });
+  FEAT.forEach(function(f){ f.imgs.forEach(function(n){ var im = new Image(); im.src = "img/v15/" + n + ".jpg"; }); });
   $("#fpic").addEventListener("mousemove", function(e){ var r = this.getBoundingClientRect(); this.style.setProperty("--mx", (e.clientX - r.left) + "px"); this.style.setProperty("--my", (e.clientY - r.top) + "px"); });
 
   /* ---------- trailer plays inside its tab ---------- */

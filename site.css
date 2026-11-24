@@ -132,9 +132,13 @@ html:not(.js) .bars::before,html:not(.js) .bars::after{height:6%}
 .flist b{font:700 15px/1.4 var(--serif)}
 .flist small{font:500 10px/1 var(--caps);letter-spacing:.22em;color:var(--mute)}
 .fstage{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--ink2);min-height:0}
-.fstage .pic{position:relative;flex:1;min-height:280px;overflow:hidden;background:#000}
+.fstage .pic{position:relative;flex:1;min-height:280px;overflow:hidden;background:radial-gradient(ellipse at center,#1d1a1c,#0a0909 75%)}
 .fstage .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
 .fstage .pic img.on{opacity:1;transform:scale(1)}
+.dots{position:absolute;z-index:2;right:16px;bottom:14px;display:flex;gap:6px}
+.dots button{width:22px;height:3px;padding:0;border:0;border-radius:2px;background:rgba(239,230,210,.35);cursor:pointer;transition:background .3s,width .4s var(--ease)}
+.dots button[aria-current="true"]{background:var(--gold);width:34px}
+.dots button::before{content:"";display:block;margin:-10px 0;height:23px}
 .fstage .pic::after{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx,70%) var(--my,30%),rgba(255,240,215,.10),transparent 60%);pointer-events:none}
 .fstage .txt{padding:24px 30px 26px}
 .fstage .txt>*{transition:opacity .45s var(--ease),transform .45s var(--ease)}
