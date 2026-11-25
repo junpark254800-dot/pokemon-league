@@ -116,8 +116,8 @@
   wireDl(document);
 
   /* ---------- tabs: base row + highlighted copy clipped to one tab ---------- */
-  var VIEWS = ["home","world","new","film","start","music"];
-  var VIEW_TIME = { home:"home", world:"morning", new:"noon", film:"sunset", start:"morning", music:"night" };
+  var VIEWS = ["home","world","new","film","start","guide","music"];
+  var VIEW_TIME = { home:"home", world:"morning", new:"noon", film:"sunset", start:"morning", guide:"noon", music:"night" };
   var tabs = $("#tabs"), tabBtns = $$("button", tabs), row = el("div", "row"), hi = el("div", "hi");
   hi.setAttribute("aria-hidden", "true");
   tabBtns.forEach(function(b){ row.appendChild(b); var c = el("span", "t", b.innerHTML); hi.appendChild(c); });
@@ -154,6 +154,7 @@
       var s = document.getElementById("v-" + v), on = v === name;
       s.classList.toggle("on", on); s.setAttribute("aria-hidden", on ? "false" : "true"); if ("inert" in s) s.inert = !on;
       if (on) s.scrollTop = 0;
+      if (on) root.classList.remove("scrolled");
     });
     setTime($("#v-" + name).getAttribute("data-time"));
     var hv = $("#heroVid");
@@ -166,7 +167,10 @@
     }
   }
   VIEWS.forEach(function(v){ $("#v-" + v).setAttribute("data-time", VIEW_TIME[v]); });
+  VIEWS.forEach(function(v){ var s = $("#v-" + v); s.addEventListener("scroll", function(){ if (v === current) root.classList.toggle("scrolled", s.scrollTop > 8); }, { passive:true }); });
   document.addEventListener("click", function(e){
+    var j = e.target.closest("[data-jump]");
+    if (j){ var tg = document.getElementById(j.dataset.jump); if (tg) tg.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); return; }
     var t = e.target.closest("[data-go]"); if (!t) return;
     if (t.tagName === "A") e.preventDefault();
     go(t.dataset.go);
@@ -183,7 +187,7 @@
   addEventListener("resize", function(){ clipTo(aimed || selBtn()); placeCursor(); });
   // phones: swipe left / right between tabs (the tab bar is the visible alternative)
   var sx = null, sy = null, views = $(".views");
-  views.addEventListener("touchstart", function(e){ if (e.target.closest(".flist,.regions,.thumbs,.wave,video,.dayline")) { sx = null; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive:true });
+  views.addEventListener("touchstart", function(e){ if (e.target.closest(".flist,.regions,.thumbs,.wave,video,.dayline,.gnav")) { sx = null; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive:true });
   views.addEventListener("touchend", function(e){
     if (sx == null) return; var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
     if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8){ var i = VIEWS.indexOf(current) + (dx < 0 ? 1 : -1); if (i >= 0 && i < VIEWS.length) go(VIEWS[i]); }

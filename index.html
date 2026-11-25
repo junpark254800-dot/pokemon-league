@@ -31,6 +31,7 @@
     <button role="tab" id="t-new" aria-controls="v-new" data-go="new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 5.3 5.8.5-4.4 3.8 1.3 5.6L12 15.3 7.1 18.2l1.3-5.6L4 8.8l5.8-.5z"/></svg><span>이번 시즌</span></button>
     <button role="tab" id="t-film" aria-controls="v-film" data-go="film"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M10 9l5 3-5 3z"/></svg><span>트레일러</span></button>
     <button role="tab" id="t-start" aria-controls="v-start" data-go="start"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg><span>시작하기</span></button>
+    <button role="tab" id="t-guide" aria-controls="v-guide" data-go="guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C6.5 4.5 9.5 4.5 12 6c2.5-1.5 5.5-1.5 8-.5V19c-2.5-1-5.5-1-8 .5-2.5-1.5-5.5-1.5-8-.5z"/><path d="M12 6v13.5"/></svg><span>가이드</span></button>
     <button role="tab" id="t-music" aria-controls="v-music" data-go="music"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg><span>음악</span></button>
   </nav>
   <div class="right">
@@ -132,9 +133,153 @@
           <li>적대 몬스터는 나오지 않아요.</li>
           <li>음악 볼륨은 설정 → 음악 및 소리 → 「주크박스/소리 블록」.</li>
           <li>문제가 생기면 F3 좌표가 보이게 캡처해 디스코드에 올려 주세요.</li>
+          <li>처음이라면 <button type="button" class="inl" data-go="guide">플레이 가이드</button>부터 읽어 보세요. 사파리존, 탐험 명소, 대장간 쓰는 법이 있어요.</li>
         </ul>
       </section>
     </div>
+  </div>
+</section>
+
+<section class="view" id="v-guide" role="tabpanel" aria-labelledby="t-guide">
+  <div class="wrap">
+    <header class="head"><h2>처음이어도<br>길을 잃지 않게</h2>
+    <p class="lede">만든 사람만 알던 것들을 모았어요. 전설과 숨은 이야기는 직접 찾는 재미를 남겨 두고, 어디서 실마리를 얻는지까지만 적었어요.</p></header>
+
+    <nav class="gnav" aria-label="가이드 목차">
+      <button type="button" data-jump="g-first">처음 30분</button>
+      <button type="button" data-jump="g-life">돈과 생활</button>
+      <button type="button" data-jump="g-move">이동</button>
+      <button type="button" data-jump="g-battle">배틀과 리그</button>
+      <button type="button" data-jump="g-safari">사파리존</button>
+      <button type="button" data-jump="g-spots">탐험 명소</button>
+      <button type="button" data-jump="g-forge">대장간</button>
+      <button type="button" data-jump="g-legend">전설과 숨은 이야기</button>
+      <button type="button" data-jump="g-help">막힐 때</button>
+    </nav>
+
+    <section class="gsec" id="g-first" aria-labelledby="g-first-h">
+      <h3 id="g-first-h"><span class="gno">01</span>처음 30분</h3>
+      <p class="gled">첫 열차가 푸른들 지방 <b>새싹마을</b>에 내려 줘요. 여기서부터 시작이에요.</p>
+      <div class="ggrid">
+        <article class="gcard"><h4>포켓기어부터 열기</h4><p>모험 수첩을 들고 <kbd>우클릭</kbd>하면 포켓기어가 열려요. <b>「다음 목표」</b>가 지금 할 일을 알려 주고, 지도·도감·위키·출석 체크도 여기 있어요.</p></article>
+        <article class="gcard"><h4>첫 체육관</h4><p>새싹마을의 노말 타입 <b>한별</b> 관장이에요. 배지는 1번 체육관부터 <b>순서대로만</b> 인정돼요. 체육관은 수련생 두 명을 지나 관장에게 가는 구조예요.</p></article>
+        <article class="gcard"><h4>볼과 회복</h4><p>몬스터볼과 회복약은 <b>파란 지붕 프렌들리숍</b>에서 사요. 포켓몬센터 회복 기계를 우클릭하면 파티가 모두 나아요.</p></article>
+        <article class="gcard"><h4>키</h4><p>포켓몬 내보내기는 <kbd>R</kbd>예요. <kbd>ESC</kbd> 메뉴 왼쪽 위 <b>「조작키 안내」</b>에서 리그 키를 한눈에 보고 바로 바꿀 수 있어요.</p></article>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-life" aria-labelledby="g-life-h">
+      <h3 id="g-life-h"><span class="gno">02</span>돈과 생활</h3>
+      <p class="gled">코인은 배틀, 의뢰, 직업으로 벌어요. 배틀을 안 해도 할 일이 많아요.</p>
+      <div class="ggrid">
+        <article class="gcard"><h4>코인 케이스</h4><p>코인은 한 칸에 99개까지만 쌓여요. 코인 케이스를 지니고 있으면 보상이 바로 케이스로 들어가요.</p></article>
+        <article class="gcard"><h4>의뢰 게시판</h4><p>마을마다 있고 매일 바뀌어요. 끝내면 그 마을 평판이 올라요: 30 손님, 80 단골 상점, 150 친구, 250 영웅(할인). 마을마다 요일별 <b>축제일</b>에는 의뢰 보상이 두 배예요.</p></article>
+        <article class="gcard"><h4>직업</h4><p>큰 마을 직업소개소에서 <b>낚시꾼·농부·광부·브리더·연구원</b> 중 하나를 골라요. 숙련도가 오르면 더 비싸게 팔고 직업 상점이 열려요.</p></article>
+        <article class="gcard"><h4>내 집</h4><p>한 사람당 한 채, 주인만 드나들어요. PC, 리스폰 침대, 매일 거두는 텃밭, 브리딩용 목장이 있어요. 집에서 쉬고 나가면 30분 동안 배틀 코인이 1.5배예요.</p></article>
+        <article class="gcard"><h4>하루 이벤트</h4><p>게임 시간 아침엔 큰 마을 광장에 <b>아침 시장</b>, 정오엔 채집 대회, 해 질 녘엔 낚시 대회가 열려요.</p></article>
+        <article class="gcard"><h4>마을 발전 기금</h4><p>게시판이나 이장에게 기부하면 함께 마을 시설을 지어요. 완공되면 기부자에게 칭호와 보상이 있어요.</p></article>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-move" aria-labelledby="g-move-h">
+      <h3 id="g-move-h"><span class="gno">03</span>이동</h3>
+      <p class="gled">네 지방은 한 땅으로 이어져 있어서 걸어서도 가요. 멀면 이 둘을 쓰세요.</p>
+      <div class="ggrid two">
+        <article class="gcard"><h4>비행 택시</h4><p>포켓몬센터 앞 승강장을 우클릭하면 <b>가 본 마을</b>로 날아가요. 처음 들어간 마을은 이름이 화면에 뜨면서 목록에 추가돼요.</p></article>
+        <article class="gcard"><h4>열차</h4><p>지방 한가운데 큰 도시 역 매표소에서 승차권을 사고, 승강장에서 승차권을 우클릭하면 출발해요. 다른 지방의 시작 마을 간이역에 내려요.</p></article>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-battle" aria-labelledby="g-battle-h">
+      <h3 id="g-battle-h"><span class="gno">04</span>배틀과 리그</h3>
+      <p class="gled">푸른들 → 백암산 → 남해 제도 → 북부 고원. 지방마다 체육관 8곳, 배지는 모두 32개예요.</p>
+      <div class="ggrid">
+        <article class="gcard"><h4>사천왕과 챔피언</h4><p>배지 8개를 모으면 그 지방 포켓몬 리그에 도전해요. 사천왕과 공식 챔피언은 <b>한 번 이기면 끝</b>이고, 지면 다시 도전하면 돼요.</p></article>
+        <article class="gcard"><h4>타이틀 매치</h4><p>공식 챔피언을 이긴 사람은 챔피언 홀에서 <b>지금 챔피언인 플레이어의 분신</b>에게 도전할 수 있어요. 이기면 왕좌가 내 것이 돼요.</p></article>
+        <article class="gcard"><h4>배틀 시설</h4><p>푸른들의 <b>배틀 타워</b>(7층에 타워 타이쿤), 대여 포켓몬으로 싸우는 <b>배틀 팩토리</b>가 있어요. 네 지방을 모두 마치면 <b>무한 배틀</b>이 열려요.</p></article>
+        <article class="gcard"><h4>눈이 마주치면 승부</h4><p>길 트레이너가 보는 방향으로 지나가면 「!」가 뜨고 걸어와요. 귀찮으면 <code>/leaguesight off</code>.</p></article>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-safari" aria-labelledby="g-safari-h">
+      <h3 id="g-safari-h"><span class="gno">05</span>사파리존</h3>
+      <p class="gled">성벽으로 둘러싼 커다란 보호구역이에요. 평소엔 보기 힘든 포켓몬을 한곳에서 만나요.</p>
+      <div class="gsafari">
+        <dl class="gfacts">
+          <div><dt>입구</dt><dd>푸른들 <b>꽃바람 마을</b> 동쪽 관리소의 「사파리존 관리인」</dd></div>
+          <div><dt>입장</dt><dd>50코인 · 사파리볼 30개 · 15분</dd></div>
+          <div><dt>안에는</dt><dd>초원부터 설원, 정글, 화산지대, 끝의 고원까지 서식지 <b>26곳</b>이 남북으로 길게 이어져요</dd></div>
+          <div><dt>맨 남쪽</dt><dd>산 속에 이끼 동굴 · 종유석 동굴 · 깊은 어둠의 동굴이 있어요</dd></div>
+        </dl>
+        <ul class="ticks">
+          <li>안의 야생 포켓몬은 기운이 빠져 있어서 사파리볼로 바로 잡기 좋아요.</li>
+          <li>나가려면 관리인에게 「그만 나갈게요」. 시간이 다 돼도 입구로 돌아와요.</li>
+          <li>남은 사파리볼은 나올 때 반납돼요. 쓸 만큼 쓰고 나오세요.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-spots" aria-labelledby="g-spots-h">
+      <h3 id="g-spots-h"><span class="gno">06</span>탐험 명소</h3>
+      <p class="gled">체육관 말고도 마을마다 놀 거리가 있어요. 모두 <b>언제든 그만둘 수 있어요</b>: 채팅의 [✖ 포기하기], 웅크린 채 하늘 보기 1.5초, 또는 NPC에게 「그만두기」.</p>
+      <div class="gspots">
+        <div><h4>푸른들</h4><ul>
+          <li><b>새싹마을</b> 나무열매 텃밭: 정원사 일손 돕기</li>
+          <li><b>흙산 마을</b> 도자기 공방: 가마에 점토, 드물게 화석</li>
+          <li><b>언덕 마을</b> 별 관측소: 밤에 망원경으로 별자리 맞히기</li>
+        </ul></div>
+        <div><h4>백암산</h4><ul>
+          <li><b>그림자 골짜기</b> 그림자 동굴: 석등 네 개의 순서</li>
+          <li><b>정상 마을</b> 산길 등반 코스: 깃발 셋, 기록 도전</li>
+          <li><b>설산 호숫가</b> 얼음 낚시터: 3분 낚시 대회</li>
+        </ul></div>
+        <div><h4>남해 제도</h4><ul>
+          <li><b>검은 항구</b> 난파선 탐험: 잠수해서 보물 찾기</li>
+          <li><b>암초 마을</b> 산호초 다이빙: 물속 고리 8개, 기록 도전</li>
+          <li><b>폭풍 섬</b> 번개 관측소: 비 오는 날에만</li>
+          <li><b>해저 기지 섬</b> 해저 기지: 바다 밑 유리 통로</li>
+        </ul></div>
+        <div><h4>북부 고원</h4><ul>
+          <li><b>제련소 마을</b> 폐광: 광산 수레 타고 땅속 광맥으로</li>
+          <li><b>어둠숲 마을</b> 미로 숲: 버섯 미로, 가운데 숲의 주인</li>
+          <li><b>북부 관문 마을</b> 수비대 연전: 망루 셋과 수비대장</li>
+          <li><b>빙하 마을</b> 얼음 미끄럼 동굴: 미끄러지는 얼음길 퍼즐</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-forge" aria-labelledby="g-forge-h">
+      <h3 id="g-forge-h"><span class="gno">07</span>대장간과 강화</h3>
+      <p class="gled">도구·무기·갑옷·낚싯대를 +10까지 벼려요. 대장간은 지방마다 하나씩이에요: <b>대장간 마을 · 채석장 마을 · 검은 항구 · 제련소 마을</b>.</p>
+      <div class="ggrid">
+        <article class="gcard"><h4>강화</h4><p>강화석, 경험치 레벨, 코인이 들어요. 실패해도 단계는 그대로이고 재료만 사라져요. 대신 다음 성공 확률이 올라요. +5에서 특수 능력, +10이면 부서지지 않아요.</p></article>
+        <article class="gcard"><h4>각인석</h4><p>+7 장비에 1칸, +10에 2칸. 보조 손에 들고 강화 창의 「◆ 각인석 끼우기」. 대장장이에게 사거나, 일일 의뢰·레이드·월드 보스에서 얻어요.</p></article>
+        <article class="gcard"><h4>지방 세트</h4><p>갑옷 네 부위를 모두 +7 이상으로, <b>같은 지방 대장간</b>에서 벼리면 세트 효과가 켜져요. 북부 세트는 추위에 얼지 않아요.</p></article>
+        <article class="gcard"><h4>키</h4><p>작은따옴표 <kbd class="k1">'</kbd>는 강화 창(대장간 바로 가기), 세미콜론 <kbd class="k1">;</kbd>은 강화 능력 켜기/끄기. 대장장이는 하루 한 번 광석 납품 의뢰와 수리도 해 줘요.</p></article>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-legend" aria-labelledby="g-legend-h">
+      <h3 id="g-legend-h"><span class="gno">08</span>전설과 숨은 이야기</h3>
+      <p class="gled">전설은 <b>서버에서 처음 맞이한 한 명만</b> 동료로 데려가요. 그 뒤에 온 사람은 기념 배틀과 기념 보상을 받아요. 어디서 무엇을 해야 하는지는 적지 않을게요.</p>
+      <div class="ggrid">
+        <article class="gcard"><h4>실마리를 주는 사람</h4><p>지방 중심 도시 연구소 박사님의 <b>「전설 이야기」</b>, 포켓몬센터 간호사의 <b>「센터 뉴스」</b>와 <b>「전설 도감」</b> 소문. 마을 노인과 주민의 옛이야기도 그냥 지나치지 마세요.</p></article>
+        <article class="gcard"><h4>수첩에 메모가 적히면</h4><p>어딘가에 다가갔을 때 모험 수첩에 메모가 생기면 그곳이 실마리예요. 그 자리에서 <b>웅크리면</b> 무엇이 모자란지 ✔/✖로 보여요.</p></article>
+        <article class="gcard"><h4>하늘과 날씨</h4><p>유성우, 뇌우, 강풍 같은 날씨 이벤트에만 나타나는 것들이 있어요. 센터 뉴스의 날씨 예보를 보고 움직이세요.</p></article>
+        <article class="gcard"><h4>준전설</h4><p>정해진 시각에 나타나고 화면에 알림이 떠요. 포켓기어 「준전설 제보」에서 소식을 모아 볼 수 있어요.</p></article>
+      </div>
+      <p class="gnote">이 밖에도 마을 곳곳에 이야기가 숨어 있어요. 오래된 석판, 이상한 글자, 아무도 안 가는 길 끝을 그냥 지나치지 마세요.</p>
+    </section>
+
+    <section class="gsec" id="g-help" aria-labelledby="g-help-h">
+      <h3 id="g-help-h"><span class="gno">09</span>막힐 때</h3>
+      <div class="ggrid">
+        <article class="gcard"><h4>박사님께 묻기</h4><p>포켓기어 → <b>물어보기 → 「박사님께」</b>. 3,400개 넘는 질문에 답해 줘요. 「물건 찾기」로 파는 곳과 값도 찾아요.</p></article>
+        <article class="gcard"><h4>배틀이 멈췄을 때</h4><p>포켓기어의 <b>「배틀 풀기」</b>로 멈춘 배틀을 끝낼 수 있어요.</p></article>
+        <article class="gcard"><h4>알림이 많을 때</h4><p>포켓기어 빠른 설정에서 이벤트 알림, 팁, 배경음악을 조절해요.</p></article>
+        <article class="gcard"><h4>버그 제보</h4><p><kbd>F3</kbd> 좌표가 보이게 캡처해서 디스코드에 올려 주세요.</p></article>
+      </div>
+    </section>
   </div>
 </section>
 
