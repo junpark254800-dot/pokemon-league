@@ -1,4 +1,4 @@
-/* 포켓몬 리그 사이트 v15 — 탭마다 하루의 시간이 바뀌는 한 화면 사이트 */
+/* 포켓몬 리그 사이트 v16 — 탭마다 하루의 시간이 바뀌는 한 화면 사이트 */
 (function(){
   "use strict";
   var S = window.SITE || {};
@@ -45,6 +45,9 @@
     gear:'<rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M9 6.5h6M9 9.5h6M9 12.5h3"/><circle cx="12" cy="17.5" r="1"/>'
   };
   var FEAT = [
+    { ic:"legend", t:"새 체육관 배지와 대장간", imgs:["v16_badges","v16_runes"], fit:["contain","contain"],
+      b:["체육관 배지 32개가 새 디자인으로 바뀌었어요. 타입이 한눈에 보이는 칠보 핀이고, 지방마다 금 · 은 · 로즈골드 · 건메탈로 금속이 달라요.","지방마다 대장간이 생겼어요. 장비를 +10까지 벼리고, +7부터 열리는 각인 칸에 18타입 보석 각인석을 끼워요. 업적 124개와 매주 바뀌는 주간 도전도 시작됐어요."],
+      n:[["32개","새 배지"],["18종","각인석"],["124개","리그 업적"]] },
     { ic:"legend", t:"전설은 한 사람을 골라요", imgs:["r2_league","r4_glacier"],
       b:["전설과 준전설 모두, 서버에서 처음 만나 잡은 한 명만 데려갈 수 있어요. 단서는 마을 곳곳의 메모와 옛 돌에 흩어져 있고, 하늘이 유성우나 뇌우로 바뀌는 날에만 나타나는 전설도 있어요.","누군가 먼저 데려갔다면 남은 잔상과 기념 배틀을 해 「인정」을 받고 다음 전설로 넘어가면 돼요. 교환은 되지만, 처음 고른 트레이너의 이름은 기록에 남아요."],
       n:[["44종","전설 도감"],["1명","종마다 첫 주인"]] },
@@ -101,6 +104,7 @@
   if (S.discord) L.push({ title:"디스코드 들어가기", url:S.discord });
   if (S.cards) L.push({ title:"리그 카드 사이트", url:S.cards });
   if (S.poster) L.push({ title:"서버 소개 포스터", url:S.poster });
+  if (S.map) L.unshift({ title:"맵(월드) 받기", url:S.map });
   (S.links || []).forEach(function(x){ if (x && x.url && !/modrinth\.com\/app/.test(x.url)) L.push(x); });
   L.forEach(function(x){ var a = el("a"); a.href = x.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = x.title || x.url; $("#links").appendChild(a); });
   function wireDl(scope){
@@ -330,7 +334,7 @@
     sbody.classList.add("swap");
     setTimeout(function(){
       var s = STEPS[i], act = "";
-      if (s[2] === "dl") act = '<a class="btn main" data-dl href="#">' + DL + '모드팩 받기 <small>' + vShort + '</small></a>';
+      if (s[2] === "dl") act = '<a class="btn main" data-dl href="#">' + DL + '모드팩 받기 <small>' + vShort + '</small></a>' + (S.map ? '<a class="btn ghost" href="' + S.map + '" target="_blank" rel="noopener">맵(월드) 받기</a>' : "");
       if (s[2] === "modrinth") act = '<a class="btn ghost" href="https://modrinth.com/app" target="_blank" rel="noopener">Modrinth 앱 받기</a>';
       sbody.innerHTML = '<div class="t"><h3></h3><p></p>' + (s[2] === "dl" ? '<p class="note"></p>' : "") + '</div>' + act;
       $("h3", sbody).textContent = (i + 1) + "단계. " + s[0]; $("p", sbody).textContent = s[1];
